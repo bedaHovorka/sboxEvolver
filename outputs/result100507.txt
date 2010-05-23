@@ -1,0 +1,504 @@
+Ga searching with population size: 100 and generation count: 250
+genome: PERMUTATION (True, 4, 4) criterion: SAC
+probability of mutation: 0.020000 probability of crossover: 0.200000
+convergence: 0
+16 best results: fitness min/avg/max/mdev : 1.11/1.125/1.35/0.06
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+3	24	2	1	0.5	1	0	2	2	b + c + a*b*c + d + a*b*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+
+1	24	0	1	0.5	1	0	2	2	a + b + a*b + a*c + b*c + a*d + b*d + c*d + a*c*d , 1 + a*b + c + b*c + d + b*d + a*c*d , 1 + a*c + b*c + d + a*d + b*d , 1 + a + a*b + b*c + b*d + a*c*d , 	
+Chromozome:	14 7 15 13 12 0 2 5 8 4 6 1 11 9 10 3 
+
+1	32	0	0.56	0.38	1	0	2	3	1 + b + a*b + c + b*c + a*b*c + a*d + a*b*d + c*d , a*b + c + a*c + b*c + a*b*c + b*d + a*c*d , 1 + a*c + b*c + a*b*c + d + a*d + a*b*d + a*c*d , a + a*b + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d , 	
+Chromozome:	5 13 4 7 6 8 0 10 9 12 2 1 3 14 15 11 
+
+1	31	0	0.56	0.38	1	0	2	3	1 + b + a*d + a*b*d + a*c*d , a + a*b + c + a*c + b*c + b*d + c*d + a*c*d , a + a*c + a*b*c + a*b*d + c*d , b + a*b + a*c + b*c + a*b*c + d + a*d + a*b*d , 	
+Chromozome:	1 7 8 4 3 11 0 14 9 6 2 10 13 15 12 5 
+
+1	32	0	0.56	0.38	1	0	2	3	1 + a*b + c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , 1 + b + c + b*c + a*d + b*d + c*d + a*c*d + b*c*d , b + a*b + c + a*c + a*b*c + d + a*d + b*d + c*d + a*c*d , 1 + a + a*b + b*c + a*d + c*d + a*c*d + b*c*d , 	
+Chromozome:	11 3 13 8 12 0 1 5 14 9 15 4 6 10 7 2 
+
+1	8	0	1	0.75	1	0	2	2	1 + b + a*b + a*c + b*c + a*d + c*d , a + a*c + b*c + a*d + b*d + c*d , 1 + b + a*b + c + a*c + b*c + d + a*d + c*d , 1 + a + a*b + a*c + d + a*d + c*d + b*c*d , 	
+Chromozome:	13 7 8 15 9 12 11 3 1 4 6 14 10 0 2 5 
+
+1	23	0	0.56	0.38	1	0	2	2	1 + b + a*b + a*c + d , 1 + a + b + a*b + a*c + a*b*c + a*d + a*b*d + a*c*d , 1 + a + b + b*c + a*d + a*b*d + c*d + b*c*d , c + a*c + a*b*c + d + a*d + c*d , 	
+Chromozome:	7 1 0 5 15 2 12 8 14 6 9 4 10 11 13 3 
+
+1	32	0	0.56	0.5	1	0	2	3	1 + b + a*b + a*c + a*b*c + d + b*d , 1 + a + a*b + a*c + d + a*d + b*d + b*c*d , b + c + a*c + b*c + d + a*b*d + a*c*d , 1 + a + b + a*b + a*c + b*c + a*b*c + c*d + b*c*d , 	
+Chromozome:	11 1 6 7 15 10 14 9 12 4 2 5 0 3 8 13 
+
+1	32	0	0.56	0.38	1	0	2	3	1 + a*b + c + a*c + b*c + a*b*c + a*c*d + b*c*d , 1 + a*c + b*c + a*b*c + d + b*d + a*b*d + a*c*d + b*c*d , b + a*b + a*c + b*c + a*b*c + a*d + b*c*d , 1 + a + a*c + b*c + b*d + a*c*d , 	
+Chromozome:	11 3 15 2 10 13 1 4 9 5 7 12 8 0 14 6 
+
+1	31	0	0.56	0.38	1	0	2	3	a + b + b*c + a*b*d + a*c*d + b*c*d , a + b + a*b + a*b*c + d + a*d + a*b*d + c*d + a*c*d + b*c*d , 1 + a + a*b + c + a*c + a*b*c + a*d + a*b*d + a*c*d , 1 + a + a*b + c + b*c + d + a*d + a*c*d , 	
+Chromozome:	12 3 15 14 0 11 10 9 6 7 5 13 8 2 1 4 
+
+1	32	0	0.56	0.5	1	0	2	3	1 + a + a*c + b*c + a*d + a*b*d + c*d + a*c*d , 1 + a + c + a*c + b*c + b*d + c*d + a*c*d , a + b + a*b + c + b*c + d + a*d + a*b*d , b + c + a*c + b*c + a*b*d + a*c*d , 	
+Chromozome:	3 4 15 12 13 1 14 6 7 5 9 2 10 8 11 0 
+
+1	23	0	0.56	0.38	1	0	2	2	1 + b + a*b + c + a*c + b*c + d + a*d + b*d , a + a*b + c + a*c + d + a*d + b*d + a*b*d , 1 + a*c + a*b*c + d + a*d + a*b*d , a + c + b*c + a*d + a*b*d + b*c*d , 	
+Chromozome:	5 15 4 13 14 3 6 12 2 7 0 8 9 11 10 1 
+
+1	32	0	0.56	0.38	1	0	2	3	1 + b + a*b + a*b*d + c*d + b*c*d , 1 + a + a*b + c + d + b*d + c*d + a*c*d + b*c*d , a + b + c + a*c + b*c + a*b*c + b*d + a*c*d , 1 + a + b + a*b + b*c + d + b*d + a*b*d + a*c*d , 	
+Chromozome:	11 5 6 3 13 7 12 9 1 15 2 14 4 0 8 10 
+
+1	32	0	0.56	0.38	1	0	2	3	a + b + c + b*c + a*d + b*d + a*b*d + b*c*d , 1 + c + a*c + a*b*c + a*d + b*d + a*b*d + c*d , a + a*b + c + a*c + b*c + d + a*d + b*d + c*d + b*c*d , 1 + a + b + a*b + b*c + a*b*c + a*d + a*b*d + b*c*d , 	
+Chromozome:	10 7 3 2 13 6 9 4 14 12 0 5 15 11 1 8 
+
+1	31	0	0.56	0.38	1	0	2	3	1 + a*b + a*c + b*c + d + a*d + b*d + a*b*d + b*c*d , 1 + a + b + a*b + a*c + a*b*c + b*c*d , 1 + a + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , c + a*c + a*b*c + d + a*b*d + c*d + b*c*d , 	
+Chromozome:	7 1 5 0 15 2 12 8 14 13 9 4 10 6 3 11 
+
+1	32	0	0.56	0.38	1	0	2	3	1 + a + b + a*b + a*b*c + a*c*d + b*c*d , 1 + a + b + b*c + a*b*c + d + a*d + a*c*d , a*b + c + b*c + d + b*d + c*d + a*c*d + b*c*d , 1 + b + a*b + b*c + d + b*d + a*b*d + c*d + a*c*d + b*c*d , 	
+Chromozome:	11 8 0 14 15 12 10 7 5 4 2 6 13 3 9 1 
+
+
+main.cpp:195	::	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+main.cpp:195	::	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+main.cpp:195	::	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+main.cpp:195	::	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+main.cpp:195	::	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+main.cpp:195	::	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+main.cpp:195	::	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+main.cpp:195	::	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+ParallelRandom searching with population size: 30000 and generation count: 30000
+genome: PERMUTATION (True, 4, 4) symbolical regresion 
+
+convergence: 0.772727
+16 best results: fitness min/avg/max/mdev : 3.21428/6.25/7.5/1.15175
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+2	31	-1	1	0.5	1	0	2	3	b + c + d + a*b*d , a*b + c + a*c + b*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 10 13 11 6 15 14 2 9 12 
+
+4	32	-1	0.56	0.38	1	0	2	3	a + c + a*c + b*c + d + a*d + a*c*d + b*c*d , b + c + a*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 6 3 7 1 0 8 13 11 5 15 14 2 10 12 
+
+6	31	-1	0.56	0.5	1	0	2	3	1 + a + a*c + b*c + a*b*c + d + a*d + a*b*d + c*d + b*c*d , 1 + a + b + a*b + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 7 1 0 9 14 10 6 15 13 2 11 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	a*b + c + a*c + a*d + b*d + a*c*d , b + c + a*c + a*b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 0 1 9 14 11 5 15 13 2 10 12 
+
+6	24	-1	0.56	0.38	1	0	2	2	a + c + d + a*d , b + c + a*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 6 3 7 0 1 8 13 11 5 15 14 2 10 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + b*c + a*b*c + a*d + a*b*d , a*b + c + b*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 2 0 9 12 11 7 15 14 1 10 13 
+
+6	32	-1	1	0.5	1	0	2	3	a + a*b*c + d + a*d + c*d + b*c*d , a + b + a*b + a*c + b*c + b*d + a*b*d + c*d , 1 + a*b + c + a*b*c + a*d + c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	4 7 6 3 8 1 0 10 13 11 5 15 14 2 9 12 
+
+6	24	-1	0.56	0.38	1	0	2	2	b + c + a*c + b*c + d + c*d , a*b + c + a*c + b*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 0 1 10 13 11 6 14 15 2 9 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	1 + a + a*d + b*d + a*b*d + c*d , 1 + a + b + a*b + a*b*c + d + c*d + a*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 7 0 1 10 13 11 6 15 14 2 9 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	c + b*c + d + a*c*d , b + c + a*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 2 7 1 0 10 13 11 5 15 14 3 9 12 
+
+6	24	-1	0.56	0.38	1	0	2	2	1 + a + b + a*b + c + b*c + a*b*c + a*d + b*d + a*b*d + a*c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 2 6 1 0 9 13 11 7 15 14 3 10 12 
+
+8	24	-1	0.56	0.38	1	0	2	2	a + d + a*d + c*d , b + b*c + a*b*c + a*d + b*d + c*d + a*c*d + b*c*d , 1 + a + c + a*c + a*b*c + a*b*d + c*d + a*c*d + b*c*d , a + a*b + c + b*c + d + a*d + b*d + c*d + a*c*d , 	
+Chromozome:	4 9 6 3 8 1 0 7 13 11 5 15 14 2 10 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	a + c + b*d + a*b*d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 6 3 7 0 1 8 12 11 5 15 14 2 10 13 
+
+8	32	-1	0.56	0.38	1	0	2	3	b + a*b + a*c + b*c + a*b*c + a*b*d + c*d + a*c*d , a*b + c + a*c + b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 6 1 0 9 14 10 7 15 13 3 11 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	b + c + a*b*c + d + a*d + a*b*d + c*d + b*c*d , a*b + c + a*c + b*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 9 13 12 6 14 15 2 11 10 
+
+8	32	-1	0.56	0.38	1	0	2	3	b + c + a*c + a*d + b*d + b*c*d , a*b + c + a*c + a*b*c + d + a*b*d + a*c*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 0 2 9 14 11 6 15 13 1 10 12 
+
+
+ParallelRandom searching with population size: 30000 and generation count: 30000
+genome: PERMUTATION (True, 4, 4) symbolical regresion 
+
+convergence: 0.933333
+16 best results: fitness min/avg/max/mdev : 0.649999/4.875/5.85/1.5463
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+0	24	2	1	0.5	1	0	2	2	b + c + a*b*c + d + a*b*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 9 13 11 6 15 14 2 10 12 
+
+2	24	-1	0.56	0.5	1	0	2	2	b + c + a*b*c + d + c*d + a*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 9 13 11 6 14 15 2 10 12 
+
+4	24	-1	0.56	0.38	1	0	2	2	b + a*b + a*c + b*c + a*b*c + d + b*d + a*b*d + c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 6 1 0 9 13 11 7 15 14 3 10 12 
+
+4	31	-1	0.56	0.38	1	0	2	3	b + c + a*c + d + c*d + a*c*d , a*b + c + b*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 2 0 9 13 11 6 14 15 1 10 12 
+
+4	32	-1	0.56	0.38	1	0	2	3	b + c + a*c + b*c + a*b*c + a*d + b*d + a*c*d , a*b + c + a*c + b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 0 1 9 14 11 6 15 13 2 10 12 
+
+4	32	-1	0.56	0.38	1	0	2	3	1 + a + a*c + b*c + a*b*c + b*d + c*d + b*c*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 7 1 0 9 13 10 6 15 14 2 11 12 
+
+6	32	-1	0.56	0.5	1	0	2	3	1 + a*b + c + b*d + a*c*d + b*c*d , 1 + b + c + a*c + b*c + a*b*c + d + a*d + a*b*d + a*c*d , a + b + a*b + a*c + b*c + a*b*c + d + b*d + a*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	3 7 5 4 8 2 0 9 13 11 6 15 14 1 10 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	1 + b + a*b + c + a*c + b*c + a*b*c + a*d + a*b*d + b*c*d , a + a*c + b*d + a*b*d + c*d + b*c*d , 1 + a*b + c + a*b*c + a*d + c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	5 7 4 3 8 1 0 9 13 10 6 15 14 2 11 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + c + a*b*c + d + a*d + a*c*d + b*c*d , a*b + c + a*c + b*c + d + a*d + c*d + b*c*d , 1 + a + b*c + a*b*c + d + b*d + a*b*d + c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 9 11 12 6 15 14 2 10 13 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + a*c + b*c + c*d + b*c*d , a*b + c + a*c + b*c + d + a*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 1 0 9 14 12 7 15 13 2 10 11 
+
+6	31	-1	0.56	0.38	1	0	2	3	b + d + a*d + b*d + a*b*d + c*d + a*c*d , a*b + c + a*c + b*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 0 1 9 13 12 7 15 14 2 10 11 
+
+6	32	-1	0.56	0.38	1	0	2	3	a*b + c + a*c + b*c + a*b*c + d + a*d + a*c*d + b*c*d , b + c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 2 0 9 13 12 5 15 14 1 10 11 
+
+6	32	-1	1	0.38	1	0	2	3	a*b + c + a*c + b*c + d + a*b*d , b + c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 2 0 10 13 11 5 15 14 1 9 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	1 + a + c + a*b*d + a*c*d + b*c*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 6 1 0 9 13 10 7 15 14 2 11 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	1 + a + a*c + b*c + b*d + c*d + b*c*d , 1 + a + b + a*b + a*b*c + d + a*d + a*b*d + c*d , b + c + a*c + a*b*c + d + b*d + c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 7 1 0 10 13 12 6 15 14 2 9 11 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + a*d + a*b*d + c*d , a*b + c + a*c + b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 0 1 9 14 11 7 15 13 2 10 12 
+
+
+ParallelRandom searching with population size: 30000 and generation count: 30000
+genome: PERMUTATION (True, 4, 4) symbolical regresion 
+
+convergence: 0.894737
+16 best results: fitness min/avg/max/mdev : 2.8/7/8.4/1.77088
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+4	32	-1	0.56	0.38	1	0	2	3	b + a*b + c + a*d + b*d + a*b*d + a*c*d + b*c*d , a*b + c + a*c + b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 7 1 0 9 14 11 6 15 13 3 10 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + c + a*c + a*b*c + d + a*d + a*c*d , a*b + c + b*c + b*d + a*b*d + a*c*d + b*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 2 0 10 13 12 6 15 14 1 9 11 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d , a*b + c + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d + b*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 1 0 10 13 12 7 15 14 2 9 11 
+
+6	23	-1	0.56	0.38	1	0	2	2	b + a*c + b*c + d + a*d + b*d + a*c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 1 0 9 13 10 7 14 15 2 11 12 
+
+6	32	-1	0.56	0.5	1	0	2	3	a + b + b*c + b*d + c*d + a*c*d , a + a*c + d + a*d + c*d + b*c*d , 1 + a*b + c + a*b*c + a*d + c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	4 7 5 2 8 1 0 9 14 11 6 15 13 3 10 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + c + a*c + a*d + b*d + a*b*d + b*c*d , a*b + c + b*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 2 0 9 12 11 6 14 15 1 10 13 
+
+6	32	-1	0.56	0.38	1	0	2	3	1 + a*b + b*c + a*b*c + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 9 5 4 7 1 0 8 13 10 6 15 14 2 11 12 
+
+8	31	-1	0.56	0.38	1	0	2	3	b + c + d + c*d + a*c*d + b*c*d , a*b + c + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 10 13 9 6 14 15 2 11 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	a + b + b*c + d + a*d + a*b*d + c*d + a*c*d , 1 + b + c + b*c + d + a*d + a*b*d + a*c*d , a + b + a*b + a*c + b*c + a*b*c + d + b*d + a*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	2 7 5 4 8 1 0 9 13 11 6 15 14 3 10 12 
+
+8	32	-1	1	0.38	1	0	2	3	b + a*b + c + a*c + b*c + a*b*c + a*d + b*d + a*b*d + b*c*d , a*b + c + a*c + b*c + a*b*c + d + a*b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 7 0 1 10 14 11 6 15 13 3 9 12 
+
+8	30	-1	0.56	0.38	1	0	2	3	1 + a + c + a*c + a*b*c + a*b*d + a*c*d , 1 + a + b + a*b + a*c + a*b*c + d + a*d + a*b*d + c*d + b*c*d , b + c + a*c + a*b*c + d + b*d + c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 6 2 0 9 13 12 7 15 14 1 10 11 
+
+8	31	-1	0.56	0.38	1	0	2	3	a*b + c + a*c + a*b*c + a*d + b*d + a*c*d + b*c*d , b + c + a*c + d + a*b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 0 1 10 14 11 5 15 13 2 9 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	1 + a*b + c + a*c + c*d + b*c*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 9 5 4 6 1 0 8 13 11 7 14 15 2 10 12 
+
+8	31	-1	0.56	0.5	1	0	2	3	a + b + a*b + a*c + b*c + a*b*c + d + a*b*d + c*d + a*c*d + b*c*d , a + a*d + b*d + c*d + a*c*d , 1 + a*b + c + a*b*c + a*b*d + c*d + a*c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	4 7 5 3 8 2 0 10 13 12 6 15 14 1 9 11 
+
+8	32	-1	0.56	0.38	1	0	2	3	1 + b + d + a*d + a*b*d + c*d , 1 + a + b*c + a*b*c + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 9 6 4 7 1 0 8 14 11 5 15 13 2 10 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	1 + a*b + b*c + a*b*c + a*d + b*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 9 5 4 7 1 0 8 13 10 6 14 15 2 11 12 
+
+
+ParallelRandom searching with population size: 30000 and generation count: 30000
+genome: PERMUTATION (True, 4, 4) symbolical regresion 
+
+convergence: 0.705882
+16 best results: fitness min/avg/max/mdev : 4.83823/5.875/7.05/0.853633
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+4	24	-1	0.56	0.38	1	0	2	2	1 + b + a*b + a*b*c + c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 9 4 3 7 1 0 8 13 11 6 15 14 2 10 12 
+
+4	31	-1	0.56	0.38	1	0	2	3	1 + a + b + a*c + a*b*c + c*d + b*c*d , a*b + c + a*c + b*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 3 7 1 0 9 13 12 6 15 14 2 10 11 
+
+4	24	-1	0.56	0.5	1	0	2	2	1 + a + b + a*c + a*b*c + a*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 3 7 1 0 9 13 11 6 14 15 2 10 12 
+
+4	32	-1	0.56	0.38	1	0	2	3	a*b + c + b*c + a*d + b*d + c*d + a*c*d , b + c + a*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 1 0 9 12 11 5 15 14 2 10 13 
+
+4	32	-1	0.56	0.38	1	0	2	3	a + b + b*c + d + a*d + a*b*d + c*d + a*c*d , a + a*c + b*d + a*b*d + c*d + b*c*d , 1 + a*b + c + a*b*c + a*d + c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	4 7 5 2 8 1 0 9 13 11 6 15 14 3 10 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	a + b + a*b + b*c + a*b*c + d + a*d + c*d , a*b + a*d + b*d + c*d + a*c*d + b*c*d , 1 + a + c + a*c + a*b*c + a*b*d + c*d + a*c*d + b*c*d , a + a*b + c + b*c + d + a*d + b*d + c*d + a*c*d , 	
+Chromozome:	4 9 5 3 8 1 0 7 13 11 6 15 14 2 10 12 
+
+6	31	-1	0.56	0.38	1	0	2	3	b + c + d + a*d + a*b*d + c*d + b*c*d , a*b + c + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d + b*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 10 13 12 6 14 15 2 9 11 
+
+6	32	-1	0.56	0.38	1	0	2	3	a + b + a*b + c + d + a*d + a*b*d + c*d , a*b + c + b*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 5 3 7 2 0 8 13 11 6 14 15 1 10 12 
+
+6	31	-1	0.56	0.38	1	0	2	3	1 + b + a*b + c + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + b*c*d , a + a*c + b*d + a*b*d + c*d + b*c*d , 1 + a*b + c + a*b*c + a*d + c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	5 7 4 3 8 1 0 9 12 11 6 15 14 2 10 13 
+
+6	24	-1	0.56	0.38	1	0	2	2	1 + a + b + a*d , a*b + c + b*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 3 7 2 0 9 13 11 6 14 15 1 10 12 
+
+6	23	-1	0.56	0.38	1	0	2	2	1 + b + a*b + a*b*c + a*b*d + a*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 9 4 3 7 1 0 8 13 11 6 14 15 2 10 12 
+
+6	24	-1	0.56	0.5	1	0	2	2	b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + c*d + a*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 6 1 0 9 13 10 7 15 14 3 11 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	b + a*b + c + a*c + b*c + a*b*c + d + a*b*d + c*d + a*c*d , a*b + c + a*c + b*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 7 0 1 10 13 11 6 14 15 3 9 12 
+
+8	24	-1	0.56	0.5	1	0	2	2	b + a*b + a*c + b*c + a*b*c + a*d + a*b*d + c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 6 1 0 9 12 11 7 14 15 3 10 13 
+
+8	32	-1	0.56	0.38	1	0	2	3	1 + a + b + a*b + a*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 6 4 7 1 0 9 13 10 5 14 15 2 11 12 
+
+8	24	-1	0.56	0.38	1	0	2	2	1 + a + b + c + a*c + a*d + b*d + a*b*d + c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 3 6 0 1 9 13 11 7 14 15 2 10 12 
+
+
+ParallelRandom searching with population size: 30000 and generation count: 30000
+genome: PERMUTATION (True, 4, 4) symbolical regresion 
+
+convergence: 0.785714
+16 best results: fitness min/avg/max/mdev : 4.73667/6.125/7.35/0.57824
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+4	24	-1	0.56	0.38	1	0	2	2	b + a*c + b*c + d + a*d + b*d + a*b*d + c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 1 0 9 13 10 7 15 14 2 11 12 
+
+6	24	-1	0.56	0.38	1	0	2	2	1 + a + b + a*c + a*b*c + a*b*d + a*c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 3 7 1 0 9 13 10 6 14 15 2 11 12 
+
+6	31	-1	0.56	0.38	1	0	2	3	a*b + c + b*c + d + a*b*d + b*c*d , b + b*c + a*d + a*b*d + c*d + a*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 5 1 0 9 13 11 7 15 14 2 10 12 
+
+6	24	-1	0.56	0.5	1	0	2	2	b + a*b + a*c + b*c + a*b*c + a*d + a*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 6 1 0 9 12 11 7 15 14 3 10 13 
+
+6	31	-1	1	0.5	1	0	2	3	b + c + a*c + a*b*c + a*d + b*d , a*b + c + b*c + d + a*b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 2 0 10 14 11 6 15 13 1 9 12 
+
+6	24	-1	0.56	0.38	1	0	2	2	1 + a + a*c + b*c + a*d + b*d , 1 + a + b + a*b + a*b*c + d + c*d + a*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 7 1 0 10 13 11 6 14 15 2 9 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + a*b + c + d + a*c*d + b*c*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	2 8 5 4 7 1 0 9 13 11 6 15 14 3 10 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	1 + a + a*b*c + b*d + c*d + a*c*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 7 0 1 9 13 10 6 15 14 2 11 12 
+
+6	24	-1	0.56	0.38	1	0	2	2	b + a*b + c + d + a*d + c*d + a*c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 7 1 0 9 13 10 6 14 15 3 11 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	a + c + a*c + b*c + d + a*b*d , b + c + a*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 6 3 7 1 0 8 13 10 5 15 14 2 11 12 
+
+6	32	-1	0.56	0.5	1	0	2	3	1 + a + b + a*c + a*d + b*c*d , a*b + c + a*c + b*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 3 7 1 0 10 13 11 6 14 15 2 9 12 
+
+6	32	-1	1	0.5	1	0	2	3	a + a*b*c + d + a*d + c*d + b*c*d , a + b + a*b + a*c + b*c + b*d + a*b*d + c*d , 1 + a*b + c + a*b*c + a*d + c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	4 7 6 3 8 1 0 10 13 11 5 15 14 2 9 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	1 + a*b + c + b*c + a*b*c + b*d , 1 + b + c + b*c + d + a*d + a*b*d + a*c*d , a + b + a*b + a*c + b*c + a*b*c + d + b*d + a*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	3 7 5 4 8 0 1 9 13 11 6 15 14 2 10 12 
+
+6	31	-1	0.56	0.5	1	0	2	3	a + b + a*b + b*c + d + a*b*d + c*d + a*c*d + b*c*d , a + a*c + a*b*c + a*d + b*d + c*d + a*c*d , 1 + a*b + c + a*b*c + a*b*d + c*d + a*c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	4 7 5 3 8 1 0 10 13 12 6 15 14 2 9 11 
+
+8	32	-1	0.56	0.38	1	0	2	3	b + a*b + c + a*d + b*d + a*b*d + a*c*d + b*c*d , a*b + c + b*c + a*b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 7 3 0 9 14 11 6 15 13 1 10 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	a*b + c + b*c + a*d + b*d + b*c*d , b + c + a*c + a*b*c + d + c*d + a*c*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 1 0 9 14 11 5 13 15 2 10 12 
+
+
+ParallelRandom searching with population size: 30000 and generation count: 30000
+genome: PERMUTATION (True, 4, 4) symbolical regresion 
+
+convergence: 0.888889
+16 best results: fitness min/avg/max/mdev : 5.29286/7.125/8.55/1.66879
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+6	24	-1	0.56	0.38	1	0	2	2	a*b + c + a*c + b*c + a*b*c + d + a*d + a*c*d , b + c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 2 0 9 13 10 5 15 14 1 11 12 
+
+6	32	-1	0.25	0.25	1	0	2	3	b + a*b + c + d + a*d + c*d + a*c*d , a*b + c + a*c + b*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 7 1 0 9 13 12 6 14 15 3 10 11 
+
+6	32	-1	0.56	0.38	1	0	2	3	a + c + a*c + b*c + d + a*b*d + b*c*d , b + c + a*c + a*b*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 6 3 7 1 0 8 13 12 5 15 14 2 10 11 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + a*b + c + a*b*c + d + a*b*d + c*d + b*c*d , a*b + c + a*c + b*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 7 1 0 10 13 11 6 14 15 3 9 12 
+
+6	31	-1	0.56	0.38	1	0	2	3	1 + a + a*c + b*c + a*b*c + a*d + b*d + a*b*d + c*d + a*c*d , b + a*b + c + a*c + a*d + b*c*d , 1 + a + b + a*b*c + b*d + a*b*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 3 4 7 1 0 9 13 11 6 15 14 2 10 12 
+
+6	31	-1	0.56	0.38	1	0	2	3	a*b + c + b*c + d + a*d + a*b*d + c*d + b*c*d , b + c + a*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 1 0 9 13 10 5 14 15 2 11 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	a + b + a*b + c + a*c + a*b*c + a*d + b*d , a*b + c + a*c + b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 5 3 7 1 0 8 14 10 6 15 13 2 11 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	1 + a + b + a*b + b*c + d + a*c*d , 1 + a + b*c + a*b*c + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 6 4 7 0 1 9 12 11 5 15 14 2 10 13 
+
+8	30	-1	0.56	0.5	1	0	2	3	1 + a*b + c + a*c + a*d + b*d + a*b*d , 1 + b + c + b*c + a*b*c + d + b*c*d , a + b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	3 7 5 4 8 1 0 10 13 12 6 15 14 2 9 11 
+
+8	32	-1	0.56	0.38	1	0	2	3	a*b + c + b*c + a*b*c + b*d + a*b*d + a*c*d , b + c + a*c + d + a*d + a*c*d + b*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 1 0 10 14 12 5 15 13 2 9 11 
+
+8	31	-1	0.56	0.5	1	0	2	3	a*b + c + b*c + d + a*d + a*c*d + b*c*d , b + c + a*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 1 0 9 13 10 5 15 14 2 12 11 
+
+8	32	-1	0.56	0.38	1	0	2	3	1 + a + c + a*c + a*b*c + a*d + a*b*d + c*d + a*c*d + b*c*d , 1 + a + b + a*b + a*c + a*b*c + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 6 2 0 9 13 11 7 14 15 1 10 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	1 + a*b + b*c + a*b*c + b*d + c*d , 1 + b + c + b*c + d + a*d + a*b*d + a*c*d , a + b + a*b + a*c + b*c + a*b*c + d + b*d + a*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	3 7 5 4 9 1 0 8 13 11 6 15 14 2 10 12 
+
+8	31	-1	0.56	0.38	1	0	2	3	b + c + a*c + d + a*d + a*c*d , a*b + c + b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 2 0 11 13 10 6 15 14 1 9 12 
+
+8	24	-1	0.56	0.38	1	0	2	2	1 + b + c + b*d , 1 + a*b + c + a*b*c + d + a*d + a*b*d + a*c*d , a + b + a*b + a*c + b*c + a*b*c + d + b*d + a*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	3 7 6 4 8 0 1 9 13 11 5 15 14 2 10 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	1 + a + b + a*b + a*b*c + d + c*d + a*c*d , 1 + a + a*c + b*c + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 6 4 7 2 0 9 14 11 5 15 13 1 10 12 
+
+
+ParallelRandom searching with population size: 30000 and generation count: 30000
+genome: PERMUTATION (True, 4, 4) symbolical regresion 
+
+convergence: 0.761905
+16 best results: fitness min/avg/max/mdev : 3.96/5.5/6.6/0.936832
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+2	32	-1	0.56	0.38	1	0	2	3	b + c + a*b*c + d + a*d + a*c*d + b*c*d , a*b + c + a*c + b*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 9 13 12 6 15 14 2 10 11 
+
+2	24	-1	0.56	0.38	1	0	2	2	b + a*c + b*c + d + b*d + c*d + a*c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 1 0 9 13 11 7 15 14 2 10 12 
+
+4	32	-1	0.56	0.38	1	0	2	3	1 + b + a*b + c + a*c + b*c + a*b*c + a*c*d , a + a*c + b*d + a*b*d + c*d + b*c*d , 1 + a*b + c + a*b*c + a*d + c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	5 7 4 3 8 1 0 9 13 11 6 15 14 2 10 12 
+
+4	31	-1	0.56	0.38	1	0	2	3	b + c + d + a*d + a*c*d , a*b + c + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d + b*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 10 13 12 6 15 14 2 9 11 
+
+4	32	-1	0.56	0.38	1	0	2	3	b + a*c + b*c + a*b*c + d + b*d + c*d + a*c*d , a*b + c + a*c + b*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 1 0 10 13 11 7 15 14 2 9 12 
+
+4	32	-1	0.56	0.38	1	0	2	3	1 + a + b*c + a*d + b*d + a*b*d + c*d + a*c*d , 1 + a + b + a*b + a*c + a*b*c + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 7 2 0 9 13 11 6 15 14 1 10 12 
+
+4	32	-1	1	0.5	1	0	2	3	a + b + a*b + b*c + a*b*c + b*d + a*b*d + c*d , a + a*c + d + a*d + c*d + b*c*d , 1 + a*b + c + a*b*c + a*d + c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	4 7 5 3 8 1 0 9 14 11 6 15 13 2 10 12 
+
+6	24	-1	0.56	0.38	1	0	2	2	a + b + a*b + b*c + a*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 5 3 6 1 0 8 12 11 7 15 14 2 10 13 
+
+6	31	-1	0.56	0.38	1	0	2	3	a + b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + b*c*d , a*b + c + b*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 5 3 6 2 0 8 13 11 7 15 14 1 10 12 
+
+6	24	-1	0.56	0.5	1	0	2	2	b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + c*d + a*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 2 6 1 0 9 13 10 7 15 14 3 11 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + c + a*b*c + a*d + b*d + c*d + a*c*d , a*b + c + a*c + b*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 9 12 13 6 15 14 2 10 11 
+
+8	24	-1	0.56	0.38	1	0	2	2	b + c + a*c + b*c + a*b*c + b*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 0 1 9 12 10 6 14 15 2 11 13 
+
+8	32	-1	0.56	0.5	1	0	2	3	b + c + a*c + a*d + b*d + c*d + a*c*d , a*b + c + b*c + a*b*c + b*d + a*b*d + a*c*d , 1 + a + b*c + a*b*c + a*d + a*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 2 0 9 12 13 6 15 14 1 10 11 
+
+8	32	-1	0.56	0.38	1	0	2	3	b + c + a*b*c + d + a*d + a*b*d + c*d + b*c*d , a*b + c + a*c + b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 9 15 10 6 14 13 2 11 12 
+
+8	32	-1	0.56	0.38	1	0	2	3	1 + a*b + c + a*c + d + a*d + b*d + c*d + b*c*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 9 5 4 6 1 0 8 12 11 7 15 14 2 10 13 
+
+8	32	-1	0.56	0.5	1	0	2	3	a*b + c + b*c + d + a*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + c*d + b*c*d , 1 + a + b*c + a*b*c + d + b*d + a*b*d + c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 6 3 7 1 0 9 11 12 5 15 14 2 10 13 
+
+
+ParallelRandom searching with population size: 30000 and generation count: 30000
+genome: PERMUTATION (True, 4, 4) symbolical regresion 
+
+convergence: 0.625
+16 best results: fitness min/avg/max/mdev : 2.2/5.5/6.6/1.96774
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+4	24	-1	0.56	0.5	1	0	2	2	a + b + c + a*c + d + a*d + a*b*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 5 2 7 1 0 8 13 11 6 15 14 3 10 12 
+
+4	32	-1	1	0.38	1	0	2	3	b + c + a*c + a*b*c + d + a*b*d , a*b + c + b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 2 0 10 13 11 6 15 14 1 9 12 
+
+4	24	-1	0.56	0.38	1	0	2	2	1 + a + b + a*c + a*b*c + c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 3 7 1 0 9 13 10 6 15 14 2 11 12 
+
+4	32	-1	0.56	0.38	1	0	2	3	a + b + a*b + b*c + a*b*c + d + a*b*d + c*d + a*c*d + b*c*d , a + a*c + b*d + a*b*d + c*d + b*c*d , 1 + a*b + c + a*b*c + a*d + c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	4 7 5 3 8 1 0 9 13 10 6 15 14 2 11 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	1 + a + b + d + b*d + c*d + a*c*d + b*c*d , a*b + c + b*c + a*b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 3 7 2 0 9 14 11 6 15 13 1 10 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + c + a*b*c + d + a*d + a*c*d , a*b + c + a*c + b*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 1 0 11 13 10 6 15 14 2 9 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	1 + a + a*b*c + a*d + b*d + a*c*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 7 0 1 9 13 11 6 14 15 2 10 12 
+
+6	24	-1	0.56	0.38	1	0	2	2	b + a*c + b*c + c*d , a*b + c + a*c + b*c + d + a*b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 1 0 9 14 10 7 15 13 2 11 12 
+
+6	24	-1	0.56	0.38	1	0	2	2	1 + a + b + b*c + a*b*c + a*d + a*c*d + b*c*d , a*b + c + a*c + b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	5 8 4 3 7 0 1 9 13 11 6 14 15 2 10 12 
+
+6	32	-1	0.56	0.5	1	0	2	3	b + a*c + b*c + a*b*c + a*d + a*b*d + b*c*d , a*b + c + a*c + b*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 1 0 10 12 11 7 15 14 2 9 13 
+
+6	32	-1	0.25	0.38	1	0	2	3	1 + a + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d , 1 + a + b + a*b + d + c*d + a*c*d + b*c*d , b + c + a*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	3 8 5 4 7 1 0 9 13 10 6 14 15 2 11 12 
+
+6	31	-1	0.56	0.5	1	0	2	3	a + b + a*b + a*c + a*b*c + d + a*b*d + c*d + b*c*d , a + a*c + a*d + b*d + c*d + a*c*d + b*c*d , 1 + a*b + c + a*b*c + a*b*d + c*d + a*c*d + b*c*d , c + a*c + b*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	4 7 5 3 8 0 1 9 13 12 6 15 14 2 10 11 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + c + a*c + a*b*c + d + c*d + a*c*d + b*c*d , a*b + c + b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 2 0 10 13 11 6 14 15 1 9 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	a + b + a*b + c + a*c + a*b*c + d + a*d + a*c*d + b*c*d , a*b + c + a*c + b*c + a*b*c + a*d + b*d + b*c*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 9 5 3 7 1 0 10 13 11 6 15 14 2 8 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + c + a*c + d + a*d + a*b*d + c*d + b*c*d , a*b + c + b*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 7 2 0 9 13 10 6 14 15 1 11 12 
+
+6	32	-1	0.56	0.38	1	0	2	3	b + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d , a*b + c + b*c + a*b*c + a*d + b*d , 1 + a + b*c + a*b*c + a*b*d , a + a*b + a*c + d + a*d + b*d + b*c*d , 	
+Chromozome:	4 8 5 3 6 2 0 9 13 10 7 15 14 1 11 12 
+
+
+Exited with status: 0

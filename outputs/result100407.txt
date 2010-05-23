@@ -1,0 +1,25 @@
+Spea searching with population size: 2000 and generation count: 2000
+genome: SOFTWARE_IMPL (1,)
+probability of mutation: 0.200000 probability of crossover: 0.700000
+criterions: [DP_MAX, BENT_AND_MOSAC, LP_MAX]
+convergence: 1.00104
+16 best results: fitness min/avg/max/mdev : 0.96002/0.96002/0.96002/0
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	Chromozome
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; XOR r4, r0} , {OR r1, r3 ; AND r3, r4 ; XOR r4, r4} , {XOR r1, r4 ; NOT r4 ; XOR r2, r3} , {NOT r4 ; XOR r0, r1 ; AND r2, r2} , {XOR r3, r0 ; XOR r1, r2 ; NOT r4} , {NOP ; NOP ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; MOV r4, r0} , {OR r1, r3 ; AND r3, r4 ; XOR r4, r3} , {OR r1, r3 ; AND r4, r0 ; XOR r2, r3} , {OR r1, r3 ; XOR r0, r1 ; OR r2, r2} , {XOR r3, r4 ; XOR r1, r2 ; NOT r4} , {NOP ; AND r3, r0 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; OR r2, r2 ; NOT r4} , {OR r1, r3 ; OR r3, r4 ; AND r2, r1} , {NOT r4 ; OR r1, r1 ; XOR r2, r3} , {AND r1, r1 ; XOR r0, r1 ; XOR r4, r4} , {NOT r3 ; XOR r1, r2 ; OR r4, r3} , {NOP ; AND r3, r0 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; MOV r4, r0} , {OR r1, r3 ; AND r3, r4 ; AND r2, r1} , {AND r3, r3 ; AND r4, r0 ; XOR r2, r3} , {OR r1, r1 ; XOR r0, r1 ; AND r4, r3} , {OR r3, r3 ; XOR r1, r2 ; AND r4, r3} , {NOP ; OR r3, r3 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; OR r4, r0} , {OR r1, r3 ; AND r3, r4 ; NOT r4} , {AND r4, r0 ; AND r3, r1 ; XOR r2, r3} , {AND r4, r3 ; XOR r0, r1 ; AND r2, r0} , {NOT r3 ; XOR r1, r2 ; NOT r4} , {NOP ; NOP ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; XOR r4, r0} , {OR r1, r3 ; AND r3, r4 ; OR r4, r2} , {AND r1, r1 ; AND r4, r4 ; XOR r2, r3} , {OR r3, r3 ; XOR r0, r1 ; NOT r2} , {AND r3, r0 ; XOR r1, r2 ; NOT r4} , {NOP ; NOP ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; MOV r4, r0} , {OR r1, r3 ; AND r3, r4 ; OR r4, r3} , {OR r1, r1 ; AND r4, r1 ; XOR r2, r4} , {NOT r1 ; XOR r0, r1 ; OR r4, r2} , {OR r0, r0 ; XOR r1, r2 ; NOT r4} , {XOR r3, r3 ; NOP ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; XOR r4, r0} , {OR r1, r3 ; AND r3, r4 ; AND r2, r2} , {XOR r1, r4 ; XOR r4, r4 ; XOR r2, r3} , {OR r3, r3 ; XOR r0, r1 ; NOT r2} , {XOR r3, r1 ; XOR r1, r2 ; NOT r4} , {NOP ; NOT r2 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; NOT r4} , {OR r1, r3 ; AND r3, r4 ; OR r4, r4} , {AND r4, r4 ; NOT r3 ; XOR r2, r3} , {NOT r4 ; XOR r0, r1 ; NOT r2} , {NOT r3 ; XOR r1, r2 ; NOT r4} , {NOP ; NOT r2 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; MOV r4, r0} , {OR r1, r3 ; OR r3, r4 ; XOR r4, r4} , {NOT r4 ; NOT r3 ; XOR r2, r3} , {OR r1, r1 ; XOR r0, r1 ; OR r4, r3} , {OR r3, r4 ; XOR r1, r2 ; AND r4, r3} , {NOP ; OR r3, r1 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; OR r2, r1 ; MOV r4, r0} , {OR r1, r3 ; OR r3, r4 ; AND r4, r2} , {NOT r3 ; XOR r4, r3 ; XOR r2, r3} , {XOR r4, r4 ; XOR r0, r1 ; AND r2, r2} , {XOR r3, r4 ; XOR r1, r2 ; NOT r4} , {NOP ; AND r2, r2 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; NOT r4} , {AND r1, r3 ; OR r3, r4 ; XOR r4, r4} , {NOT r4 ; NOT r1 ; XOR r2, r3} , {NOT r1 ; XOR r0, r1 ; NOT r4} , {AND r3, r0 ; XOR r1, r2 ; NOT r4} , {OR r3, r2 ; OR r1, r1 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; OR r2, r1 ; NOT r4} , {AND r1, r3 ; AND r3, r4 ; XOR r0, r1} , {OR r1, r1 ; AND r4, r4 ; XOR r2, r3} , {OR r3, r3 ; XOR r0, r1 ; XOR r4, r1} , {XOR r3, r1 ; XOR r1, r2 ; NOT r4} , {NOT r2 ; NOP ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{AND r0, r2 ; OR r2, r1 ; OR r4, r0} , {OR r1, r3 ; AND r3, r4 ; OR r4, r1} , {AND r3, r3 ; OR r1, r1 ; XOR r2, r3} , {NOT r4 ; XOR r0, r1 ; OR r2, r2} , {AND r3, r0 ; XOR r1, r2 ; XOR r4, r3} , {OR r3, r1 ; OR r1, r1 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; OR r4, r0} , {OR r1, r3 ; AND r3, r4 ; AND r2, r1} , {AND r3, r3 ; AND r1, r1 ; XOR r2, r3} , {OR r1, r1 ; XOR r0, r1 ; XOR r4, r4} , {NOT r3 ; XOR r1, r2 ; NOT r4} , {NOP ; NOT r3 ; XOR r4, r0}
+0.96	64	0	0.25	0.25	0	0	1	{OR r0, r2 ; AND r2, r1 ; MOV r4, r0} , {OR r1, r3 ; AND r3, r4 ; XOR r0, r4} , {AND r4, r3 ; OR r1, r1 ; XOR r2, r3} , {OR r4, r3 ; XOR r0, r1 ; NOT r1} , {OR r3, r3 ; OR r1, r2 ; NOT r4} , {NOP ; OR r3, r4 ; XOR r4, r0}
+
+Exited with status: 0

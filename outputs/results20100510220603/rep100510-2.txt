@@ -1,0 +1,124 @@
+\subsubsection{TODO} %LP_MAX
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+(0, 0) & $2$ & $0.830075$ & $0.373374$ & $0.905579$ & $-0$ \\ \hline
+(0, 0.04) & $2$ & $0.830075$ & $0.511175$ & $1.13063$ & $0.830075$ \\ \hline
+(0, 0.08) & $2$ & $0.830075$ & $0.577091$ & $1.31957$ & $0.830075$ \\ \hline
+(0.16, 0.16) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0.16) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0.16) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0.16) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.16, 0.12) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0.12) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0.12) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0.12) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.16, 0.08) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0.08) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0.08) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0.08) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.16, 0.04) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0.04) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0.04) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0.04) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.16, 0) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0, 0.12) & $2$ & $2$ & $0.584362$ & $1.44218$ & $0.830075$ \\ \hline
+(0, 0.16) & $2$ & $2$ & $0.549793$ & $1.61486$ & $0.830075$ \\ \hline
+\end{tabular}
+\caption{TODO} %LP_MAX
+\label{tabLP_MAXParametersSmall}
+\end{center}
+\end{table}
+\insertimage[0.88\textwidth]{boxplotLP_MAXsmall}{TODO} %LP_MAX
+náhodné prohledávání: maximum 2 medián 2 odchylka 0.365039 průměr 1.87213 minimum 0.830075
+\insertimage[0.88\textwidth]{comparisonLP_MAXsmall}{TODO} %LP_MAX
+
+
+\subsubsection{TODO} %DP_MAX
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+(0, 0) & $2$ & $1.41504$ & $0.283811$ & $1.28443$ & $0.415038$ \\ \hline
+(0, 0.04) & $2$ & $1.41504$ & $0.199666$ & $1.48975$ & $1$ \\ \hline
+(0, 0.08) & $2$ & $1.41504$ & $0.23421$ & $1.53232$ & $1.41504$ \\ \hline
+(0, 0.12) & $2$ & $1.41504$ & $0.264779$ & $1.58327$ & $1.41504$ \\ \hline
+(0, 0.16) & $2$ & $1.41504$ & $0.284352$ & $1.63902$ & $1.41504$ \\ \hline
+(0.16, 0.16) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0.16) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0.16) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0.16) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.16, 0.12) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0.12) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0.12) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0.12) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.16, 0.08) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0.08) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0.08) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0.08) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.16, 0.04) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0.04) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0.04) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0.04) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.16, 0) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.12, 0) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.08, 0) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0.04, 0) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+\end{tabular}
+\caption{TODO} %DP_MAX
+\label{tabDP_MAXParametersSmall}
+\end{center}
+\end{table}
+\insertimage[0.88\textwidth]{boxplotDP_MAXsmall}{TODO} %DP_MAX
+náhodné prohledávání: maximum 2 medián 2 odchylka 0.29122 průměr 1.73475 minimum 1.41504
+\insertimage[0.88\textwidth]{comparisonDP_MAXsmall}{TODO} %DP_MAX
+
+
+\subsubsection{TODO} %POLYNOMIAL_DEGREE
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+(0.16, 0.16) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.12, 0.16) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.08, 0.16) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.04, 0.16) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0, 0.16) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.16, 0.12) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.12, 0.12) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.08, 0.12) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.04, 0.12) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0, 0.12) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.16, 0.08) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.12, 0.08) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.08, 0.08) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.04, 0.08) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0, 0.08) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.16, 0.04) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.12, 0.04) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.08, 0.04) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.04, 0.04) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0, 0.04) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.16, 0) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.12, 0) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.08, 0) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0.04, 0) & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0, 0) & $3$ & $3$ & $0.455533$ & $2.7484$ & $1$ \\ \hline
+\end{tabular}
+\caption{TODO} %POLYNOMIAL_DEGREE
+\label{tabPOLYNOMIAL_DEGREEParametersSmall}
+\end{center}
+\end{table}
+\insertimage[0.88\textwidth]{boxplotPOLYNOMIAL_DEGREEsmall}{TODO} %POLYNOMIAL_DEGREE
+náhodné prohledávání: maximum 3 medián 3 odchylka 0 průměr 3 minimum 3
+\insertimage[0.88\textwidth]{comparisonPOLYNOMIAL_DEGREEsmall}{TODO} %POLYNOMIAL_DEGREE
+
+
+Exited with status: 0

@@ -1,0 +1,280 @@
+Ga searching with population size: 100 and generation count: 250
+genome: PERMUTATION (True, 4, 4) criterion: SAC
+probability of mutation: 0.020000 probability of crossover: 0.200000
+convergence: 0
+16 best results: fitness min/avg/max/mdev : 1/1/1/0
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+1	32	0	0.56	0.5	1	0	2	3	1 + a*b + c + a*c + b*c + a*b*c + d + a*d + b*d + c*d , 1 + b + a*b*c + d + a*b*d + a*c*d + b*c*d , a + b + a*b + b*c + a*b*c + b*d + a*c*d , b + a*c + a*b*c + d + a*d + b*d + c*d + a*c*d , 	
+Chromozome:	3 7 13 12 2 15 9 14 8 5 11 1 0 10 4 6 
+
+1	32	0	0.25	0.38	1	0	2	3	a + c + a*c + b*c + a*b*c + a*c*d , 1 + b + c + a*c + b*c + a*b*c + d + a*d + b*d + c*d + a*c*d , a + b + c + a*c + a*b*c + d + a*b*d , 1 + c + a*b*c + d + b*d + c*d , 	
+Chromozome:	10 15 12 9 5 7 0 13 4 3 8 11 1 2 14 6 
+
+1	24	0	0.56	0.5	1	0	2	2	1 + a + a*b + a*b*c + d + c*d + b*c*d , 1 + a + a*b + c + b*c + b*d , a + a*c + b*c + d + b*d + a*b*d + a*c*d , b + a*b + c + b*c + a*b*c + c*d + b*c*d , 	
+Chromozome:	3 4 11 7 9 10 15 14 6 1 8 0 5 2 12 13 
+
+1	32	0	0.56	0.5	1	0	2	3	1 + a + a*c + a*b*c + b*d + c*d , b + a*c + b*c + a*b*c + d + a*c*d , a + a*b + c + b*c + d + a*d + a*b*d + c*d + a*c*d + b*c*d , a + a*b + c + a*c + c*d + a*c*d + b*c*d , 	
+Chromozome:	1 12 3 2 13 11 9 0 7 14 4 5 6 10 15 8 
+
+1	31	0	0.56	0.25	1	0	2	3	1 + a + b + c + b*c + a*b*c + d + a*b*d + a*c*d + b*c*d , 1 + a*b + c + a*c + a*d + a*b*d + c*d + a*c*d , 1 + a + a*c + b*c + a*b*c + a*d + b*d + a*b*d + c*d + a*c*d , 1 + b + a*c + a*b*c + a*c*d , 	
+Chromozome:	15 10 6 1 12 7 0 4 14 13 3 5 11 9 2 8 
+
+1	32	0	0.25	0.38	1	0	2	3	1 + a + a*b + b*c + a*b*c + a*d + b*d + a*b*d + a*c*d + b*c*d , 1 + b + a*b + a*b*c + a*d + b*d + c*d + a*c*d , 1 + a + a*b + c + d + a*b*d + c*d , 1 + a + b + a*b + c + b*c + a*b*c + a*d + b*d , 	
+Chromozome:	15 2 5 7 3 14 0 9 11 13 10 6 1 4 8 12 
+
+1	24	0	0.56	0.5	1	0	2	2	a*b + b*c + d + a*d + a*c*d , 1 + b + c + b*c + a*b*c + a*b*d + a*c*d , a + b + a*c + a*b*c + b*d + a*b*d + c*d , 1 + b + a*b + a*c + d + b*d + c*d , 	
+Chromozome:	10 14 4 9 8 0 5 2 3 6 1 11 13 7 12 15 
+
+1	31	0	0.56	0.5	1	0	2	3	a*b + d + a*b*d + a*c*d + b*c*d , a + a*b + c + a*b*c + d + a*b*d + c*d , 1 + b + c + d + b*d + a*b*d + b*c*d , a + a*b + c + a*c + b*c + d + a*d + b*d + a*b*d , 	
+Chromozome:	4 14 0 1 10 8 6 13 11 9 3 5 7 12 2 15 
+
+1	31	0	0.56	0.38	1	0	2	3	1 + a + b + a*b + c + b*c + a*b*c + c*d + a*c*d , 1 + a + b + a*b + b*c + d + a*b*d , 1 + b + d + a*d + b*d + c*d + a*c*d + b*c*d , a + c + a*b*c + d + b*d + a*b*d + c*d + a*c*d , 	
+Chromozome:	7 12 0 8 14 5 10 11 9 6 2 4 13 15 1 3 
+
+1	32	0	0.56	0.5	1	0	2	3	a + c + a*c + b*c + a*b*c + a*d + a*c*d + b*c*d , 1 + a + b + c + b*c + a*b*c + d + b*d + c*d , 1 + a + a*b + c + a*c + b*c + a*b*c + d + a*d + a*b*d + b*c*d , a + b + a*c + b*c + a*b*c + a*d + b*c*d , 	
+Chromozome:	6 9 12 7 1 3 4 13 0 2 8 10 5 11 15 14 
+
+1	24	0	0.56	0.38	1	0	2	2	b + c + a*c + b*c + d , a + a*b + b*c + a*b*c + d + a*d + b*d + a*b*d , a + a*b + c + a*b*d + c*d + a*c*d + b*c*d , b + a*b + c + a*c + d + b*d + a*b*d + c*d , 	
+Chromozome:	0 6 9 1 13 2 7 4 11 15 8 12 10 3 14 5 
+
+1	16	0	1	0.5	1	0	2	2	1 + a + a*b + c + a*c + d , b*c + d + a*b*d + c*d + a*c*d , a + b*c + a*b*d + c*d + a*c*d , b + a*c + b*c , 	
+Chromozome:	1 4 9 13 0 12 6 11 2 7 10 8 5 15 3 14 
+
+1	32	0	0.56	0.38	1	0	2	3	1 + a*c + b*c + a*b*c + d + a*d + b*d , 1 + a + b + c + a*c + b*c + a*b*c + a*d + a*b*d + a*c*d + b*c*d , 1 + a*b + c + b*c + b*d + c*d + a*c*d + b*c*d , a + a*c + d + a*d + a*b*d + a*c*d , 	
+Chromozome:	7 13 5 11 1 0 4 2 14 15 9 6 12 8 10 3 
+
+1	22	0	0.56	0.5	1	0	2	2	1 + b + a*b + a*c + a*d + b*c*d , 1 + a*c + b*c + d + a*d + b*d , a + a*d + b*d + c*d + a*c*d + b*c*d , b + c + a*c + b*c + a*c*d + b*c*d , 	
+Chromozome:	3 7 10 15 11 4 8 6 1 2 14 12 13 9 5 0 
+
+1	31	0	0.56	0.38	1	0	2	3	1 + a + b*c + a*b*c + a*d + a*c*d , 1 + a + b + d + a*d + b*d + a*b*d + c*d , 1 + c + a*d + b*d + a*b*d + c*d + b*c*d , a*b + b*c + a*b*c + d + a*d , 	
+Chromozome:	7 4 5 14 3 0 8 10 13 1 9 11 15 2 6 12 
+
+1	30	0	0.56	0.5	1	0	2	3	1 + b + c + b*c + a*b*c + b*d , 1 + a*b + a*c + a*b*c + d + a*d + a*c*d + b*c*d , c + a*c + b*c + a*b*c + d + a*b*d + c*d + a*c*d + b*c*d , a + b + a*b + c + a*b*c + a*b*d , 	
+Chromozome:	3 11 10 8 14 0 2 9 5 15 13 1 12 6 7 4 
+
+
+main.cpp:195	::	3 7 13 12 2 15 9 14 8 5 11 1 0 10 4 6 
+main.cpp:195	::	3 7 13 12 2 15 9 14 8 5 11 1 0 10 4 6 
+main.cpp:195	::	3 7 13 12 2 15 9 14 8 5 11 1 0 10 4 6 
+main.cpp:195	::	3 7 13 12 2 15 9 14 8 5 11 1 0 10 4 6 
+ParallelRandom searching with population size: 2000 and generation count: 100000
+genome: SOFTWARE_IMPL (1,) symbolical regresion 
+
+convergence: 0.857143
+16 best results: fitness min/avg/max/mdev : 33.2932/68.6875/82.425/15.8484
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+55	7	-1	1	0.5	0	0	1	1	b + a*c + b*c + a*b*c + a*d + a*b*d + a*c*d + b*c*d + a*b*c*d , b + c + d + b*d + c*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{NOT r4 ; AND r2, r2 ; OR r0, r0} , {XOR r2, r4 ; OR r0, r1 ; XOR r1, r2} , {XOR r3, r0 ; XOR r4, r4 ; OR r1, r3} , {AND r1, r1 ; XOR r4, r0 ; AND r0, r1} , {AND r2, r2 ; AND r4, r3 ; AND r3, r2} , {OR r3, r0 ; NOP ; NOP}
+
+55	16	-1	1	0.75	0	0	1	3	a + b + a*b + c + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d + b*c*d + a*b*c*d , 1 + a + b + a*b + d + b*d + a*b*d + c*d , b + a*b + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b + d + b*d + a*b*d + c*d , 	
+Chromozome:	{XOR r2, r0 ; OR r1, r0 ; NOT r4} , {XOR r0, r4 ; NOT r3 ; NOT r4} , {NOT r4 ; OR r3, r2 ; AND r1, r3} , {AND r3, r3 ; AND r0, r1 ; XOR r1, r3} , {NOT r3 ; OR r0, r0 ; AND r2, r4} , {OR r2, r0 ; NOT r4 ; OR r0, r3}
+
+66	21	-1	1	1	0	0	1	1	b + a*b + c + d + a*d + b*d + a*b*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{AND r4, r3 ; XOR r2, r0 ; OR r0, r3} , {AND r3, r3 ; NOT r4 ; NOT r2} , {OR r1, r0 ; NOT r0 ; AND r4, r4} , {NOT r4 ; XOR r0, r1 ; AND r1, r1} , {NOT r3 ; OR r1, r4 ; NOT r4} , {NOT r1 ; XOR r3, r2 ; XOR r4, r3}
+
+66	7	-1	1	1	0	0	1	1	a + b + a*b , d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{NOT r2 ; OR r0, r1 ; MOV r4, r2} , {NOT r4 ; XOR r2, r4 ; OR r1, r3} , {NOT r1 ; OR r3, r4 ; AND r4, r4} , {XOR r2, r3 ; XOR r3, r3 ; AND r4, r0} , {NOT r2 ; XOR r3, r4 ; OR r0, r3} , {NOP ; NOT r3 ; NOP}
+
+66	21	-1	1	1	0	0	1	1	b + a*b + c + d + a*d + b*d + a*b*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r1, r0 ; XOR r2, r0 ; OR r4, r4} , {OR r1, r3 ; NOT r2 ; OR r0, r2} , {XOR r3, r4 ; OR r4, r4 ; OR r0, r2} , {OR r4, r3 ; AND r3, r4 ; NOT r0} , {XOR r4, r1 ; AND r3, r4 ; OR r1, r3} , {AND r4, r1 ; XOR r0, r2 ; OR r2, r2}
+
+68	14	-1	1	1	0	0	1	0	1 , a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{AND r3, r2 ; MOV r4, r3 ; OR r0, r0} , {OR r1, r0 ; OR r2, r3 ; OR r3, r1} , {XOR r2, r0 ; OR r1, r1 ; AND r4, r4} , {NOT r1 ; AND r4, r1 ; NOT r2} , {NOT r0 ; NOT r1 ; NOT r4} , {AND r4, r0 ; NOT r1 ; OR r0, r4}
+
+69	14	-1	1	0.88	0	0	1	1	b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r1, r0 ; OR r4, r0 ; XOR r0, r0} , {OR r1, r0 ; XOR r0, r3 ; OR r2, r0} , {XOR r1, r0 ; OR r0, r0 ; NOT r4} , {XOR r2, r4 ; OR r1, r0 ; XOR r4, r1} , {OR r0, r1 ; OR r3, r3 ; NOT r4} , {OR r1, r1 ; AND r0, r2 ; AND r4, r0}
+
+70	22	-1	1	0.75	0	0	1	1	1 + a + b + a*b + a*d + b*d + a*b*d , a + b + a*b + d + b*d + c*d + b*c*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r2, r3 ; XOR r0, r2 ; OR r4, r4} , {XOR r4, r1 ; XOR r1, r1 ; XOR r2, r0} , {NOT r2 ; OR r4, r2 ; NOT r0} , {NOT r0 ; OR r4, r1 ; XOR r3, r3} , {AND r4, r0 ; NOT r0 ; XOR r1, r4} , {NOP ; NOP ; NOT r0}
+
+70	14	-1	1	1	0	0	1	1	a + d + a*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r0, r4 ; XOR r2, r0 ; XOR r3, r4} , {OR r2, r4 ; XOR r4, r3 ; XOR r3, r2} , {NOT r2 ; AND r1, r1 ; XOR r3, r3} , {OR r0, r4 ; XOR r1, r3 ; OR r4, r3} , {AND r0, r0 ; OR r1, r0 ; AND r3, r1} , {NOP ; XOR r4, r1 ; AND r0, r1}
+
+72	24	-1	1	0.75	0	0	1	0	1 + b + a*b + c + b*d + a*b*d + c*d , b + a*b + c + b*d + a*b*d + c*d , a + b + a*b + d + b*d + a*b*d + c*d , 	
+Chromozome:	{XOR r2, r0 ; XOR r4, r3 ; XOR r3, r0} , {OR r1, r0 ; XOR r2, r4 ; NOT r0} , {OR r1, r3 ; AND r0, r2 ; OR r4, r2} , {AND r0, r3 ; OR r1, r3 ; XOR r4, r1} , {NOT r1 ; XOR r4, r2 ; AND r0, r4} , {NOP ; NOT r2 ; NOP}
+
+72	0	-1	1	1	0	0	1	1	b + c , 1 + a + b + b*d , 1 + a + c , a + b + a*b + b*d , 	
+Chromozome:	{MOV r0, r0 ; MOV r4, r4 ; OR r2, r2} , {XOR r0, r1 ; AND r3, r1 ; XOR r2, r1} , {AND r0, r0 ; XOR r3, r0 ; XOR r4, r1} , {OR r1, r0 ; OR r4, r0 ; NOT r2} , {XOR r2, r0 ; XOR r4, r0 ; NOT r0} , {NOT r3 ; XOR r4, r3 ; NOT r1}
+
+74	28	-1	1	1	0	0	1	3	1 + a + b + a*b + a*d + b*d + a*b*d , a + b + a*b + d + a*d + b*d + a*b*d , b + a*b + c + d + a*d + b*d + a*b*d , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r4, r3 ; OR r3, r0 ; XOR r2, r0} , {NOT r0 ; OR r3, r4 ; OR r1, r3} , {XOR r4, r1 ; AND r0, r0 ; OR r1, r1} , {XOR r2, r1 ; AND r0, r1 ; NOT r3} , {OR r1, r4 ; XOR r3, r4 ; NOT r0} , {NOP ; NOP ; OR r3, r0}
+
+74	21	-1	1	0.75	0	0	1	1	1 + a + a*c + b*c + a*b*c , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{MOV r0, r4 ; XOR r2, r0 ; OR r1, r0} , {XOR r2, r0 ; XOR r0, r2 ; XOR r4, r0} , {NOT r0 ; OR r3, r4 ; NOT r1} , {NOT r1 ; NOT r4 ; OR r0, r1} , {OR r1, r3 ; NOT r3 ; NOT r2} , {AND r4, r3 ; NOP ; NOP}
+
+74	29	-1	1	0.75	0	0	1	3	a + a*b + a*d + a*b*d , b + c + b*c + d + b*d + c*d + b*c*d , 1 + a + b + a*b + c + b*c + d + a*d + b*d + a*b*d + c*d + b*c*d , a + b + a*b + d + b*d + a*b*d + c*d , 	
+Chromozome:	{OR r4, r1 ; XOR r2, r1 ; XOR r0, r3} , {XOR r2, r0 ; OR r1, r3 ; AND r3, r3} , {OR r1, r2 ; NOT r2 ; AND r3, r2} , {XOR r3, r4 ; NOT r2 ; AND r0, r2} , {NOT r1 ; AND r4, r0 ; OR r3, r0} , {AND r0, r0 ; XOR r1, r0 ; OR r4, r3}
+
+74	21	-1	1	1	0	0	1	2	1 + a + b + a*b + a*d + b*d + a*b*d , a + b + a*b , b + a*b + c + d + a*d + b*d + a*b*d , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{AND r0, r0 ; OR r1, r0 ; XOR r2, r0} , {OR r1, r0 ; OR r4, r3 ; AND r3, r3} , {XOR r2, r1 ; AND r0, r1 ; XOR r3, r4} , {XOR r4, r1 ; NOT r0 ; AND r2, r2} , {AND r4, r1 ; XOR r2, r4 ; XOR r0, r2} , {XOR r2, r4 ; NOT r0 ; OR r3, r4}
+
+74	7	-1	1	0.62	0	0	1	1	a + d + b*d , 1 + a + b + a*b + c + a*c + b*c + a*b*c + b*d + a*b*d + b*c*d + a*b*c*d , 1 + a + c , a + b + a*b + a*b*d , 	
+Chromozome:	{NOT r3 ; NOT r4 ; OR r1, r0} , {AND r3, r3 ; OR r4, r3 ; NOT r2} , {XOR r3, r4 ; XOR r1, r4 ; OR r4, r0} , {XOR r2, r0 ; NOT r0 ; NOT r3} , {AND r3, r2 ; XOR r4, r1 ; XOR r0, r3} , {AND r1, r3 ; OR r3, r3 ; NOP}
+
+
+ParallelRandom searching with population size: 2000 and generation count: 100000
+genome: SOFTWARE_IMPL (1,) symbolical regresion 
+
+convergence: 1.07463
+16 best results: fitness min/avg/max/mdev : 42.978/68.875/82.65/10.6615
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+63	14	-1	1	0.88	0	0	1	1	c + a*c + b*c + a*b*c + d + c*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r0, r2 ; OR r1, r0 ; NOT r4} , {NOT r2 ; OR r1, r3 ; NOT r4} , {XOR r0, r3 ; NOT r2 ; NOT r4} , {OR r0, r1 ; AND r3, r4 ; AND r4, r4} , {AND r4, r1 ; OR r3, r3 ; OR r0, r1} , {OR r3, r4 ; AND r4, r4 ; XOR r0, r4}
+
+66	14	-1	1	1	0	0	1	1	1 + a + b + a*b + a*d + b*d + a*b*d , a + b + a*b , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r2, r2 ; OR r1, r0 ; OR r0, r4} , {NOT r2 ; AND r1, r1 ; XOR r4, r0} , {NOT r0 ; OR r4, r4 ; XOR r2, r0} , {NOT r1 ; NOT r0 ; OR r4, r1} , {AND r1, r1 ; OR r0, r3 ; AND r3, r3} , {OR r2, r2 ; NOT r3 ; NOT r4}
+
+66	7	-1	1	0.88	0	0	1	0	a + d + a*d , 1 , b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{MOV r4, r3 ; XOR r2, r0 ; OR r0, r3} , {OR r1, r0 ; OR r2, r2 ; XOR r3, r2} , {NOT r4 ; XOR r2, r1 ; AND r3, r2} , {AND r3, r2 ; NOT r1 ; AND r4, r1} , {OR r3, r4 ; XOR r2, r3 ; OR r0, r0} , {OR r1, r0 ; XOR r3, r0 ; NOP}
+
+68	14	-1	1	1	0	0	1	0	a*d + b*d + a*b*d , 1 , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{AND r4, r2 ; OR r1, r0 ; AND r2, r2} , {OR r0, r1 ; AND r3, r1 ; XOR r2, r0} , {OR r1, r3 ; OR r0, r3 ; AND r4, r2} , {NOT r2 ; XOR r3, r3 ; XOR r0, r3} , {AND r1, r1 ; XOR r0, r1 ; XOR r4, r0} , {NOT r1 ; NOT r3 ; AND r0, r0}
+
+68	14	-1	1	1	0	0	1	1	a + b + a*b + d + a*d + b*d + a*b*d , d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r3, r1 ; AND r0, r0 ; MOV r1, r3} , {XOR r2, r0 ; OR r0, r3 ; OR r3, r3} , {OR r0, r1 ; XOR r4, r1 ; NOT r3} , {OR r1, r4 ; OR r2, r2 ; OR r3, r0} , {AND r3, r3 ; OR r4, r0 ; NOT r2} , {OR r3, r4 ; OR r0, r4 ; XOR r4, r1}
+
+68	14	-1	1	1	0	0	1	0	1 , a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r1, r0 ; OR r0, r0 ; OR r4, r1} , {XOR r0, r3 ; OR r3, r3 ; XOR r1, r3} , {XOR r2, r0 ; OR r4, r0 ; NOT r0} , {AND r1, r3 ; NOT r4 ; XOR r2, r0} , {AND r2, r2 ; NOT r4 ; OR r0, r1} , {XOR r1, r3 ; OR r0, r3 ; XOR r4, r1}
+
+68	14	-1	1	1	0	0	1	0	1 , a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r1, r0 ; NOT r3 ; XOR r0, r2} , {NOT r3 ; OR r0, r4 ; OR r4, r3} , {AND r4, r1 ; NOT r3 ; NOT r2} , {OR r2, r3 ; AND r3, r2 ; NOT r0} , {OR r1, r4 ; NOT r0 ; OR r4, r4} , {XOR r3, r3 ; XOR r1, r4 ; OR r0, r3}
+
+69	14	-1	1	0.88	0	0	1	1	b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r1, r0 ; XOR r2, r0 ; XOR r0, r2} , {OR r1, r3 ; OR r3, r0 ; OR r4, r3} , {NOT r0 ; XOR r2, r0 ; XOR r4, r1} , {OR r2, r2 ; NOT r3 ; AND r4, r1} , {XOR r4, r2 ; AND r0, r1 ; OR r2, r0} , {AND r4, r4 ; OR r1, r4 ; XOR r3, r3}
+
+70	14	-1	1	1	0	0	1	1	a + b + a*b , 1 + a + b + a*b + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r1, r0 ; XOR r0, r2 ; OR r2, r3} , {NOT r2 ; NOT r1 ; XOR r4, r2} , {AND r4, r2 ; AND r1, r0 ; OR r3, r2} , {NOT r2 ; OR r1, r3 ; OR r4, r2} , {NOT r4 ; NOT r0 ; NOT r2} , {NOP ; NOT r3 ; NOP}
+
+70	23	-1	1	0.75	0	0	1	1	1 + d , 1 + a + b + a*b + d + b*d + a*b*d + c*d , a*c + a*c*d , a + b + a*b + d + b*d + a*b*d + c*d , 	
+Chromozome:	{OR r3, r0 ; NOT r0 ; XOR r4, r0} , {NOT r1 ; NOT r2 ; OR r3, r1} , {XOR r1, r1 ; AND r2, r1 ; XOR r4, r1} , {XOR r2, r4 ; OR r4, r0 ; NOT r1} , {XOR r1, r1 ; AND r4, r3 ; AND r2, r0} , {NOT r1 ; OR r2, r1 ; NOP}
+
+70	7	-1	1	1	0	0	1	0	d , 1 , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r0, r4 ; OR r1, r0 ; OR r2, r2} , {OR r3, r3 ; XOR r0, r2 ; NOT r4} , {XOR r2, r3 ; AND r1, r4 ; AND r0, r0} , {AND r4, r1 ; OR r2, r0 ; XOR r1, r1} , {NOT r2 ; OR r0, r3 ; NOT r1} , {NOP ; AND r0, r3 ; NOT r3}
+
+70	7	-1	1	0.5	0	0	1	1	d + a*d + c*d , a + b + a*b , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r0, r2 ; NOT r2 ; OR r1, r0} , {AND r2, r3 ; XOR r4, r2 ; OR r1, r1} , {AND r1, r1 ; NOT r4 ; OR r0, r0} , {NOT r4 ; NOT r3 ; NOT r2} , {AND r0, r3 ; NOT r2 ; AND r4, r1} , {XOR r0, r3 ; NOP ; OR r3, r3}
+
+71	7	-1	1	0.88	0	0	1	3	1 + b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d + a*b*c*d , 1 + c + a*c + b*c + a*b*c , a + b + a*b + c + a*c + b*c + a*b*c + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d + a*b*c*d , b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d + a*b*c*d , 	
+Chromozome:	{OR r0, r1 ; NOT r1 ; XOR r2, r0} , {OR r3, r0 ; XOR r2, r3 ; NOT r1} , {AND r4, r1 ; XOR r1, r0 ; AND r3, r1} , {OR r0, r0 ; XOR r4, r3 ; NOT r3} , {XOR r2, r4 ; OR r3, r4 ; XOR r1, r0} , {NOT r0 ; OR r1, r0 ; NOT r3}
+
+71	7	-1	1	0.88	0	0	1	1	1 + c + a*c + b*c + a*b*c + c*d + a*c*d + b*c*d + a*b*c*d , d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r0, r2 ; MOV r4, r4 ; OR r1, r0} , {NOT r4 ; AND r2, r1 ; XOR r3, r1} , {AND r4, r3 ; OR r1, r3 ; NOT r2} , {AND r0, r1 ; NOT r4 ; AND r3, r4} , {AND r0, r0 ; XOR r4, r4 ; XOR r1, r3} , {OR r4, r3 ; OR r0, r2 ; OR r3, r0}
+
+72	14	-1	1	1	0	0	1	1	1 + a + c , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{AND r4, r3 ; OR r1, r3 ; OR r0, r0} , {OR r4, r3 ; OR r3, r0 ; XOR r2, r0} , {AND r1, r0 ; XOR r0, r1 ; AND r3, r3} , {NOT r2 ; OR r1, r0 ; NOT r0} , {AND r3, r1 ; XOR r4, r1 ; XOR r0, r3} , {XOR r3, r4 ; OR r1, r1 ; AND r0, r2}
+
+72	14	-1	1	0.75	0	0	1	1	1 + a + c , a + b + a*b + c + b*c + d + a*d + b*d + a*b*d + c*d + b*c*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r2, r0 ; OR r0, r1 ; OR r1, r3} , {AND r3, r3 ; OR r1, r2 ; AND r4, r3} , {AND r3, r4 ; AND r2, r1 ; NOT r4} , {OR r3, r3 ; XOR r1, r3 ; AND r4, r0} , {AND r4, r0 ; NOT r2 ; NOT r0} , {NOT r3 ; AND r0, r2 ; OR r2, r0}
+
+
+ParallelRandom searching with population size: 2000 and generation count: 100000
+genome: SOFTWARE_IMPL (1,) symbolical regresion 
+
+convergence: 0.815789
+16 best results: fitness min/avg/max/mdev : 28.8888/67.5625/81.075/12.0371
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+52	22	-1	1	0.75	0	0	1	2	1 + b + a*b + c + a*d + b*d + a*b*d , b + a*b + c + a*d + b*d + a*b*d , 1 + a + c + d + a*d + c*d , a + b + a*b + d + b*d + a*b*d + c*d , 	
+Chromozome:	{XOR r3, r3 ; XOR r1, r0 ; XOR r4, r3} , {NOT r0 ; OR r1, r0 ; XOR r2, r0} , {XOR r2, r4 ; OR r4, r2 ; OR r1, r4} , {XOR r0, r3 ; XOR r2, r3 ; XOR r1, r2} , {NOT r3 ; OR r4, r4 ; NOT r0} , {NOT r2 ; NOT r0 ; XOR r4, r1}
+
+64	21	-1	1	0.88	0	0	1	3	a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + b + a*b + a*d + b*d + a*b*d , b + a*b + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r0, r1 ; XOR r2, r0 ; NOT r4} , {XOR r1, r1 ; NOT r2 ; OR r0, r3} , {NOT r1 ; AND r3, r0 ; AND r2, r0} , {AND r4, r4 ; AND r2, r0 ; NOT r1} , {XOR r1, r0 ; AND r4, r0 ; AND r3, r1} , {NOP ; NOP ; NOT r3}
+
+66	14	-1	1	1	0	0	1	1	d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{AND r3, r4 ; OR r4, r3 ; OR r1, r0} , {NOT r4 ; XOR r2, r0 ; AND r3, r0} , {AND r3, r1 ; NOT r0 ; AND r1, r3} , {NOT r0 ; XOR r4, r0 ; AND r3, r0} , {XOR r4, r0 ; OR r0, r3 ; XOR r1, r4} , {OR r1, r4 ; NOT r2 ; AND r4, r1}
+
+66	14	-1	1	1	0	0	1	1	1 + a + b + a*b + a*d + b*d + a*b*d , a + b + a*b , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{NOT r4 ; XOR r2, r0 ; MOV r3, r1} , {XOR r0, r0 ; NOT r4 ; OR r1, r0} , {AND r1, r1 ; NOT r4 ; NOT r0} , {OR r2, r2 ; OR r1, r3 ; XOR r3, r0} , {AND r2, r0 ; NOT r3 ; AND r4, r1} , {NOT r0 ; XOR r2, r0 ; XOR r3, r4}
+
+66	21	-1	1	1	0	0	1	1	1 + a + b + a*b + a*d + b*d + a*b*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r3, r4 ; XOR r2, r0 ; OR r1, r3} , {AND r0, r2 ; AND r4, r3 ; OR r1, r0} , {XOR r0, r0 ; NOT r2 ; XOR r1, r3} , {OR r0, r0 ; OR r4, r1 ; XOR r2, r4} , {AND r2, r2 ; OR r1, r1 ; OR r3, r1} , {NOT r0 ; OR r1, r3 ; AND r4, r3}
+
+67	14	-1	1	0.75	0	0	1	1	b + a*b + c + a*c + b*c + a*b*c + d + b*d + a*b*d + b*c*d + a*b*c*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r4, r3 ; XOR r2, r3 ; OR r3, r2} , {XOR r3, r1 ; OR r1, r4 ; NOT r4} , {OR r1, r0 ; NOT r3 ; OR r2, r0} , {AND r4, r1 ; XOR r0, r4 ; OR r1, r0} , {XOR r2, r4 ; AND r0, r4 ; XOR r3, r0} , {OR r3, r1 ; NOT r2 ; OR r0, r2}
+
+68	8	-1	1	0.75	0	0	1	0	1 + d , 1 + a + c + d , a + b + a*b + d + b*d + a*b*d + c*d , 	
+Chromozome:	{OR r1, r0 ; MOV r0, r3 ; XOR r2, r0} , {XOR r2, r4 ; AND r3, r0 ; OR r1, r4} , {OR r1, r0 ; AND r3, r2 ; XOR r2, r0} , {AND r3, r3 ; XOR r4, r1 ; NOT r1} , {XOR r4, r3 ; NOT r2 ; AND r0, r1} , {OR r1, r1 ; XOR r2, r0 ; NOP}
+
+68	7	-1	1	1	0	0	1	0	1 , d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r4, r0 ; AND r0, r1 ; OR r1, r3} , {XOR r2, r4 ; AND r1, r3 ; OR r0, r1} , {XOR r0, r4 ; XOR r4, r0 ; OR r3, r0} , {NOT r4 ; AND r3, r0 ; OR r0, r3} , {OR r0, r0 ; NOT r2 ; OR r3, r0} , {OR r0, r4 ; AND r4, r0 ; XOR r3, r2}
+
+68	7	-1	1	1	0	0	1	0	1 , d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{NOT r0 ; XOR r2, r0 ; OR r1, r0} , {NOT r3 ; XOR r4, r1 ; AND r2, r2} , {AND r4, r3 ; AND r1, r3 ; XOR r0, r2} , {NOT r3 ; NOT r1 ; OR r4, r4} , {AND r4, r4 ; XOR r3, r1 ; NOT r0} , {XOR r0, r2 ; NOT r2 ; NOP}
+
+69	14	-1	1	0.75	0	0	1	1	1 + a + b + a*b + c + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r3, r3 ; OR r1, r0 ; XOR r0, r4} , {OR r3, r3 ; NOT r4 ; XOR r0, r2} , {AND r4, r1 ; XOR r3, r1 ; OR r1, r3} , {OR r0, r4 ; OR r3, r0 ; NOT r2} , {NOT r3 ; NOT r0 ; AND r4, r3} , {NOP ; AND r0, r3 ; NOT r3}
+
+70	14	-1	1	1	0	0	1	1	a + b + a*b , 1 + a + b + a*b + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r2, r0 ; MOV r4, r3 ; OR r1, r0} , {XOR r0, r1 ; NOT r4 ; OR r1, r0} , {AND r4, r1 ; AND r0, r0 ; XOR r3, r1} , {AND r3, r4 ; OR r1, r3 ; OR r0, r1} , {XOR r1, r2 ; AND r0, r1 ; NOT r2} , {AND r3, r0 ; NOT r1 ; NOP}
+
+70	14	-1	1	1	0	0	1	1	a + b + a*b , 1 + a + b + a*b + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{MOV r4, r1 ; NOT r3 ; MOV r1, r0} , {XOR r2, r0 ; OR r0, r4 ; OR r1, r1} , {OR r4, r0 ; OR r1, r0 ; OR r0, r1} , {OR r0, r4 ; XOR r1, r0 ; AND r4, r3} , {NOT r2 ; XOR r1, r4 ; AND r3, r3} , {OR r4, r1 ; OR r3, r0 ; NOT r1}
+
+70	21	-1	1	0.75	0	0	1	1	1 + a + b + a*b + a*d + b*d + a*b*d , 1 + c + a*c + b*c + a*b*c , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{NOT r4 ; OR r1, r4 ; XOR r3, r3} , {OR r1, r0 ; XOR r2, r0 ; AND r0, r1} , {OR r4, r4 ; OR r3, r2 ; NOT r0} , {AND r4, r1 ; NOT r2 ; AND r0, r1} , {OR r1, r2 ; AND r0, r0 ; AND r2, r2} , {NOP ; NOT r2 ; NOT r0}
+
+72	7	-1	1	1	0	0	1	1	1 + a + b + a*b + d , a + b + a*b , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r2, r0 ; OR r1, r0 ; MOV r0, r3} , {AND r2, r2 ; AND r3, r3 ; XOR r4, r1} , {XOR r3, r4 ; XOR r4, r3 ; AND r0, r3} , {OR r1, r1 ; NOT r0 ; NOT r2} , {OR r1, r1 ; AND r4, r1 ; AND r3, r0} , {NOP ; OR r1, r1 ; OR r3, r0}
+
+72	0	-1	1	1	0	0	1	1	1 + a + c , a , 1 + a + c , a + b + a*b + a*d , 	
+Chromozome:	{MOV r1, r1 ; XOR r2, r0 ; NOT r4} , {NOT r4 ; AND r3, r3 ; NOT r0} , {NOT r4 ; AND r1, r0 ; OR r3, r0} , {AND r4, r3 ; XOR r3, r1 ; NOT r1} , {XOR r0, r2 ; NOT r1 ; NOT r4} , {XOR r3, r2 ; XOR r0, r1 ; NOT r2}
+
+73	14	-1	1	0.75	0	0	1	1	a + b + a*b + c + a*c + b*c + a*b*c + d + a*d + b*d + a*b*d + c*d + a*c*d + b*c*d + a*b*c*d , 1 + a + c + a*d + a*c*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r1, r0 ; XOR r2, r0 ; XOR r4, r3} , {XOR r3, r4 ; AND r0, r3 ; OR r1, r3} , {OR r1, r0 ; OR r3, r2 ; XOR r2, r1} , {AND r2, r3 ; XOR r4, r1 ; OR r0, r2} , {XOR r2, r1 ; XOR r0, r1 ; XOR r1, r2} , {NOT r2 ; NOT r1 ; OR r0, r2}
+
+
+ParallelRandom searching with population size: 2000 and generation count: 100000
+genome: SOFTWARE_IMPL (1,) symbolical regresion 
+
+convergence: 0.902174
+16 best results: fitness min/avg/max/mdev : 36.5529/68.9375/82.725/12.5582
+Fit	Bent	SAC	LpMax	DpMax	Bij	Bidir	BF	MinDeg	Polynoms
+50	15	-1	1	0.75	0	0	1	2	a + d + a*d , b + a*b + c + a*d + b*d + a*b*d , 1 + a + c + d + a*d + c*d , a + b + a*b + d + b*d + a*b*d + c*d , 	
+Chromozome:	{XOR r2, r0 ; OR r0, r3 ; XOR r4, r2} , {OR r0, r3 ; AND r3, r0 ; OR r1, r0} , {OR r1, r3 ; AND r3, r3 ; XOR r4, r0} , {OR r0, r0 ; XOR r2, r3 ; OR r4, r3} , {XOR r3, r0 ; XOR r1, r2 ; NOT r2} , {XOR r4, r1 ; NOP ; NOT r2}
+
+60	7	-1	1	1	0	0	1	1	1 + a + b , a + a*d , 1 + a + c , a + b + a*b + a*b*d , 	
+Chromozome:	{XOR r1, r4 ; XOR r4, r0 ; XOR r0, r4} , {OR r1, r3 ; XOR r4, r1 ; AND r3, r4} , {XOR r2, r0 ; AND r1, r3 ; OR r3, r2} , {XOR r1, r0 ; AND r3, r4 ; XOR r0, r2} , {NOT r0 ; AND r2, r2 ; NOT r3} , {OR r4, r1 ; AND r0, r0 ; NOT r2}
+
+62	8	-1	1	0.75	0	0	1	2	1 + a + c + d + a*d + c*d , a + c + d + a*d + c*d , 1 + a + c + d + a*d + c*d , a + b + a*b + d + b*d + a*b*d + c*d , 	
+Chromozome:	{OR r1, r0 ; XOR r4, r3 ; OR r0, r4} , {OR r4, r3 ; XOR r2, r0 ; XOR r0, r1} , {OR r3, r2 ; OR r1, r4 ; AND r4, r2} , {NOT r4 ; NOT r1 ; XOR r2, r3} , {NOT r4 ; NOT r2 ; NOT r0} , {NOT r1 ; NOP ; AND r4, r1}
+
+62	8	-1	1	0.5	0	0	1	1	1 + d , a + b + a*b , b + a*b + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b + d + b*d + a*b*d + c*d , 	
+Chromozome:	{OR r1, r0 ; AND r4, r3 ; XOR r0, r2} , {OR r4, r0 ; XOR r0, r2 ; AND r2, r3} , {AND r4, r4 ; NOT r2 ; AND r0, r4} , {NOT r0 ; OR r3, r1 ; NOT r4} , {OR r4, r2 ; AND r2, r0 ; AND r0, r4} , {AND r2, r3 ; NOP ; AND r4, r3}
+
+66	21	-1	1	1	0	0	1	1	1 + a + b + a*b + a*d + b*d + a*b*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r0, r2 ; OR r1, r0 ; XOR r2, r0} , {AND r1, r1 ; NOT r0 ; NOT r3} , {NOT r3 ; XOR r4, r1 ; NOT r1} , {OR r0, r1 ; AND r4, r1 ; NOT r3} , {AND r3, r4 ; OR r1, r3 ; NOT r4} , {NOT r3 ; NOT r2 ; NOP}
+
+68	0	-1	1	0.62	0	0	1	2	a + b*d , a*b + b*c , 1 + a*b + b*c , b + a*c + a*b*c + a*b*d + b*c*d + a*b*c*d , 	
+Chromozome:	{AND r3, r1 ; OR r4, r4 ; OR r0, r4} , {OR r4, r2 ; XOR r0, r3 ; XOR r2, r0} , {XOR r4, r1 ; AND r2, r1 ; AND r3, r1} , {AND r3, r4 ; AND r4, r0 ; XOR r1, r3} , {AND r3, r0 ; NOT r2 ; OR r4, r1} , {OR r4, r4 ; NOT r1 ; NOP}
+
+69	0	-1	1	0.75	0	0	1	1	1 + a + b + a*b + c*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b , 1 + a + c , a + b + a*b + a*d + b*c*d + a*b*c*d , 	
+Chromozome:	{OR r0, r2 ; OR r1, r0 ; XOR r2, r0} , {AND r0, r3 ; AND r3, r4 ; OR r4, r4} , {OR r4, r0 ; XOR r1, r3 ; OR r3, r4} , {AND r1, r1 ; OR r3, r2 ; OR r0, r1} , {XOR r4, r0 ; AND r2, r3 ; NOT r0} , {NOT r2 ; NOP ; OR r1, r1}
+
+71	14	-1	1	0.62	0	0	1	1	a + a*c + b*c + a*b*c + b*d + a*b*d + a*c*d + b*c*d + a*b*c*d , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r1, r0 ; AND r0, r1 ; XOR r2, r0} , {NOT r2 ; OR r0, r1 ; OR r4, r3} , {NOT r2 ; AND r4, r1 ; AND r0, r0} , {XOR r4, r0 ; OR r1, r3 ; OR r2, r2} , {OR r1, r0 ; NOT r2 ; OR r3, r2} , {AND r3, r3 ; AND r4, r0 ; AND r0, r3}
+
+72	21	-1	1	1	0	0	1	1	a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + b + a*b + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{MOV r3, r3 ; OR r0, r3 ; XOR r2, r0} , {NOT r4 ; NOT r1 ; OR r0, r1} , {AND r1, r2 ; XOR r3, r2 ; NOT r2} , {XOR r3, r1 ; NOT r1 ; AND r4, r0} , {XOR r2, r0 ; AND r4, r4 ; NOT r3} , {XOR r2, r0 ; NOT r1 ; NOP}
+
+72	14	-1	1	1	0	0	1	1	1 + a + c , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{MOV r3, r3 ; OR r1, r0 ; XOR r0, r2} , {AND r3, r3 ; NOT r2 ; AND r4, r4} , {AND r4, r4 ; OR r1, r3 ; AND r0, r4} , {OR r1, r0 ; XOR r2, r0 ; AND r0, r1} , {XOR r3, r2 ; XOR r0, r2 ; NOT r4} , {NOP ; NOP ; AND r4, r1}
+
+74	0	-1	1	0.88	0	0	1	1	d , b + a*c + a*b*c + d + b*d + a*c*d + a*b*c*d , a + b + c + a*c + a*b*c + d + b*d + a*c*d + a*b*c*d , b + a*c + a*b*c + b*d + a*c*d + a*b*c*d , 	
+Chromozome:	{XOR r2, r0 ; AND r0, r2 ; OR r4, r1} , {AND r0, r3 ; AND r3, r3 ; OR r1, r0} , {NOT r4 ; OR r3, r4 ; NOT r0} , {OR r1, r3 ; OR r3, r1 ; AND r0, r2} , {NOT r0 ; XOR r2, r3 ; AND r4, r3} , {NOP ; NOT r3 ; NOP}
+
+74	14	-1	1	1	0	0	1	1	a + b + a*b , a + b + a*b + d + a*d + b*d + a*b*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{MOV r1, r4 ; OR r4, r1 ; XOR r2, r0} , {XOR r1, r3 ; OR r2, r0 ; NOT r3} , {NOT r4 ; OR r0, r4 ; XOR r2, r4} , {AND r1, r1 ; NOT r3 ; NOT r2} , {AND r0, r0 ; OR r1, r2 ; NOT r2} , {NOP ; XOR r1, r3 ; NOT r4}
+
+74	14	-1	1	0.75	0	0	1	1	1 + a + a*c + b*c + a*b*c , a + b + a*b , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{OR r0, r1 ; XOR r4, r3 ; XOR r2, r0} , {NOT r2 ; AND r3, r2 ; AND r4, r0} , {OR r3, r2 ; NOT r0 ; NOT r4} , {XOR r4, r0 ; NOT r3 ; AND r1, r0} , {OR r4, r4 ; OR r0, r2 ; AND r1, r0} , {NOP ; OR r3, r4 ; XOR r1, r3}
+
+76	14	-1	1	0.75	0	0	1	1	1 + b + a*b + c + a*d + b*d + a*b*d , 1 + a + a*c + b*c + a*b*c + a*d + a*c*d + b*c*d + a*b*c*d , 1 + a + c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{MOV r4, r4 ; OR r0, r1 ; XOR r2, r0} , {OR r0, r3 ; XOR r4, r4 ; OR r2, r4} , {XOR r0, r3 ; AND r4, r1 ; NOT r3} , {NOT r2 ; NOT r4 ; XOR r1, r1} , {XOR r1, r4 ; XOR r0, r2 ; NOT r4} , {OR r1, r2 ; AND r2, r2 ; NOP}
+
+76	0	-1	1	1	0	0	1	1	a + b + a*b + d + b*d , a + b + a*b + d + b*d , 1 + a + c , a + b + a*b + b*d , 	
+Chromozome:	{XOR r0, r3 ; XOR r2, r0 ; MOV r3, r3} , {AND r4, r4 ; OR r3, r4 ; NOT r2} , {XOR r3, r4 ; AND r0, r4 ; OR r1, r0} , {XOR r3, r1 ; XOR r2, r0 ; NOT r4} , {XOR r0, r1 ; AND r4, r1 ; OR r1, r3} , {AND r1, r0 ; OR r4, r3 ; NOT r3}
+
+77	22	-1	0.77	0.5	0	0	1	3	b + a*b + c + a*b*c + d + b*d + a*b*d + c*d + a*b*c*d , a*b*c + d + a*d + c*d , 1 + a + a*b + c + a*b*c , a + b + a*b + a*d + b*d + a*b*d , 	
+Chromozome:	{XOR r2, r0 ; MOV r4, r3 ; MOV r1, r1} , {OR r0, r1 ; AND r1, r0 ; NOT r4} , {OR r3, r2 ; AND r0, r0 ; NOT r2} , {OR r3, r3 ; AND r0, r1 ; AND r4, r0} , {OR r0, r3 ; XOR r1, r3 ; OR r2, r1} , {XOR r0, r4 ; AND r1, r2 ; AND r3, r3}
+
+
+Exited with status: 0

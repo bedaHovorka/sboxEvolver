@@ -1,0 +1,636 @@
+%
+%      Brno University of Technology
+%      Faculty of Information Technology
+% 
+%      MSc Thesis	2009/2010
+% 
+%      Design of S-Boxes Using Genetic Algorithms
+%
+%
+%      Bedrich Hovorka
+%
+% -----------------------------------------------------
+Cílem experimentů bylo zjistit zda jsou Evoluční algoritmy 
+vhodné pro pro hledání zvolených velikostí s-boxů.
+Za tím účelem bylo porovnáno s náhodným prohledáváním.
+Porovnání běhů dle statistik z Galibu \cite{galib} na několika bězích.
+Experimenty byly naskriptovány pomocí Pythonu.
+Byly vybrány na základě testovaní programu, kde proběhly jednoběhové zkoušky
+velikosti populace. Pro dlouhodobější hledání kvalitnějších řešení byly nejprve 
+stanoveny parametry evoluce, zejména pravděpodobnosti mutace a křížení.
+Poté se tyto parametry užily pro náročnější experimenty.
+
+\section{Stanovení pravděpodobností mutace a křížení pro jednotlivá kritéria}
+Nejprve byly stanoveny parametry křížení a mutace pro jednokriteriální
+optimalizaci pro každé kritérium. Při nich se většinou dospělo k mezním hodnotám. 
+Byly nalezeny nejlepší pravděpodobnosti mutace a křížení pro každé kritérium
+při pevné velikosti populace 100, počtu generací 1000 a počtu běhů 100.
+Proti tomu bylo postaveno stejně početné náhodné prohledávání.
+S-box byl zvolen středně složitý se 4 vstupy a 4 výstupy (tedy byl typu $4 \times 4$).
+Nejprve byly na intervalu $\langle 0, 1)$ zkoušeny všechny možné dvojice pravděpodobností:
+pro mutaci $0, 0.05, 0.1, 0.2, 0.4, 0.6, 0.8$; pro křížení $0, 0.2, 0.4, 0.6, 0.8$.
+Protože výsledky u některých kritérií ve vyšších hodnotách byly obdobné a málo slibnější, 
+byl zvolen ještě užší interval $\langle0, 0.2)$. Zkoušeny byly
+dvojice pravděpodobností $0, 0.04, 0.08, 0.12, 0.16$ jak u křížení tak u mutace.
+U každého běhu bylo zaznamenáno uloženo 100 nejlepších jedinců z průběhu celé evoluce
+a všichni jedinci ze všech běhů pro jednu dvojici $(p_{Mut}, p_{Cross})$ byly sloučeni 
+dohromady a nad nimy byly spočteny statistiky.
+Výsledky zaneseny do tabulek, které jsou seřazeny od nejhoršího po nejlepší
+podle řadícího klíče (maximum, medián, průměr + odchylka, průměr, minimum).
+Pro rozhodnutí byl proveden orientační dvouvýběrový t-test výsledků náhodného prohledávání
+a nejlepší kombinace parametrů pro genetický algoritmus.
+\subsubsection{Bent skóre}
+\begin{table}[tb]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+(0, 0) & $32$ & $31$ & $4.07067$ & $29.1836$ & $7$ \\ \hline
+ostatní kombinace & $32$ & $32$ & $0$ & $32$ & $32$ \\ \hline
+\end{tabular}
+\caption{Výsledky pro celý interval a kritérium bent skóre $+$ řád SAC}
+\label{tabBENT_AND_MOSACParameters}
+\end{center}
+\end{table}
+V tabulce \ref{tabBENT_AND_MOSACParameters} je uvedena pouze varianta bez
+křížení a mutace, ostatní kombinace parametrů dávaly stejné statistiky
+a to takové, že se shodovaly i se statistikami náhodného prohledávání,
+u kterého vyšlo maximum 32, medián 32, odchylka 0, průměr 32, minimum 32.
+Tj. všichni nejlepší členové dosáhli maximálního možného bent skóre pro
+bijektivní s-box. Pro bijektivní by to bylo 64.
+U tohoto kritéria tedy nezáleží na parametrech pro velikost
+populace 100 a počet generací 1000. Výsledky se shodují s náhodným prohledáváním.
+Na základě toho se kritérium dále pro zúžení intervalu zdálo nezajímavé.
+
+\subsubsection{Linear probability}
+\begin{table}[tb]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+(0, 0) & $2$ & $0.830075$ & $0.380956$ & $0.910228$ & $0$ \\ \hline
+ostatní kombinace & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0, 0.2) & $2$ & $2$ & $0.452339$ & $1.7859$ & $0.830075$ \\ \hline
+\end{tabular}
+\caption{Výsledky pro celý interval pro kritérium $LP_{\max}$}
+\label{tabLP_MAXParameters}
+\end{center}
+\end{table}
+\begin{table}[tb]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+(0, 0) & $2$ & $0.830075$ & $0.373374$ & $0.905579$ & $0$ \\ \hline
+(0, 0.04) & $2$ & $0.830075$ & $0.511175$ & $1.13063$ & $0.830075$ \\ \hline
+(0, 0.08) & $2$ & $0.830075$ & $0.577091$ & $1.31957$ & $0.830075$ \\ \hline
+ostatní kombinace & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0, 0.12) & $2$ & $2$ & $0.584362$ & $1.44218$ & $0.830075$ \\ \hline
+(0, 0.16) & $2$ & $2$ & $0.549793$ & $1.61486$ & $0.830075$ \\ \hline
+\end{tabular}
+\caption{Výsledky pro zúžený interval pro kritérium $LP_{\max}$} %LP_MAX
+\label{tabLP_MAXParametersSmall}
+\end{center}
+\end{table}
+
+V tabulce \ref{tabLP_MAXParameters} vychází jako nejvyšší hodnota $2$.
+Maximální odchylka pravděpodobnosti lineárních výrazů $2^{-2} = 0.25$.
+Vyzkoušeny hodnoty v užším intervalu a zaznamenány do tabulky \ref{tabLP_MAXParametersSmall}.
+Náhodné prohledávání mělo: maximum 2, medián 2, odchylka 0.365039, průměr 1.87213, minimum 0.830075.
+Náhodné prohledávání má lepší průměr.
+
+\subsubsection{Diferential probability}
+\begin{table}[tb]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+(0, 0) & $2$ & $1.41504$ & $0.280306$ & $1.28179$ & $0.415038$ \\ \hline
+ostatní kombinace & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+(0, 0.2) & $2$ & $2$ & $0.291124$ & $1.73563$ & $1.41504$ \\ \hline
+\end{tabular}
+\caption{Výsledky pro celý interval pro kritérium $DP_{\max}$}
+\label{tabDP_MAXParameters}
+\end{center}
+\end{table}
+\begin{table}[tb]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+(0, 0) & $2$ & $1.41504$ & $0.283811$ & $1.28443$ & $0.415038$ \\ \hline
+(0, 0.04) & $2$ & $1.41504$ & $0.199666$ & $1.48975$ & $1$ \\ \hline
+(0, 0.08) & $2$ & $1.41504$ & $0.23421$ & $1.53232$ & $1.41504$ \\ \hline
+(0, 0.12) & $2$ & $1.41504$ & $0.264779$ & $1.58327$ & $1.41504$ \\ \hline
+(0, 0.16) & $2$ & $1.41504$ & $0.284352$ & $1.63902$ & $1.41504$ \\ \hline
+ostatní kombinace & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+\end{tabular}
+\caption{Výsledky pro zúžený interval pro kritérium $DP_{\max}$} %DP_MAX
+\label{tabDP_MAXParametersSmall}
+\end{center}
+\end{table}
+Výsledky pro celý interval v tabulce \ref{tabDP_MAXParameters} jsou obdobné výsledkům kritéria $LP_{\max}$. 
+Náhodné prohledávání mělo: maximum 2, medián 2, odchylku 0.29122, průměr 1.73475 a minimum 1.41504.
+Pro zúžený interval tabulka \ref{tabDP_MAXParametersSmall} potvrzuje, že pokud je vypnutá mutace
+a křížení je menší než 0.2 nalezne více slabších výsledků. V jiném případě je lepší než náhodné prohledávání.
+
+\pagebreak
+\subsubsection{SAC} %SAC
+Samotný řád SAC má malou vypovídací hodnotu o kvalitě řešení, přesto
+genetický algoritmus nalezl nejvyšší možný řád. Hodnoty v tabulce \ref{tabSACParameters} jsou zvýšené
+o jedničku, aby fitness nebyla záporná\footnote{Což vyžaduje Galib}. 
+Z tabulky vyplývá, že takřka nezáleží na pravděpodobnosti
+mutace a křížení. Rozdíly mezi jednotlivými dvojicemi parametrů jsou nevýznamné.
+Naproti tomu náhodné prohledávání dospělo k maximu 1, mediánu 0, odchylce 0.249148, 
+průměru 0.0665 a minimu 0. Tj. našlo jen pár jedinců, kteří vůbec splňují SAC 0. řádu.
+
+\subsubsection{Branching faktor} %BF
+Genetický algoritmus s faktorem větvení jako objektivní funkcí v tabulce \ref{tabBFParameters} 
+dospělo k obdobným statistikám jako náhodné prohledávání, které
+dospělo k maximu 3, mediánu 2, odchylce 0.0199968, průměru 2.0004 a minimu 2.
+Pro zúžení byl nezajímavý.
+
+\subsubsection{Stupeň algebraického polynomu} %POLYNOMIAL_DEGREE
+\begin{table}[tb]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+ostatní kombinace & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0, 0) & $3$ & $3$ & $0.457029$ & $2.748$ & $1$ \\ \hline
+\end{tabular}
+\caption{Výsledky pro celý interval pro kritérium stupeň algebraického polynomu} %POLYNOMIAL_DEGREE
+\label{tabPOLYNOMIAL_DEGREEParameters}
+\end{center}
+\end{table}
+\begin{table}[bt]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+ostatní kombinace & $3$ & $3$ & $0$ & $3$ & $3$ \\ \hline
+(0, 0) & $3$ & $3$ & $0.455533$ & $2.7484$ & $1$ \\ \hline
+\end{tabular}
+\caption{Výsledky pro zúžený interval pro kritérium stupeň algebraického polynomu} %POLYNOMIAL_DEGREE
+\label{tabPOLYNOMIAL_DEGREEParametersSmall}
+\end{center}
+\end{table}
+Všechny kombinace parametrů v tabulce \ref{tabPOLYNOMIAL_DEGREEParameters} až na variantu
+bez křížení a mutace se ve výsledcích shodují. 
+Stálo za to, prověřit to i v zúženém intervalu v tabulce \ref{tabPOLYNOMIAL_DEGREEParametersSmall}, který
+zjištění potvrzuje.
+Náhodné prohledávání dospělo též maximu 3, mediánu 3, odchylce 0, průměru 3 a minimu 3.
+Pro bijektivní funkce je to stupeň polynomu nejvyšší možný.
+\pagebreak
+\begin{table}[bt]
+\begin{center}
+\begin{tabular}{| l | c | c | c |}
+\hline
+Kritérium & pMut & pCross & co je lepší \\ \hline
+bent skóre & 0.1 & 0.2 & Random \\ \hline
+$LP_{\max}$ & 0.0 & 0.16 & Random \\ \hline
+$DP_{\max}$ & 0.0 & 0.2  & GA \\ \hline 
+SAC & 0.1 & 0.2 & GA \\ \hline
+faktor větvení & 0.1 & 0.2 & Random \\ \hline
+stupeň polynomu & 0 & 0 & Random \\ \hline 
+\end{tabular}
+\caption{Shrnutí Genetického algoritmu vs. náhodného prohledávání na permutaci}
+\label{tabGAvsRandom}
+\end{center}
+\end{table}
+
+V tabulce \ref{tabGAvsRandom} jsou uvedeny nejlepší možné parametry genetického algoritmu.
+A stanovení, který algoritmus byl pro provedené evoluce lepší.
+Tam kde se hodnoty statistik shodovaly bylo zvoleno náhodné prohledávání kvůli své jednodušší 
+algoritmické složitosti. Na statistikách evoluce různých jsou vidět jak omezení kritérií, tak
+i podobný tvar vzorců, kterými jsou k kritéria počítána. 
+To jaký je algoritmus lepší záleží na použitém kritériu.
+V některých případech má evoluci smysl provést.
+
+\section{Porovnání výsledků EDA algoritmů\\s Genetickým algoritmem}
+Dalším provedeným experimentem bylo ověření na binárním chromozómu, 
+zda EDA algoritmy nacházejí lepší, horší či stejné výsledky v porovnání s nejlepšími parametry předchozího
+experimentu. Byly provedeny stejné výpočty jako v předešlém experimentu, tentokrát však pro
+nejlepší parametry Genetického algoritmu vůči algoritmům BMDA a UMDA a ná\-hod\-né\-mu prohledávání.
+Narozdíl od předchozího však nebyla hledána bijektivní funkce.
+
+Pro vizualizaci porovnání byly zvoleny tabulky kratší, které ukazují
+kritéria v jednotlivých algoritmech, a krabicové grafy, které porovnávají 
+algoritmy mezi sebou. Krabicový graf znázorňuje rozložení stejně početných skupin hodnot.
+Horní a dolní strana modrého obdélníka znázorňuje umístění kvartilů. Prostřední červená 
+vodorovná úsečka přestavuje medián. Nahoru a dolů od obdélníka vede tzv. vous \footnote{z anglického whisker}.
+Horní resp. dolní vous znázorňuje nejvyšší resp. nejnižší hodnotu, na kterou má být brán zřetel.
+Křížky jsou označeny odlehlé hodnoty.
+V tabulce \ref{tabGaGaVsEDAComparison} jsou statistiky pro Genetický algoritmus.
+Pro SAC se nepodařilo najít nejvyšší řád. Pro Bent skóre a stupeň polynomu již neplatí
+omezení bijektivitou. Jinak jsou výsledky podobné hledání permutace z předcházejícího 
+experimentu. UMDA algoritmus v tabulce \ref{tabUMDAGaVsEDAComparison}
+neměl žádný problém z $DP_{\max}$ a stupněm polynomu, za to SAC podobně jako u náhodného prohledávání
+našel jen pár jedinců, kteří splňovali nejnižší stupeň SAC.
+BDMA v tabulce \ref{tabBMDAGaVsEDAComparison} dopadl obdobně, trochu lepší výsledek měl
+u bent skóre. Náhodné prohledávání (tab. \ref{tabRandomGaVsEDAComparison}) mělo stejné výsledky v  maximech a mediánech jako 
+BMDA.%az jsem pojal podezreni ze jsem to blbe zkopiroval z vystupu programu
+
+\begin{table}[tb]
+\begin{center}   
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline                                    
+Kritérium & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+$LP_{\max}$ & $2$ & $1.35614$ & $0.221604$ & $1.44462$ & $1.35614$ \\ \hline  
+bent skóre & $64$ & $40$ & $3.51839$ & $42.0224$ & $40$ \\ \hline    
+$DP_{\max}$ & $2$ & $2$ & $0.0628992$ & $1.99316$ & $1.41504$ \\ \hline       
+SAC & $2$ & $1$ & $0.0141407$ & $1.0002$ & $1$ \\ \hline                 
+BF & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline                               
+stupeň polynomu & $4$ & $3$ & $0.421644$ & $2.9443$ & $0$ \\ \hline    
+\end{tabular}                                                            
+\caption{Porovnání EDA a GA na binárním chromozómu: kritéria pro GA}                                                        
+\label{tabGaGaVsEDAComparison}                                           
+\end{center}                                                             
+\end{table}
+\nopagebreak                                                              
+\begin{table}[tb]
+\begin{center}   
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline                                    
+Kritérium & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+$LP_{\max}$ & $2$ & $1.35614$ & $0.141776$ & $1.38912$ & $1.35614$ \\ \hline  
+bent skóre & $47$ & $31$ & $2.23823$ & $31.988$ & $30$ \\ \hline     
+$DP_{\max}$ & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline                           
+SAC & $1$ & $0$ & $0.0990082$ & $0.0099$ & $0$ \\ \hline                 
+BF & $2$ & $2$ & $0.498952$ & $1.5322$ & $1$ \\ \hline                   
+stupeň polynomu & $4$ & $4$ & $0$ & $4$ & $4$ \\ \hline                
+\end{tabular}                                                            
+\caption{Porovnání EDA a GA na binárním chromozómu: kritéria pro UMDA}                                                      
+\label{tabUMDAGaVsEDAComparison}                                         
+\end{center}                                                             
+\end{table}
+\nopagebreak                                                              
+\begin{table}[tb]
+\begin{center}   
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline                                    
+Kritérium & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+$LP_{\max}$ & $2$ & $1.35614$ & $0.234303$ & $1.45737$ & $1.35614$ \\ \hline
+bent skóre & $48$ & $32$ & $2.98262$ & $33.5576$ & $31$ \\ \hline
+$DP_{\max}$ & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+SAC & $1$ & $0$ & $0.196198$ & $0.0401$ & $0$ \\ \hline
+BF & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+stupeň polynomu & $4$ & $4$ & $0$ & $4$ & $4$ \\ \hline
+\end{tabular}
+\caption{Porovnání EDA a GA na binárním chromozómu: kritéria pro BMDA}
+\label{tabBMDAGaVsEDAComparison}
+\end{center}
+\end{table}
+\nopagebreak
+\begin{table}[tb]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c |}
+\hline
+Kritérium & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+$LP_{\max}$& $2$ & $1.35614$ & $0.184163$ & $1.4141$ & $1.35614$ \\ \hline
+bent skóre & $48$ & $32$ & $4.16932$ & $30.4523$ & $24$ \\ \hline
+$DP_{\max}$ & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+SAC & $1$ & $0$ & $0.205328$ & $0.0441$ & $0$ \\ \hline
+BF & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
+stupeň polynomu & $4$ & $4$ & $0.478596$ & $3.6447$ & $3$ \\ \hline
+\end{tabular}
+\caption{Porovnání EDA a GA na binárním chromozómu: kritéria pro Random}
+\label{tabRandomGaVsEDAComparison}
+\end{center}
+\end{table}
+
+\insertimage[0.85\textwidth]{edaVsGaComparisonBENT_AND_MOSAC}{Porovnání EDA algoritmů na binárním reprezentaci s-boxu, kritérium bent skóre} %BENT_AND_MOSAC
+
+Krabicový graf na obrázku \ref{edaVsGaComparisonBENT_AND_MOSAC} porovnává jednotlivé
+algoritmy pro kritérium bent skóre. V tomto kritériu je zcela jasným vítězem
+Genetický algoritmus. Náhodné prohledávání je v tomto kritériu srovnatelné s EDA algoritmy.
+V kritériích $LP_{\max}$ a $DP_{\max}$ (obr. \ref{edaVsGaComparisonLP_MAX} a \ref{edaVsGaComparisonDP_MAX})
+nejsou mezi algoritmy rozdíly. U lavinového efektu, kde má genetický algoritmus svůj průměr i medián, jsou
+u ostatních odlehlé maximální hodnoty (obr. \ref{edaVsGaComparisonSAC}). 
+Ve faktoru větvení (obr. \ref{edaVsGaComparisonBF}) je o něco horší UMDA, ale jinak se
+dospělo ke stejným výsledkům. Za to ve stupni polynomu (obr. \ref{edaVsGaComparisonPOLYNOMIAL_DEGREE}) je genetický algoritmus
+nejhorší. Jen v tomto kritériu vycházejí EDA algoritmy o něco málo lépe než náhodné
+prohledávání, leč střední hodnota je shodná.
+
+Celkově tedy EDA algoritmy dopadly nejhůř, náhodné prohledávání nalezne obdobné výsledky.
+Původní motivací pro nasazení EDA algoritmů 
+byly tvary MOSAC Booleovských funkcí, které mají určité 
+pravidelnosti \footnote{viz tabulka \ref{miniSAC}, větší funkce v \cite{yokohama}}.
+Dvouvstupová booleovská funkce (půl-bajt) splňující MOSAC obsahuje 3 stejné bity, čtvrtý se liší.
+Třívstupová (bajt) se skládá z dvouvstupových, tak že pozice lišícího se bitu v půl-bajtu jsou symetrické
+podle osy vedoucí středem bajtu. U čtyřstup nesmí být dva vedlejší bajty symetrické.
+Otázkou by bylo zda-li se z toho dá vytvořit nějaký pravděpodobnostní model závislostí mezi bity, 
+který by byl použitelný v evoluci pomocí EDA. Proti tomu stojí myšlenka, že
+statistický model hledající závislosti mezi bity má pro bezpečnost opačný význam,
+právě, že by bity by měly být vzájemně nezávislé, proto ani nebyl implementován
+složitější pravděpodobnostní model pro algoritmus BOA.
+
+\section{Parametry paralelního náhodného prohledávání}\label{secParalelRandomComparison}
+Pro reprezentaci s-boxu jako acyklický graf (Kartézské genetické programování) není definováno křížení.
+Srovnáno bylo s reprezentací i686 u které též nebylo prováděno křížení.
+Byly použity dva algoritmy: náhodné prohledávání a paralelní náhodné prohledávání.
+Pro paralelní náhodné prohledávání vyzkoušeny byly tyto hodnoty mutace: 
+0, 0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 a 0.9.
+
+Chromozóm pro Kartézské genetické programování zvolen se čtyřmi vstupy, čtyřmi výstupy, čtyřmi sloupci,
+třemi řádky a s maximálním počtem mutací 6. V tabulce \ref{tabCGPParallelRadnomParameters} jsou shrnuty až výsledné 
+hodnoty s nejlepšími mutacemi. Hodnoty pro jednotlivá kritéria pro každou hodnotu mutace
+jsou zakreslena do grafů na obrázcích \ref{cgpVsLuffaCGPComparisonBENT_AND_MOSAC} až \ref{cgpVsLuffaCGPComparisonPOLYNOMIAL_DEGREE}.
+Z nich je patrné, že počet generací je tak velký, že velikost mutace nehraje moc roli.
+Pro každé kritérium vycházelo lépe paralelní náhodné prohledávání, 
+takže tzv. \uv{paralelnost}\footnote{ve smyslu, že je vyhodnoceno více jedinců v populaci}
+prokázala svůj smysl.
+Pro kritérium $DP_{\max}$ dokonce nalezlo lepší výsledek než předcházející algoritmy.
+To samé se dá říci i o faktoru větvení.                                                     
+\begin{table}[bt]                                                                                                        
+\begin{center}                                                                                                          
+\begin{tabular}{| l | c | c | c | c | c | c |}                                                                          
+\hline                                                                                                                  
+Kritérium & pMut & maximum & medián & std. odchylka & průměr & minimum \\ \hline                                        
+$LP_{\max}$ & 0.01 & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline                                                                   
+$DP_{\max}$ & 0.4 & $3$ & $2$ & $0.139994$ & $2.02$ & $2$ \\ \hline                                                          
+bent skóre & 0.01 & $64$ & $64$ & $0$ & $64$ & $64$ \\ \hline                                                       
+SAC & 0.01 & $3$ & $3$ & $1.22189$ & $2.37$ & $0$ \\ \hline                                                             
+BF & 0.9 & $4$ & $3$ & $0.511454$ & $2.72$ & $2$ \\ \hline                                                              
+stupeň polynomu & 0.01 & $4$ & $4$ & $0$ & $4$ & $4$ \\ \hline                                                        
+\end{tabular}                                                                                                           
+\caption{Nejlepší pravděpodobnosti mutace pro paralelní náhodné programování nad reprezentací CGP} %CGP                                                                                                     
+\label{tabCGPParallelRadnomParameters}
+\end{center}
+\end{table}
+%SOFTWARE_IMPL
+\insertimage[0.85\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonBENT_AND_MOSAC}{Parametry paralelního náhodného prohledávání,bent skóre, reprezentace Luffa} %BENT_AND_MOSAC
+\insertimage[0.85\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonDP_MAX}{Parametry paralelního náhodného prohledávání,kritérium DP\_MAX, reprezentace Luffa} %DP_MAX
+\begin{table}[bt]
+\begin{center}
+\begin{tabular}{| l | c | c | c | c | c | c |}
+\hline
+Kritérium & pMut & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+$LP_{\max}$ & 0.5 & $2$ & $2$ & $0.263511$ & $1.86451$ & $0.830075$ \\ \hline
+$DP_{\max}$ & 0.05 & $3$ & $2$ & $0.141421$ & $2$ & $1$ \\ \hline
+bent skóre & 0.7 & $64$ & $64$ & $4.53159$ & $59.8606$ & $48$ \\ \hline
+SAC & 0.05 & $3$ & $3$ & $0.729079$ & $2.78$ & $0$ \\ \hline
+BF & 0.05 & $4$ & $4$ & $0.42989$ & $3.7919$ & $2$ \\ \hline
+stupeň polynomu & 0.01 & $4$ & $4$ & $0$ & $4$ & $4$ \\ \hline
+\end{tabular}
+\caption{Nejlepší pravděpodobnosti mutace pro paralelní náhodné programování nad reprezentací i686} %SOFTWARE_IMPL
+\label{tabSOFTWARE_IMPLParallelRadnomParameters}
+\end{center}
+\end{table}
+
+\pagebreak
+Pro reprezentaci i686 byly zvolen parametr 1 čtveřice (tj. 1 bit v registru), aby měla 
+počet vstupů i výstupů rovný čtyřem. Z tabulky \ref{tabSOFTWARE_IMPLParallelRadnomParameters} je patrná
+podobnost výsledků těchto reprezentací. Zde však parametr mutace hraje větší roli.
+Z krabicového grafu na obrázku \ref{cgpVsLuffaSOFTWARE_IMPLComparisonBENT_AND_MOSAC} je patrné, že
+příliš nízká a příliš vysoká pravděpodobnost mutace zhoršuje výsledek pro bent skóre, 
+hodnoty mezi tím jsou stabilizované. Jako nejlepší parametr však je vybráno 0.7, 
+protože by při některých jiných kritérií, mohly hodnoty u mutací 0.01 až 0.6 znamenat
+uvíznutí v lokálním extrému. To samé platí pro kritérium $DP_{\max}$.
+na obrázku \ref{cgpVsLuffaSOFTWARE_IMPLComparisonDP_MAX}. O ostatních kritériích na obrázcích
+\ref{cgpVsLuffaSOFTWARE_IMPLComparisonLP_MAX} až \ref{cgpVsLuffaSOFTWARE_IMPLComparisonPOLYNOMIAL_DEGREE}
+se dá konstatovat totéž.
+
+Obě reprezentace dospívají k obdobným výsledkům s tím rozdílem, že u každé jsou jiné hodnoty mutace.
+To je zřejmě dané strukturou chromozómů a různými způsoby mutování.
+
+\section{Parametry multikriteriálního vyhledávání}
+Pro jedno kritérium se tedy dá dospět k praktickým mezním hodnotám rychle a ne moc náročně.
+Ovšem jak vypadají výsledky a jaké parametry vyšly nejlépe, když 
+bude třeba splnit všechna kritéria najednou, probere následující podkapitola. 
+Nejprve bylo nutné stanovit jak vůbec výsledky pro každou dvojici pravděpodobností mutace a křížení
+mezi sebou porovnávat. Nabízel se
+počet ve všech nadprůměrných jedinců.
+Průměrný jedinec byl vypočten ze všech běhů pro všechny parametry, tj. po provedení
+všech potřebných evolucí byly vypočteny průměrné hodnoty pro každé kritérium a z nich
+byl vytvořen vektor o stejných dimenzích jako ohodnocení kteréhokoliv skutečného jedince.
+Pro každou dvojici pravděpodobností mutace a křížení byli spočteni jedinci, 
+kteří tomuto \uv{průměrnému jedinci} slabě dominují.
+Jako kritéria byla použita všechna, která byla zkoumána v před\-chá\-ze\-jí\-cích podkapitolách,
+tedy bent skóre, $LP_{\max}$, $DP_{\max}$, SAC, faktor větvení a stupeň polynomu.
+Použitými algoritmy byly VEGA a SPEA.
+
+\subsubsection{Parametry pro permutaci}
+Nejprve evoluce proběhla při velikosti populace 100 při 1000 generacích pro permutaci
+se čtyřmi vstupy a čtyřmi výstupy.
+
+Algoritmus VEGA dospěl k průměrnému jedinci\footnote{při sázení textu všechny hodnoty zaokrouhleny na dvě desetinná místa}
+s bent skóre $29.61$, 
+$-log_2{LP_{\max}} = 0.99$ tj. $LP_{\max} = 0.5$, 
+$-log_2{DP_{\max}} = 1.31$ tj. $DP_{\max} = 0.4$,  
+SAC $0.95$, 
+faktor větvení $2$ 
+a stupeň polynomu $2.77$.
+
+Algoritmus SPEA dospěl k
+bent skóre $31.50$, 
+$-log_2{LP_{\max}} = 1.91$ tj. $LP_{\max} = 0.27$, 
+$-log_2{DP_{\max}} = 1.93$ tj. $DP_{\max} = 0.26$, 
+SAC $0.98$, 
+faktor větvení $2.04$ 
+a stupeň polynomu $2.96$.
+
+Žádný algoritmus nedospěl k žádnému parametru, co by měl nějaké nadprůměrné jedince.
+Proto byly i vzhledem k časové náročnosti algoritmu Spea a na základě výsledků
+z testovací fáze programu zvoleny jiné parametry na
+počet generací na 200 a velikost populace 200. Počet běhů zůstal na 100.
+Hodnoty průměrného jedince byly ještě před stanovením počtů nadprůměrných
+zaokrouhleny dolů na celé desetiny.
+
+Algoritmus VEGA dospěl k tomuto průměrnému jedinci s
+bent skóre $29.1$,
+$-log_2{LP_{\max}} = 1.7$ tj. $LP_{\max} = 0.30778610333622908$, 
+$-log_2{DP_{\max}} = 1.5$ tj. $DP_{\max} = 0.35355339059327379$,  
+SAC $0.2$, 
+faktor větvení $2.0$ 
+a stupeň polynomu $2.7$.
+V tabulce \ref{tabVegaParameters} jsou uvedeny výsledky pro jednotlivé kombinace pravděpodobností.
+Nejlépe vyšla kombinace s $pMut = 0.3$ a $pCross = 0.8$, počty však byly docela vyrovnané.
+
+Algoritmus SPEA dospěl k o něco lepšímu průměrnému jedinci, podobně jak tomu bylo u vyššího počtu 
+jedinců v populaci, s                                                                                                       
+bent skóre $31.6$,
+$-log_2{LP_{\max}} = 1.9$ tj. $LP_{\max} = 0.26794336563407328$,
+$-log_2{DP_{\max}} = 1.9$ tj. $DP_{\max} = 0.26794336563407328$,
+SAC $0.9$,
+faktor větvení 2.0
+a stupeň polynomu 2.9.
+V tabulce \ref{tabSpeaParameters} jsou uvedeny výsledky pro jednotlivé kombinace pravděpodobností.
+Nejlépe vyšla kombinace s $pMut = 0.9$ a $pCross = 0.05$.
+
+Zvýšení velikosti populace tedy populace zlepšilo průměry jednotlivých kritérií.                                                                                     
+
+\subsubsection{Parametry pro i686}
+Dále proveden předchozí pokus, ale z reprezentací i686 se čtyřmi vstupy
+a čtyřmi výstupy, navíc přibylo kritérium bijektivní skóre,
+neboť tato reprezentace nezaručuje bijektivitu.
+
+Algoritmus VEGA dospěl k průměrnému jedinci s                    
+bent skóre 14.4, 
+$-log_2{LP_{\max}} = 0.1$ tj. $LP_{\max} = 0.93303299153680741$, 
+$-log_2{DP_{\max}} = 0.6$ tj. $DP_{\max} = 0.659753955386447$,
+bijektivní skóre 8.8, 
+SAC 0.0, 
+faktor větvení 1.0 
+a stupeň polynomu 1.5.
+V tabulce \ref{tabVegaParametersLuffa} jsou uvedeny výsledky pro jednotlivé kombinace pravděpodobností.
+Nejlépe vyšla kombinace s $pMut = 0.01$ a $pCross = 0.09$.
+
+Algoritmus SPEA dospěl k průměrnému jedinci s                    
+bent skóre 21.5, 
+$-log_2{LP_{\max}} = 0.4$ tj. $LP_{\max} = 0.75785828325519899$, 
+$-log_2{DP_{\max}} = 0.8$ tj. $DP_{\max} =  0.57434917749851744$,
+bijektivní skóre 12.2, 
+SAC 0.4, 
+faktor větvení 1.5 
+a stupeň polynomu 2.2.
+V tabulce \ref{tabSpeaParametersLuffa} jsou uvedeny výsledky pro jednotlivé kombinace pravděpodobností.
+Nejlépe vyšla kombinace s $pMut = 0.05$ a $pCross = 0.7$
+
+Přidání bijektivního skóre má vliv na degradaci ostatních parametrů.
+
+\subsubsection{Parametry pro CGP}
+A pokus byl proveden ještě s reprezentací CGP se 4 vstupními bity, 
+4 výstupními bity, 4 sloupci, 3 řádky a 6 maximálními mutacemi). 
+Samozřejmě, že tentokrát nebylo užito křížení, proto je ve výsledcích
+méně kombinací.
+
+Algoritmus VEGA dospěl k průměrnému jedinci s                    
+bent skóre 8.1, 
+$-log_2{DP_{\max}} = 0.1$ tj. $LP_{\max} = 0.93303299153680741$, 
+$-log_2{DP_{\max}} = 0.5$ tj. $DP_{\max} = \frac{\sqrt{2}}{2}$,
+bijektivní skóre 10.3, 
+SAC 0.0, 
+faktor větvení 1.0 
+a stupeň polynomu 1.1.
+V tabulce \ref{tabVegaParametersCgp}
+jsou uvedeny výsledky pro jednotlivé pravděpodobnosti mutace.
+V grafu na obrázku \ref{cgpVegaParameters} jsou porovnány počty nadprůměrných .
+Nejlépe vyšla pravděpodobnost mutace $pMut = 0.9$.
+Na této reprezentaci vyšlo lépe bijektivní skóre, avšak o to jsou horší ostatní parametry.
+
+\insertimage{cgpVegaParameters}{Parametry cgp pro VEGA}
+
+Algoritmus SPEA dospěl k průměrnému jedinci s                    
+bent skóre 21.8, 
+$-log_2{LP_{\max}} = 0.3$ tj. $LP_{\max} = 0.81225239635623558$, 
+$-log_2{DP_{\max}} = 0.8$ tj. $DP_{\max} = 0.57434917749851744$,
+bijektivní skóre 12.7, 
+SAC 0.3, 
+faktor větvení 1.4 
+a stupeň polynomu 2.1.
+Algoritmus Spea bez křížení nedospěl k žádné nadprůměrné kombinaci.
+Na této reprezentaci je o něco lepší bijektivní skóre, a o to jsou horší ostatní parametry.
+
+\section{Hledání složitějších s-boxů}
+Bylo provedeno i hledání s-boxů o rozměrech $6 \times 6$, $6 \times 4$, $8 \times 8$ algoritmy
+VEGA a SPEA, jak na permutacích tak na reprezentacích CGP, i686.
+Opět se potvrdilo, že pokud je bijektivita zaručena reprezentací, dosáhlo se vysokých hodnot kritérií, s tím, že
+vysoce hodnocených bylo několik a každý jedinec byl lepší v něčem jiném (pareto optimum).
+Při bijektivitě jako zvláštní kritérium byly hodnoty všech kritérií malé.
+Již na 30 generacích a velikosti populace 30 a počtu běhů 4, kdy z jednotlivých běhů byla vytvořena
+sada nedominovaných výsledků.
+Pro všechny výsledky v této nedominované sadě platilo pro rozměry $6 \times 6$ při
+reprezentaci permutace, že $-log_2{LP_{\max}} = 2.38529015$ nebo $2.83007503$ pro algoritmus
+SPEA, u algoritmu VEGA mělo několik jedinců $2$. Stupeň polynomu byl $4$ nebo $5$ u obou
+algoritmů. Oba nalezly různé jedince s $-log_2{DP_{\max}} = 3.41503739$.
+\begin{center}
+\begin{minipage}{0.6\textwidth}
+U algoritmu SPEA měl tento jedinec chromozóm:
+\begin{verbatim}
+5 49 43 44 3 30 35 59 40 29 13 53 11 4 2 18 
+39 41 38 10 57 36 7 20 17 37 47 24 5 55 62 51 
+22 60 26 16 14 0 21 63 48 1 34 19 27 52 42 61 
+12 50 46 54 32 31 58 8 15 6 9 56 33 28 23 45 
+\end{verbatim}
+
+U algoritmu VEGA měl tento jedinec chromozóm:
+\begin{verbatim}
+50 35 21 23 3 38 15 25 26 11 8 62 32 42 47 51 
+57 28 24 48 58 54 19 56 55 13 60 2 43 0 52 20 
+46 29 14 59 31 17 9 41 30 22 40 4 49 10 37 27 
+63 45 5 33 6 39 44 61 18 16 34 53 1 36 7 12 
+\end{verbatim}
+\end{minipage}
+\end{center}
+
+Obdobné výsledky byly i u počtu generací 200 a velikosti populace 200.
+U s-boxů $6 \times 4$ byly všechny $LP_{\max} = 1$.
+Některé s-boxy $8 \times 8$ docela rychle splnily podmínky\footnote{které jsou uvedeny v \cite{twofish}}
+pro výběr $LP_{\max} \leq  0.0625$ a
+$DP_{\max} \leq  \frac{10}{256}$
+při hledání pomocí algoritmu SPEA, počtu generací 30 a velikosti populace 30.
+Na obr. \ref{good88Box} je uvedený jeden z nich, který má
+bent skóre 250, 
+$-log_2{LP_{\max}} = 4.18621874$ tj. $LP_{\max} = 0.05493164$, 
+$-log_2{DP_{\max}} = 4.67807198$ tj. $DP_{\max} \dot{=} \frac{10}{256}$,
+bijektivní skóre 255, 
+SAC 0, 
+faktor větvení 2 
+a stupeň polynomu 7.
+Zobrazení nuly na nulu je spíše nežádoucí, avšak to se týká jen u tohohle konkrétního jedince.
+
+Ostatní řešení, co měla $-log_2{DP_{\max}} = 4$, měla o něco málo vyšší bent skóre.
+K obdobným výsledkům dojde i náhodné prohledávání, ale potřebuje více běhů.
+Náhodné permutace větších velikostí totiž mají nízké pravděpodobnosti
+$LP_{\max}$ a $DP_{\max}$, jak je uvedeno v \cite{bigSboxes}. A hodně náhodných permutací má 
+$-log_2{DP_{\max}} = 4.67807198$ a $-log_2{DP_{\max}} = 4$.
+K jedinci s $-log_2{LP_{\max}} = 4.18621874$\footnote{a dalšími parametry výše}
+však evoluce dospěje evoluce s méně běhy, jinak řečeno je nutné méně náhodně vygenerovaných
+jedinců.
+
+\pagebreak
+\section{Dvoufázové hledání}
+Kvůli zaručení bijektivity u reprezentací CGP a i686 se jako další 
+možnost\footnote{po bijektivním skóre jako kritérium a omezení bijektivity v objektivní
+funkci}
+řešení nabízí rozdělit evoluci na dvě fáze. 
+V první fázi se na reprezentaci permutace najde nejlepší řešení. To je pak
+použito jako trénovací množina pro symbolickou regresi pomocí reprezentací
+CGP či i686.
+Prvotně nastává problém s výběrem
+vhodného kandidáta, který postoupí do druhé fáze. Symbolická regrese bude
+muset být provedena několikrát pro více jedinců. Dále se bude muset přijmout
+fakt, že i symbolická regrese má svá omezení a problém se na ni jen přenáší.
+Symbolická regrese byla provedena 
+na reprezentacích CGP a i686 o rozměrech $2 \times 2$, $4 \times 4$, $6 \times 6$, $8 \times 8$
+na různých permutacích jako trénovací množiny.
+Trénovací množina je úplná, tj. obsahuje všechny vstupy a výstupy.
+
+\subsubsection{Parametry symbolické regrese}
+Již při počtu generací 50 a velikosti populace 1000 se v reprezentaci jako acyklický graf 
+s 3 sloupci, 3 řádky a 3 maximálními mutacemi, nalezne $3 \times 3$ za nutnosti
+několika běhů. U složitějších s-boxů již záleží na tvaru funkce, např. pro
+$f(x) =  x$ tj. $[1, 2, \cdots, n - 1]$, je bez problému nalezeno řešení i pro
+$8 \times 8$.
+
+Vedlejším produktem tohoto rozdělení může být optimální realizace, avšak
+základním kritériem musí být přesnost. Nejoptimálnější se vybere až z několika
+přesných řešení.
+
+\section{Celkové zhodnocení výsledku}
+Při jednokriteriální optimalizaci na provedených experimentech
+dochází jak náhodné prohledávání tak genetický algoritmus
+k téměř obdobným výsledkům. Pouze v některých případech je výrazněji lepší buď jedno nebo druhé.
+V multikriteriálním prohledávání pomocí algoritmů VEGA a SPEA
+lze snadněji zajistit lepší hodnoty více kritérií souběžně
+než u náhodného prohledávání. Zatímco náhodné prohledávání je algoritmicky méně složitější,
+genetický algoritmus nepotřebuje tolik běhů (náhodných inicializací jedinců na počátku).
+Tedy jsou případy reprezentací jako permutace, kdy lze evoluční algoritmy použít.
+Zaručit bijektivitu lze spolehlivě jen u permutací. U ostatních reprezentací se při multikriteriálním prohledávání
+po přidání bijektivního skóre výrazně zhoršují hodnoty ostatních kritérií. A pokud
+pro všechny nebijektivní jedince bude hodnota každého kritéria nulová, či-li napřed je
+proveden test na bijektivitu a poté je teprve proveden výpočet kritéria, poskytuje  
+ještě horší výsledky. Nejlépe by bylo, kdyby pro reprezentace CGP a i686 existovaly
+genetické operátory, které bijektivitu zaručí.
+U těchto reprezentací se projevuje složitost jejich struktur (mnoho možností
+pro mutace a křížení a častost opakování toho samého jedince), a tím pádem
+evoluční algoritmus hledá řešení obtížněji \cite{prednaskyBIN}.
+Obdobné závěry lze konstatovat i u hledání minimální realizace (podle počtu použitých hradel) u reprezentace CGP, kdy
+je populace zanesena minimálními nefunkčními obvody.
+Rozdělení na dvě fáze je pouhé přenesení na problém symbolické regrese. Minimální
+realizace musí být vybrána, až po splnění kritérií bezpečnosti.
+V nalezených zdrojích se nezabývají multikriteriálním prohledáváním s více kritérii
+bezpečnosti.
+V \cite{paretoHardware} se zabývají optimální strukturou hardware, avšak hodnoty kritérií
+bezpečnosti nejsou zmíněny.

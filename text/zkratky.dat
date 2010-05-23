@@ -1,0 +1,25 @@
+GA "Genetický algoritmus" v klasické podobì (viz str. \pageref{secGA})
+EDA "Estimation of Distribution Algorithm" druh EA zalo¾ený na pravdìpodobnostním modelu (str. \pageref{algorithmEDA})
+UMDA "Univariate Marginal Distribution Algorithm" druh EDA (str. \pageref{algorithmUMDA})
+BMDA "Bivariate Marginal Distribution Algorithm" druh EDA (str. \pageref{algorithmBMDA})
+BOA "Bayesian Optimization Algorithm" druh EDA pou¾ívající Bayesovské sítì jako pravdìpodobnostní model
+EA "Evoluèní Algoritmus"  nadtøída prohledávacích algoritmù zmínìných v této práci
+VEGA "Vector Evaluated Genetic Algorithm" jednoduchý multikriteriální GA (str. \pageref{algorithmVEGA})
+SPEA "Strength Pareto Evolutionary Algorithm" multikriteriální GA s elitou obsahující nashlukované Pareto-optimální jedince (str. \pageref{algorithmSPEA})
+SAC "Strict Avalanche Criterion" viz str. \pageref{critSAC}
+CGP "Cartesian Genetic Programing" viz str. \pageref{algorithmCGP}
+DES "Data Encryption Standard" ¹ifra s 56-bitovým klíèem vyvinutá v 70. letech, v pùvodní formì dnes ji¾ nespolehlivá
+AES "Advanced Encryption Standard" ¹ifra Rijndael schválená jako standard
+UML "Unified Modeling Language" sada zformalizovaných grafických reprezentací návrhu/modelu programu
+GaLib "Genetic Algorithm Library" knihovna pro Genetický algoritmus a genetické programování \cite{galib}
+CREW "Concurent Read Exclusive Write" jeden z mo¾ných modelù paralelizmu 
+MOSAC "maximal order SAC" SAC nejvy¹¹ího mo¾ného øádu
+RC4 "Rivest Cipher 4" jedna ze symetrických proudových ¹ifer Rona Rivesta, který mj. spolupracoval na RSA
+MD5 "Message Digest 5" jeden z hashovacích algoritmù Rona Rivesta, který mj. spolupracoval na RSA
+RSA "Rivest -- Shamir -- Adleman" nejznámìj¹í asymetrická ¹ifra, zalo¾ená na faktorizaci souèinu dvou velkých prvoèísel, princip vymysleli døíve v Británii av¹ak jej tajili, nezávisle na to samé pøi¹la trojice Amerièanù
+DSA "Digital Signature Algorithm" algoritmus pro elektronický podpis zalo¾ený na diskrétních logaritmech
+SHA "Secure Hash Algorithm" standardizovaný hashovací algoritmus, v souèasnosti SHA2, SHA3 ve vývoji
+GP "Genetické programování" evoluèní algoritmus pracující rovnou se spustitenými strukturami místo èíselného chromozomu
+BF "Branching factor" faktor vìtvení (viz podkapitola \ref{secBF} na str. \pageref{secBF})
+POSIX "Portable Operating System Interface" standardizované pøenositelné rozhranní pro operaèní systémy
+GCC "Gnu Compiler Collection" sada pøekladaèù rùzných jazykù pro UNIXové systémy \url{http://gcc.gnu.org/}

@@ -1,0 +1,46 @@
+%
+%      Brno University of Technology
+%      Faculty of Information Technology
+% 
+%      MSc Thesis	2009/2010
+% 
+% 		 Design of S-Boxes Using Genetic Algorithms
+%
+%
+%      Bedrich Hovorka
+%
+%V této práci příliš žluťoučký kůň úpěl ďábelské ódy gg
+Rostoucí výkon počítačů a nárůst jejich použití širokou masou uživatelů v celosvětové po\-čí\-ta\-čo\-vé síti
+si žádají vyšší nutnost zaobírat se bezpečností těchto uživatelů. 
+Neboť součástí této sítě
+nejsou jen samí lidé a organizace s dobrými úmysly, ale i tací, kteří se snaží 
+porušit právo na soukromí odposlechnutím důvěrných
+informací jiné osoby a využít je ve svůj prospěch či tu osobu zkompromitovat jiným způsobem, například
+se za ní vydávat. Proto je důležité těmto záškodníkům tyto činnosti prakticky znemožnit převodem důvěrné informace
+do podoby, kterou budou schopny přečíst jen vybrané osoby a nebude schopna přečíst žádná nežádoucí osoba
+-- důvěrnost.
+Dále musí být součástí tohoto převodu ověření identity původce přenášené informace -- autentizace.
+Algoritmy, které zajišťují důvěrnost a autentizaci přenášených dat, se zabývá kryptografie.
+Těmto algoritmům se též říká šifra. Díky čím dál tím jejich větším používáním a objevováním novějších
+druhů kryptoanalýzy životnost šifer klesá.
+Poučení z historie šifer říká, že šifra byla neprolomitelná do té doby, než 
+někdo objevil její slabinu. Proto musela být vzápětí vždy vytvořena šifra nová.
+V dnešní době probíhá neustálý výzkum a vývoj nových šifer, které by měli být odolnější
+vůči stále přibývajícím novějším druhům útoků.
+
+Tato práce se zabývá částí šifrovacího algoritmu zvanou substituční box
+(zkráceně s-box) a jeho vývojem. K jejich konstrukci se využívají jak čistě
+matematické přístupy s využitím teorie Galois polí, tak i různé stochastické způsoby návrhu, ke
+kterým se řadí například evoluce, která je použita v této práci.
+Evoluční výpočetní techniky jsou, jak již název napovídá, inspirovány evoluční teorií z biologie. 
+Cílem práce je použít některé vlastnosti substitučních boxů
+jako objektivní funkce k jejich evolučnímu vývoji.
+Pře\-sto\-že již bylo mnoho vlastností studováno, relativně málo práce bylo uskutečněno
+při hledání s-boxů především v multikriteriálním genetickém prohledávání.
+
+Nejprve však bylo nutné navrhnout a naimplementovat kolekci algoritmů, 
+která tyto vlastnosti umožní experimentálně zjistit.
+Tato implementace musí především umožnit rychle zadávat různé evoluční experimenty a, pokud možno, 
+provést je co nejrychleji.
+
+Tato práce vznikla jako samostatné dílo, které nenavazuje na žádný školní projekt.

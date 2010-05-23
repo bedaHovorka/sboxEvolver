@@ -1,0 +1,42 @@
+%
+%      Brno University of Technology
+%      Faculty of Information Technology
+% 
+%      MSc Thesis	2009/2010
+% 
+%      Design of S-Boxes Using Genetic Algorithms
+%
+%
+%      Bedrich Hovorka
+%
+%
+Prvním výsledkem diplomové práce je naimplementovaný modul s knihovními funkcemi pro Python, který 
+vyžívá algoritmy implementované v dynamicky linkované knihovně, jenž byla implementována v C++. 
+Druhým výsledkem jsou experimentálně zjištěné hodnoty.
+Bylo navrženo jednoduché rozhraní pro popis parametrů evoluce, aby jej bylo možné
+v budoucnu použít na další experimenty.
+Ve fázi implementace muselo být naprogramováno efektivní provedení
+různých evolučních algoritmů. K tomu bylo využito nástrojů
+valgrind, který pomáhá odhalit chyby práce s pamětí, a oprofile, hledající části kódu, které
+trvají nejdéle. Kvůli tomu, aby Python rozhraní mělo možnost jednoduše popsat parametry 
+evoluce, musela být provedena práce na úrovní C++, která se navrátila jednodušším popisem
+experimentů a zpracováním výsledků.
+Experimenty ukázaly, které algoritmy, a jaké jejich použité parametry jsou lepší při určitých
+kritériích na zvolených reprezentacích, a to jak
+pro jednotlivá kritéria bezpečnosti substitučních boxů, tak i pro multikriteriální
+optimalizaci.
+V \cite{evo} je zmíněno, že bylo provedeno málo porovnaní 
+Genetických algoritmů a algoritmů EDA.
+I z toho důvodu bylo provedeno srovnání na tomto konkrétním problému.
+Nebylo možné provést všechny možné kombinace algoritmů, reprezentací, kritérií a parametrů.
+K experimentům byly vybrány ty, které se zdály být zajímavé.
+
+\subsection*{Náměty pro další rozvoj}
+Pro s-boxy složitější, než se kterými byly provedeny experimenty v této práci, je už
+nutné zvážit hardwarovou akceleraci výpočtů jednotlivých kritérií a prohledávacích 
+algoritmů. Dalším kritériem by mohl být řád polynomu v $GF(2^m)$.
+Vyšší řád \cite{langrangeAttack, courtois} polynomu znamená vyšší odolnost vůči útoku pomocí interpolace Langrangeovým
+polynomem. Jedná se o zobecnění lineární kryptoanalýzy. Právě pomocí Lagrangeovy interpolace
+se získá polynom vyjadřující s-box. Jeho stupeň je dále použitelný k maximalizaci.
+Existuje ovšem několik variant Galois polí, ze kterých si útočník může vybrat, tudíž je nutná
+odolnost vůči všem.

@@ -1,0 +1,81 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 260 140
+/elw { 30 } def %sirka elementu
+/elh { 40 } def %vyska elementu
+/inw { 3 } def %delka vstupu/vystupu
+/elph { elh 2 div } def %pulvyska
+/elh3 { elh 3 div } def %tretina vysky
+
+ /blk2 { % vstupem jsou souradnice horniho leveho, text1 text2
+   newpath   moveto gsave       %rlineto relativ posuv
+   elw 0 rlineto            0 elh rlineto           elw neg 0 rlineto           gsave                   1 1 1 setrgbcolor         fill   grestore   closepath   2 setlinewidth   stroke         grestore gsave
+%FUNKCE
+/Helvetica findfont 10 scalefont setfont 
+dup %str str 
+stringwidth pop %str wx 
+elw 2 sub %str wx maxx 
+2 1 roll sub %str maxx-wx 
+elh 12 sub %str maxx-wx y 
+rmoveto show 
+grestore gsave
+%INDEX
+   /Helvetica findfont 10 scalefont setfont elw 3 add elph 3 add rmoveto show grestore gsave      0 elh3 2.5 mul rmoveto %in1
+   -10 0 rlineto    10 elh3 elh3 add neg rmoveto %in2
+   -10 0 rlineto     stroke grestore   elw elph rmoveto %out
+  10 0 rlineto     stroke } def 
+
+ /ln2in2 {  newpath   exch -10 add exch %FROM posun x
+  elh3 0.5 mul add  moveto %posun y
+  exch elw 10 add add exch  %TO posun x
+  elph add %posun y
+  lineto  stroke } def /ln2in1 {  newpath   exch -10 add exch %FROM posun x
+  elh3 2.5 mul add  moveto %posun y
+  exch elw 10 add add exch  %TO posun x
+  elph add %posun y
+  lineto  stroke } def 
+
+ /ln1in1 {  newpath   elh add %posun y
+  moveto   exch elw 10 add add exch  %FROM posun x
+  elph add   lineto  stroke } def 
+
+/inout { newpath  elh add %posun y 
+  moveto   gsave       inw 0 rlineto    2 setlinewidth    stroke  grestore  gsave  0 0 0.6 setrgbcolor  /Helvetica findfont 10 scalefont setfont 0 5 rmoveto show  grestore } def
+%TEXT aligned to the right
+/rlabel { gsave 0 0 0.6 setrgbcolor /Helvetica findfont 10 scalefont setfont %str x y 
+3 -1 roll dup%x y str str 
+stringwidth pop %x y str wx 
+3 1 roll%x wx y str 
+4 2 roll%y str x wx 
+sub %y str x_new 
+3 -1 roll%str x_new y 
+moveto show  grestore } def
+%TEXT aligned to the center
+/clabel { gsave 0 0 0.6 setrgbcolor /Helvetica findfont 10 scalefont setfont %str x y 
+3 -1 roll dup%x y str str 
+stringwidth pop %x y str wx 
+3 1 roll%x wx y str 
+4 2 roll%y str x wx 
+2 div sub %y str x_new 
+3 -1 roll%str x_new y 
+moveto show  grestore } def
+
+
+ 0.8 0.8 0.8 setrgbcolor 
+(4) (0) 160 85 blk2 
+ 0 0 0 setrgbcolor 
+(2) (8) 80 85 blk2 
+(3) (7) 80 15 blk2 
+(5) (8) 160 15 blk2 
+ 0 0.7 0 setrgbcolor 
+20 10 elw add sub inw add 45 elph add 80 85  ln2in1 % 1-2
+20 10 elw add sub inw add 45 elph add 80 85  ln2in2 % 1-2
+20 10 elw add sub inw add 75 elph add 80 15  ln2in1 % 0-3
+20 10 elw add sub inw add 75 elph add 80 15  ln2in2 % 0-3
+80 15 160 15  ln2in1 % 3-5
+80 85 160 15  ln2in2 % 2-5
+160 15 240 75  ln1in1 % 5-6
+ 0 0 0 setrgbcolor 
+(0) 20 75 inout 
+(1) 20 45 inout 
+(0) 240 75 inout 
+() 130 0 clabel

@@ -1,0 +1,48 @@
+%
+%      Brno University of Technology
+%      Faculty of Information Technology
+% 
+%      MSc Thesis	2009/2010
+% 
+%      Design of S-Boxes Using Genetic Algorithms
+%
+%
+%      Bedrich Hovorka
+%
+Tato příloha vysvětluje značení v chromozómu kartézského genetického programování.
+Notace byla použita ve shodě s CGPTools \cite{vasicek}
+\subsubsection{Tvar chromozómu} 
+Hlavička obsahuje údaje v tomto pořadí:
+\begin{verbatim}
+  {počet_vstupů, počet_výstupů, sloupce, řádky, vstupů_do_bloku, l_back, 
+   počet_použitých_bloků}
+\end{verbatim}
+Následují popisy jednotlivých bloků (za vstupní blok se považuje i vstup celého obvodu, bloky
+se číslují od počtu vstupů):
+\begin{verbatim}
+  ([číslo bloku] vstupní_blok_a, vstupní_blok_b, funkce)
+\end{verbatim}
+a na konec jsou výstupy některých bloků (uvedena čísla) prohlášeny za výstupy celého obvodu:
+\begin{verbatim}
+  (seznam bloků)
+\end{verbatim}
+
+
+\subsubsection{Přiřazení funkcí}
+pro vstupní proměnné $a$ a $b$
+
+\begin{center}
+     \begin{tabular}{| c | c |}
+      \hline
+      číslo funkce & výraz \\ \hline\hline
+      0 & $a$ \\ \hline
+      1 & $a$ AND $b$ \\ \hline
+      2 & $a$ OR $b$ \\ \hline
+      3 & $a$ XOR $b$ \\ \hline
+      4 & NOT $a$ \\ \hline
+      5 & NOT $b$ \\ \hline
+      6 & $a$ AND (NOT $b$) \\ \hline
+      7 & $a$ NAND $b$ \\ \hline
+      8 & $a$ NOR $b$ \\ \hline
+     \end{tabular}
+\end{center}

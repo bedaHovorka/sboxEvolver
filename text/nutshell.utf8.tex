@@ -1,0 +1,109 @@
+%
+%      Brno University of Technology
+%      Faculty of Information Technology
+% 
+%      MSc Thesis	2009/2010
+% 
+%      Design of S-Boxes Using Genetic Algorithms
+%
+%
+%      Bedrich Hovorka
+%
+Tento krátký manuál je určen těm, kteří budou chtít provádět vlastní experimenty v evo\-luč\-ním
+hledání s-boxů.
+Pro správný (paralelní) chod je nutné mít zkompilovanou knihovnu Galib v upravené podobě.
+Pro sekvenční byla odzkoušena i knihovna původní.
+Po instalaci knihovny je možné pomocí příkazu \emph{make} zkompilovat dynamickou knihovnu
+pro hledání s-boxů. Pokud nejde z nejakeho důvodu Galib nainstalovat a jen zkompilovat
+v adresáři, musí se v makefile pomocí přepínačů -I a -L nastavit cesta k této knihovně.
+(V odevzdávané podobě jsou zdrojové kódy tak jak běžely na serveru merlin, takže makefile je nastavený).
+
+Dále popisované objekty jsou v (i)pythonu přístupné pomocí příkazu:
+\begin{verbatim}
+  from evolution import *
+\end{verbatim}
+tak jak vidět v souboru experiments.py. 
+V tomto souboru jsou též provedené experimenty jako příklady.
+
+\subsubsection{Definování genomu}
+Pro zvolení reprezentace slouží konstruktor objektu Genome, kterému je třeba předat typ,
+objektivní funkci pro jednokriteriální optimalizaci:
+\begin{verbatim}
+  Genome(chromozomeType, criterion, [specific])
+\end{verbatim}
+kde \verb|chromozomeType| může být\\
+\verb|ChromozomeType.BINARY| pro binární reprezentaci; \verb|specific| jsou počet vstupních bitů, počet výstupních bitů\\
+\verb|ChromozomeType.PERMUTATION| pro reprezentaci jako seznam výstupů; \verb|specific| vyžadování permutace, počet vstupních bitů,
+počet výstupních bitů\\
+\verb|ChromozomeType.CGP| pro reprezentaci jako acyklický graf hradel; \verb|specific| počet vstupních bitů,
+počet výstupních bitů, počet sloupců, počet řádků, maximální počet mutací jednoho prvku\\
+\verb|ChromozomeType.SOFTWARE_IMPL| pro reprezentaci jako posloupnost trojinstrukcí i686;\\
+\verb|specific| počet čtveřic bitů na vstupu a výstupu zároveň\\
+
+a \verb|criterion| \\
+(pro multikriteriální optimalizaci ignorován, lze však zadat \verb|CriterionFunction.NONE_FITNESS|)
+\verb|CriterionFunction.BENT_AND_MOSAC| pro zvolení kritéria bent skóre,\\ 
+\verb|CriterionFunction.LP_MAX| pro linear probability, \\
+\verb|CriterionFunction.DP_MAX| pro differential probability,\\ 
+\verb|CriterionFunction.BIJECTIVE_SCORE| pro bijektivní skóre,\\
+\verb|CriterionFunction.SAC| pro řád Strict avalanche criterion,\\
+\verb|CriterionFunction.BF| pro faktor větvení,\\
+\verb|CriterionFunction.POLYNOMIAL_DEGREE| pro stupeň algebraického polynomu
+
+\subsubsection{Definování parametrů hledání, výběr algoritmu}
+Vytvoření nového hledání se provede pomocí zavolání kostruktoru:
+\begin{verbatim}
+Searching(algorithm, genome, popSize, generations, [specific])
+\end{verbatim}
+\verb|algorithm| je\\
+\verb|"Ga"| pro jednokriteriální genetický algoritmus (genetické programování); \\ \verb|specific| pravděpodobnost mutace, 
+ pravděpodobnost křížení, zapnutí elitismu\\
+\verb|"Vega"| pro algoritmus VEGA; \verb|specific| pravděpodobnost mutace, 
+ pravděpodobnost křížení, seznam kritérií\\
+\verb|"Spea"| pro algoritmus SPEA; \verb|specific| pravděpodobnost mutace, 
+ pravděpodobnost křížení, seznam kritérií\\
+\verb|"Eda"| pro algoritmus EDA; \verb|specific| typ (\verb|False| pro UMDA, \verb|True| BMDA)\\
+\verb|"Random"| pro náhodné prohledávání; velikost populace znamená počet uchovávaných nejlepších výsledků\\
+\verb|"ParallelRandom"| pro paralelní náhodné prohledávání; \verb|specific| pravděpodobnost mutace\\
+
+\verb|genome| je reprezentace vytvořená podle pravidel výše
+a \verb|popSize| resp. \verb|generations| je velikost populace resp. počet generací
+
+
+\subsubsection{Spuštění evoluce a získání výsledku}
+Třída Searching obsahuje:
+\begin{itemize}
+  \item instanční metodu  \verb|simpleEvolve()| -- umožňuje spustit jeden experiment
+  \item třídní metodu \verb|parallelSearching(list)| -- provede seznam \verb|list| objektů typu Searching paralelně
+  \item instanční metodu \verb|statistics()| -- po provedení evoluce vrátí object TStatistics
+  \item instanční metodu \verb|bestPopulationStrings()| -- vrátí seznam řetězcových reprezentací všech \verb|statistics().nBestGenomes| nejlepších jedinců za celý průběh evoluce
+\end{itemize}
+
+Třída TStatistics obsahuje:
+\begin{itemize}
+  \item \verb|online| -- průměr skóre za celý průběh evoluce
+  \item \verb|offlineMax| -- průměr minimálních skóre
+  \item \verb|offlineMin| -- průměr maximálních skóre
+  \item \verb|bestPopulationScores| -- skóre všech \verb|nBestGenomes| nejlepších jedinců za celý průběh evoluce
+  \item \verb|bestPopulationCriterionsValues| -- hodnoty jednotlivých kritérií všech \verb|nBestGenomes| nejlepších jedinců za celý průběh evoluce
+  \item \verb|bestPopulationOutputs| -- výstupy všech \verb|nBestGenomes| nejlepších jedinců za celý průběh evoluce
+  \item \verb|maxEver| -- největší dosažené skóre,
+  \item \verb|minEver| -- nejmenší dosažené skóre,
+  \item \verb|generation| -- poslední generace,
+  \item \verb|convergence| -- konvergence evoluce,
+  \item \verb|selections| -- počet provedených selekcí za celý průběh evoluce,
+  \item \verb|crossovers| -- počet provedených křížení za celý průběh evoluce,
+  \item \verb|mutations| -- počet provedených mutací za celý průběh evoluce,
+  \item \verb|replacements| -- počet provedených nahrazení za celý průběh evoluce,
+  \item \verb|nBestGenomes| -- počet uchovávaných nejlepších jedinců,\\
+\end{itemize}
+
+Položky \verb|bestPopulationScores| ap. jsou typu \verb|numpy.Array|
+
+\subsubsection{Provedení symbolické regrese z výsledku předchozího hledání}
+Pro symbolickou regresi je třeba vytvořit specializovaný genom
+\begin{verbatim}
+  SymbolicalRegresionGenome(chromozomeType, list, [specific])
+\end{verbatim}
+kde \verb|list| je seznam požadovaných výstupů, musí odpovídat parametrům boxu
+ostatní parametry jsou shodné s třídou \verb|Genome|

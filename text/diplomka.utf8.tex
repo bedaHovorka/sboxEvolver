@@ -1,0 +1,155 @@
+%
+%      Brno University of Technology
+%      Faculty of Information Technology
+% 
+%      MSc Thesis	2009/2010
+% 		
+%		 Design of S-Boxes Using Genetic Algorithms
+% 
+%      Bedrich Hovorka
+% -----------------------------------------------------
+%
+\documentclass[cover]{cls/fitthesis}
+\usepackage[latin2]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage{longtable}
+%\usepackage{lscape}
+
+% balíčky amsmath, babel, graphics a epsfig (resp. graphicx) jsou již zařazeny
+
+% =======================================================================
+% balíček "hyperref" vytváří klikací odkazy v pdf, pokud tedy použijeme pdflatex
+% problém je, že balíček hyperref musí být uveden jako poslední, takže nemůže
+% být v šabloně
+\ifx\pdfoutput\undefined % nejedeme pod pdflatexem
+\else
+  \usepackage{color}
+  \usepackage[colorlinks,hyperindex,plainpages=false,pdftex]{hyperref}
+  \definecolor{links}{rgb}{0.4,0.5,0}
+  \definecolor{anchors}{rgb}{1,0,0}
+  \def\AnchorColor{anchors}
+  \def\LinkColor{links}
+  \def\pdfBorderAttrs{/Border [0 0 0] } % bez okrajů kolem odkazů
+  \pdfcompresslevel=9
+\fi
+
+%  sekce globálních nastavení ------------------------------------------
+
+%Informace o praci/projektu
+%---------------------------------------------------------------------------
+\projectinfo{
+  %Prace
+  project=DP,           %typ prace BP/DP
+  year=2010,             %rok
+  date=\today,           %datum odevzdani
+  %Nazev prace
+  title.cs=Hledání S-boxů pomocí evolučních algoritmů,  %nazev prace v cestine
+  title.en=Design of S-Boxes Using Genetic Algorithms, %nazev prace v anglictine
+  title.break=Hledání S-boxů pomocí evolučních algoritmů,
+  %Autor
+  author=Bedřich Hovorka,   %jmeno prijmeni autora
+  author.title.p=Bc., %titul pred jmenem (nepovinne)
+  %author.title.a=PhD, %titul za jmenem (nepovinne)
+  %Ustav
+  department=UITS,
+  %Skolitel
+  supervisor=Petr Hanáček, %jmeno prijmeni skolitele
+  supervisor.title.p=Doc. Dr. Ing.,   %titul pred jmenem (nepovinne)
+  supervisor.title.a=,   %titul za jmenem (nepovinne)
+  %
+  %Klicova slova, abstrakty, prohlaseni a podekovani je mozne definovat 
+  %bud pomoci nasledujicich parametru nebo pomoci vyhrazenych maker (viz dale)
+  %===========================================================================
+  %Klicova slova
+  keywords.cs={s-box, genetický algoritmus, EDA, UMDA, BMDA, VEGA, SPEA, Kartézské genetické programování,
+  Pareto optimum, lineární a diferenciální kryptoanalýza, Python, C++}, %klicova slova v ceskem jazyce
+  keywords.en={S-box, Genetic algorithm, EDA, UMDA, BMDA, VEGA, SPEA, Cartesian genetic programming,
+  Pareto optimum, linear a differential cryptoanalysis, Python, C++}, %klicova slova v anglickem jazyce
+  %Abstract
+  abstract.cs={
+  Předložená práce se zabývá částí šifrovacího algoritmu zvanou substituční box a jeho evolučním návrhem. 
+  K jeho vývoji jsou použity evoluční výpočetní techniky, jako jsou klasický genetický algoritmus,
+  Estimation of Distribution Algorithm, Kartézské genetické programování a multikriteriální
+  algoritmy VEGA a SPEA. Cílem práce je prozkoušet vlastnosti substitučních boxů k jejich evolučnímu vývoji. 
+  Práce se nejprve zabývá kryptografií a problematikou s-boxů. Zde budou vysvětleny základní
+  pojmy a popsána vybraná kritéria jejich bezpečnosti. Dále budou vyloženy použité evoluční algoritmy
+  a základy multikriteriální optimalizace. Těchto poznatků je využito, k návrhu a implementaci programu, 
+  které jsou popsány dále. Nakonec diskutuje použití studovaných kritérií. Je zde diskutováno prohledávání
+  s-boxů jak při jednokriteriálním, tak především v multikriteriálním genetickém prohledávání.
+	      }, % abstrakt v ceskem jazyce
+  abstract.en={This work deals with part of the encryption algorithm, called S-box and its development.
+  For its development is used evolutionary computing, such as classical genetic algorithm,
+  Estimation of Distribution Algorithm, Cartesian genetic programming and multi-criteria
+  VEGA and SPEA algorithms. This thesis aims to test the properties of substitution boxes to its evolutionary development.
+  Firstly, the work deals with cryptography and issues of s-boxes. There are explained basic
+  concepts and describes the selected criteria of safety. Next chapter explains evolutionary algorithms
+  and multi-criteria optimization. This knowledge is used to design and program implementation,
+  which are described below. Finally discusses the application of the criteria studied. Discussed here is searching
+  S-boxes in both single-criteria, and especially in multi-criteria genetic search.
+	      },
+  %Prohlaseni
+  declaration={
+    Prohlašuji, že jsem tuto diplomovou práci vypracoval samostatně pod vedením doc. Petra Hanáčka.  
+    Další informace mi poskytl Dipl.-Inform. Martin Grajcar.
+    Uvedl jsem všechny literární prameny a publikace, ze kterých jsem čerpal.
+    },
+  %Podekovani (nepovinne) az v diplomce a navic moji vetu...
+  acknowledgment={Tímto bych chtěl poděkovat především svému vedoucímu doc. Petru Hanáčkovi a Martinu Grajcarovi za poskytnuté rady. 
+  Dále bych chtěl poděkovat všem, kteří mě podporovali během celého studia, zejména rodičům a přátelům.}
+}
+
+%\renewcommand{\baselinestretch}{1.5} %pro kontrolou normosran
+
+\input{routines}
+
+% =======================================================================
+% =================================================================
+\begin{document}
+\maketitle
+\addcontentsline{toc}{chapter}{Obsah}
+\setcounter{tocdepth}{2}
+\tableofcontents
+% ----------------------------------------------------------------
+
+\nextChapter{Úvod}{uvod}
+\nextChapter{Úvod do kryptografie}{crypto}
+\nextChapter{Problematika S-boxů}{sboxes}
+\nextChapter{Evoluční algoritmy}{evo}
+\nextChapter{Návrh programu pro experimenty}{design}
+\nextChapter{Popis implementace}{development}
+\nextChapter{Provedené experimenty a zhodnocení výsledku}{experiments}
+\nextChapter{Závěr}{zaver}
+
+\bibliographystyle{czechiso}
+\begin{flushleft}
+ \bibliography{diplomka}
+\end{flushleft}
+
+\zkratky
+
+\nadepsanaStranka{Seznam příloh}
+Součástí odevzdané práce jsou tyto přílohy:
+\begin{description}
+  \item[A] Chromozóm v Kartézském genetickém programování
+  \item[B] Přehled příkazů pro skriptování experimentů
+  \item[C] Podrobné tabulky a grafy
+  \item[DVD] DVD nosič
+\end{description}
+
+DVD nosič obsahuje:
+\begin{itemize}
+  \item kompletní zdrojové kódy programu
+  \item kompletní zdrojové kódy tohoto textu
+  \item výstupy programu při jednotlivých experimentech
+\end{itemize}
+
+\appendix
+
+\nextChapter{Chromozóm v Kartézském genetickém programování}{cgpfunctions}
+\nextChapter{Přehled příkazů pro skriptování experimentů}{nutshell}
+\nextChapter{Podrobné tabulky a grafy}{experimentDetails}
+
+\end{document}

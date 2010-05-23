@@ -1,0 +1,42 @@
+Ucesany vystup, 8 nejlepsich vysledku v prubehu evoluce (dovysvetleni)
+Searching("Ga", genome(4), 120, 120, 0.1, 0.5, False).simpleEvolve()
+booleanBentFunctionGenome
+convergence: 1
+8 best results: fitness min/avg/max/mdev : 0/17.75/20.2857/7.17208
+Fit	Bent	SAC	LpMax	DpMax	Bij	BF	Chromozome
+18	16	2	1	0.5	0	1	0100001000101011
+18	16	2	1	0.5	0	1	0100110100100100
+18	16	2	1	0.5	0	1	1110011101110001
+18	16	2	1	0.5	0	1	1011110100101011
+18	16	2	1	0.5	0	1	0100001011010100
+18	16	2	1	0.5	0	1	0111111000010111
+18	16	2	1	0.5	0	1	0010101101000010
+16	16	0	1	0.5	0	1	1011111010001101
+
+booleanDPMaxFunctionGenome
+convergence: 1
+8 best results: fitness min/avg/max/mdev : 1/1/1/0
+Fit	Bent	SAC	LpMax	DpMax	Bij	BF	Chromozome
+1	0	0	1	1	0	1	0001001000100001
+1	7	-1	1	1	0	1	1000110110011001
+1	7	-1	1	1	0	1	0111110111000011
+1	7	-1	1	1	0	1	0001000110101010
+1	7	-1	1	1	0	1	1111011111111101
+1	7	-1	1	1	0	1	1111111101101111
+1	7	-1	1	1	0	1	0100101000011010
+1	7	-1	1	1	0	1	0100000011111110
+
+booleanLPMaxFunctionGenome
+convergence: 1
+8 best results: fitness min/avg/max/mdev : 1/1/1/0
+Fit	Bent	SAC	LpMax	DpMax	Bij	BF	Chromozome
+1	0	-1	1	0.875	0	1	0010100110000111
+1	0	-1	1	0.875	0	1	0101100110100100
+1	8	-1	1	0.75	0	1	1000011101001000
+1	0	-1	1	0.625	0	1	1000101000000110
+1	0	-1	1	0.625	0	1	0100000001011001
+1	0	-1	1	0.875	0	1	1010011101010000
+1	8	-1	1	0.75	0	1	1100011000101101
+1	0	-1	1	0.625	0	1	1010011011000111
+
+Exited with status: 0
