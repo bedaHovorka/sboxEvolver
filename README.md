@@ -30,15 +30,40 @@ Year: 2009/2010
 
 ## Quick Start
 
-### Prerequisites
+### Option 1: Docker Build (Recommended)
 
+**No manual dependency installation required!**
+
+```bash
+# Build both C++ library and thesis PDF
+docker-compose up --build
+
+# Artifacts appear in ./artifacts/
+ls -lh artifacts/prog/libsboxevolution.so
+ls -lh artifacts/text/diplomka.pdf
+
+# Or build individually
+docker-compose build prog   # C++ library only
+docker-compose build text   # Thesis PDF only
+```
+
+**What Docker does:**
+- Automatically extracts and compiles GAlib 2.4.7
+- Patches makefiles for modern compilers (g++-4.4 → g++, k8-sse3 → native, Python paths)
+- Installs all Czech language tools (cstocs, vlna, texlive)
+- Produces identical builds across platforms
+- Eliminates all platform-specific limitations listed in this document
+
+### Option 2: Native Build
+
+**Prerequisites:**
 - **C++ Compiler**: `g++ 4.4` or newer (C++98 support)
 - **Python**: 2.5 or 2.6 (legacy codebase)
 - **Libraries**: OpenMP, NumPy, Matplotlib (pylab)
 - **Build Tools**: make
 - **Optional**: LaTeX toolchain for thesis compilation (pdflatex, epstopdf, inkscape, dia)
 
-### Installation
+**Installation:**
 
 1. **Clone the repository**
    ```bash
@@ -60,6 +85,15 @@ Year: 2009/2010
    ```
 
    This produces `libsboxevolution.so` - a shared library callable from Python.
+
+   **Note:** `libsboxevolution.so` is a **build artifact** (not checked into git).
+
+   **⚠️ You will likely need to adjust the makefile for modern systems:**
+   - Line 18: Change `CXX = g++-4.4` to `CXX = g++`
+   - Line 26: Change `-march=k8-sse3` to `-march=native`
+   - Line 26: Update Python include path if using Python 2.7
+
+   **These adjustments are automated by Docker - use Docker build to avoid manual patching.**
 
 ### Running an Experiment
 
@@ -85,9 +119,18 @@ python experiments.py 1
 
 ## Thesis Compilation
 
-The LaTeX thesis document is located in the `text/` directory. To compile the thesis into PDF format:
+The LaTeX thesis document is located in the `text/` directory.
 
-### Quick Start
+### Docker Build (Recommended)
+
+```bash
+# Build thesis PDF in Docker (no LaTeX installation required)
+docker-compose up --build text
+
+# Output: ./artifacts/text/diplomka.pdf
+```
+
+### Native Build
 
 ```bash
 cd text/
@@ -168,6 +211,7 @@ The Makefile orchestrates a multi-step build:
 ```
 sboxEvolver/
 ├── prog/                          # Source code
+│   ├── Dockerfile                # Multi-stage C++ build
 │   ├── evolution.py              # Python wrapper (ctypes interface)
 │   ├── experiments.py            # 6 experimental scenarios
 │   ├── main.cpp                  # C++ core and algorithm implementations
@@ -177,13 +221,19 @@ sboxEvolver/
 │   ├── criterions.cpp/h          # Cryptographic fitness functions
 │   ├── multicriterial.cpp/h      # VEGA and SPEA implementations
 │   ├── boxes.h                   # S-box lookup tables
-│   ├── makefile                  # Build configuration
-│   └── libsboxevolution.so       # Compiled shared library
+│   └── makefile                  # Build configuration
 ├── text/                          # LaTeX thesis document
+│   ├── Dockerfile                # LaTeX build with Czech tools
 │   ├── diplomka.utf8.tex         # Main thesis file
 │   ├── *.utf8.tex                # Thesis chapters
 │   └── img/                      # Figures and diagrams
+├── artifacts/                     # Docker build outputs (gitignored)
+│   ├── prog/
+│   │   └── libsboxevolution.so  # Generated C++ shared library
+│   └── text/
+│       └── diplomka.pdf         # Generated thesis PDF
 ├── outputs/                       # Historical experiment results
+├── docker-compose.yml             # Build orchestration
 ├── galib247bh100329.tar.bz2      # GAlib 2.4.7 library
 └── DIPxhovor07final.pdf          # Final thesis PDF (Czech)
 ```
@@ -355,12 +405,61 @@ Master's Thesis, Brno University of Technology, Faculty of Information Technolog
 
 ---
 
+## Docker Details
+
+### Architecture
+
+The project uses a **build-only container pattern**:
+
+1. **prog/Dockerfile** (multi-stage):
+   - Stage 1: Build GAlib 2.4.7 from tarball
+   - Stage 2: Compile libsboxevolution.so with auto-patched makefile
+   - Stage 3: Runtime with Python 2.7 + NumPy + Matplotlib
+   - Copies `.so` to mounted volume and exits
+
+2. **text/Dockerfile** (single-stage):
+   - Installs full TeX Live + Czech tools (cstocs, vlna)
+   - Compiles thesis with 4-pass LaTeX build
+   - Copies `diplomka.pdf` to mounted volume and exits
+
+### Automatic Makefile Patching
+
+Docker automatically applies these fixes for modern systems:
+```bash
+# Compiler version (g++-4.4 → g++)
+sed -i 's|CXX = g++-4.4|CXX = g++|g' makefile
+
+# CPU architecture (AMD K8 2010 → modern CPU)
+sed -i 's/-march=k8-sse3/-march=native/g' makefile
+
+# Python headers (2.5 → 2.7)
+sed -i 's|-I/usr/local/include/python2.5|-I/usr/include/python2.7|g' makefile
+```
+
+This eliminates the need for manual makefile editing and resolves platform-specific limitations.
+
+### Build Validation
+
+```bash
+# Check library symbols
+nm -D artifacts/prog/libsboxevolution.so | grep "newGaSearching"
+
+# Check PDF validity
+pdfinfo artifacts/text/diplomka.pdf
+```
+
+### Security Note
+
+Docker images use legacy Python 2.7 and old Debian versions with known CVEs. **Only use for local builds, not production deployment.**
+
 ## Known Limitations
 
 - **Python 2 Only**: Code written for Python 2.5/2.6 (requires porting for Python 3+)
 - **Legacy Dependencies**: GAlib 2.4.7 (2001), C++98 standard
-- **Platform-Specific**: Makefile optimized for AMD K8 architecture (`-march=k8-sse3`)
+- **Platform-Specific** (Native builds only): Makefile hardcodes AMD K8 architecture flags and Python 2.5 paths
+  - **✓ Resolved by Docker**: Automatic patching for modern compilers and architectures
 - **Language**: Thesis and some output strings in Czech
+- **Docker images**: Contain unpatched security vulnerabilities (local use only)
 
 ---
 

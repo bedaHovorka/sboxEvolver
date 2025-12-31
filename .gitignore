@@ -1,0 +1,106 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.picle
+*.pickle
+
+# C/C++
+*.o
+*.a
+*.lo
+*.la
+*.out
+*.exe
+*.dll
+*.dylib
+*.so
+*.so.*
+prog/libsboxevolution.so
+
+# Compiled GAlib
+galib247/
+galib247bh100329/
+*.tar.bz2.extracted/
+
+# LaTeX
+text/*.aux
+text/*.bbl
+text/*.blg
+text/*.log
+text/*.out
+text/*.toc
+text/*.lof
+text/*.lot
+text/*.fls
+text/*.fdb_latexmk
+text/*.synctex.gz
+text/*.nav
+text/*.snm
+text/*.vrb
+text/*.xdv
+text/*.il2
+text/*.dvi
+text/*.ps
+text/_region_*
+text/*.backup
+text/*-converted-to.pdf
+
+# Experiment outputs
+outputs/
+results*/
+prog/results*/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.bak
+
+# PyCharm
+.idea/
+*.iml
+.idea_modules/
+
+# Environment variables
+.env
+.env.local
+
+# Docker (from repo status)
+docker-build.log
+docker-build-2.log
+docker-build-prog.log
+docker-run.log
+
+# Project artifacts (from repo status)
+artifacts/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# OS files
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# Documentation build artifacts
+text/diplomka.pdf
+text/zkratky.tex
+
+# EPS to PDF conversions
+text/img/*.pdf

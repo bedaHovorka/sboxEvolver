@@ -247,6 +247,7 @@ def crossAndMutationBoxPlot(results, criterion):
     boxplot(map(lambda x: results[x], sortedResultsKeys), vert=0)
     boxplotFileName = "boxplot%s"%(criterion)
     savefig("%s/%s.%s"%(OUTPUT_DIR, boxplotFileName, OUTPUT_IMAGE_FORMAT))
+    return boxplotFileName
 
 def experiment1():
     for criterion in allCriterions:
@@ -258,7 +259,7 @@ def experiment1():
                 results[(pMut, pCross)] = runs(map(lambda x: Searching("Ga", genome, popSize, generations, pMut, pCross, False), xrange(runsCount)))
 
         #nakresleni grafu...
-        crossAndMutationBoxPlot(results, criterion)
+        boxplotFileName = crossAndMutationBoxPlot(results, criterion)
 
         stats = []
         for (pMut, pCross), values in results.iteritems():

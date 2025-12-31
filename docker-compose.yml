@@ -1,0 +1,51 @@
+#
+#      Brno University of Technology
+#      Faculty of Information Technology
+#
+#      MSc Thesis       2009/2010
+#
+#      Design of S-Boxes Using Genetic Algorithms
+#
+#      Dockerization: 2025
+#
+#      Docker Compose orchestration for sboxEvolver project
+#
+#      Usage:
+#        docker-compose up --build       # Build both services
+#        docker-compose build prog       # Build only prog service
+#        docker-compose build text       # Build only text service
+#        docker-compose up prog          # Run prog build
+#        docker-compose up text          # Run text build
+#
+
+services:
+  # Build C++ library with Python 2.7 wrapper
+  prog:
+    build:
+      context: .
+      dockerfile: prog/Dockerfile
+    volumes:
+      # Mount local directory to extract artifacts
+      - ./artifacts/prog:/artifacts
+    container_name: sboxevolver-prog-build
+    # Optional: uncomment to see more detailed build output
+    # stdin_open: true
+    # tty: true
+
+  # Build LaTeX thesis with Czech language tools
+  text:
+    build:
+      context: .
+      dockerfile: text/Dockerfile
+    volumes:
+      # Mount local directory to extract artifacts
+      - ./artifacts/text:/artifacts
+    container_name: sboxevolver-text-build
+    # Optional: uncomment to see more detailed build output
+    # stdin_open: true
+    # tty: true
+
+# Explicit network for clarity (optional)
+networks:
+  default:
+    name: sboxevolver-network
