@@ -100,7 +100,7 @@ A chromozóm druhého potomka je poskládán ze zbývajících částí. Selekce
 \item[Reprezentace] Genetické programování \cite{ui4} pracuje s tzv. spustitelnými strukturami.
 Nej\-čas\-tě\-ji se
 jedná o programy, které jsou reprezentovány stromy a grafy. Tyto struktury mají
-(ale nemusí vždy mít) proměnnou délku. Narozdíl od klasického GA se zde pracuje přímo
+(ale nemusí vždy mít) proměnnou délku. Na rozdíl od klasického GA se zde pracuje přímo
 se spustitelnou strukturou, která představuje jak genotyp tak fenotyp kandidátního řešení.
 
 \item[Genetické operátory] pracují nad spustitelnými strukturami. Kromě běžných
@@ -258,7 +258,7 @@ V našem případě se jedná o testování nezávislosti obsahů dvou lokusů:
   \frac{(Np_{i,j}(x_i, x_j) - Np_i(x_i)p_j(x_j))^2}{Np_i(x_i)p_j(x_j)}
 \end{equation}
 kde $r_i$ je počet různých allel na lokusu $i$, $r_j$ počet různých allel na lokusu $j$ (u
-binárních chromozomů $r = s = 2$). Tento vzorec vychází z předpokladu, že pro
+binárních chromozómů $r = s = 2$). Tento vzorec vychází z předpokladu, že pro
 výskyt hodnot na nezávislých pozicích musí podle teorie pravděpodobnosti
 platit $p_{i, j} (x_i , x_j) = p_i(x_i) p_j(x_j)$.
 Pro všechny dvojice lokusů jsou při průchodu populací sestaveny kontingenční tabulky.
@@ -339,7 +339,7 @@ populaci jsou nalezena a odstraněna z této populace.
 V externí populaci zůstávají nejlepší nedominovaná řešení kombinované
 populace obsahující staré a nové elity. Za účelem omezení přerůstání populace,
 je velikost externí populace vázána na limit $N_e$. Pokud velikost populace je
-rovná velikosti externí populace, jsou všechna řešení obsažena i v externí
+rovna velikosti externí populace, jsou všechna řešení obsažena i v externí
 populaci. Nicméně, pokud velikost populace překračuje $N_e$, ne všechny elity
 mohou být umístěny v externí populaci.
 Elitní jedinci, kteří jsou v méně přeplněných regionech v nedominované frontě,
@@ -355,7 +355,7 @@ populace ($n_i$), kteří externímu řešení $i$ dominují:
 \end{equation}
 Tím je zajištěno, že větší sílu má elita, která ovládá více řešení v aktuální
 populaci. Dělení hodnotou $(N + 1)$ zabezpečí, že maximální hodnota síly
-libovolného členu externí populace bude vždy menší nežli $1$. Navíc, nedominované
+libovolného člena externí populace bude vždy menší nežli $1$. Navíc, nedominované
 řešení dominující nad menšími řešeními má lepší fitness. Fitness
 nynějšího člena populace $j$ je určena jako suma sil všech externích členů, které
 silně\footnote{v původním textu \cite{evo} je slabě, v implementaci však byla použita dominance silná}
@@ -437,7 +437,7 @@ v \cite{goodsboxes}.
 Vybírá \cite{ui1} k expanzi odvozený uzel, který je nejslibnější. Rodič i sourozenci jsou zapomenuti.
 Pokud jsou všechny odvozené uzly horší, algoritmus končí. Takto často končí v lokálním extrému.
 \subsubsection{Uspořádané prohledávání}
-Narozdíl od gradientního algoritmu ukládá neexpandované uzly do prioritní fronty
+Na rozdíl od gradientního algoritmu ukládá neexpandované uzly do prioritní fronty
 (či seřazeného seznamu) podle ohodnocení. Nevýhodou je velká paměťová náročnost.
 Velikost fronty lze omezit, ale tím se toto prohledávání přiblíží ke gradientnímu a
 bude náchylné na skončení/uvíznutí v lokálním extrému.
@@ -446,7 +446,7 @@ Je použito v \cite{twofish}. Toto prohledávání je jako jediné z uvedených 
 Odvodí nové řešení náhodnou změnou (mutací) aktuálního řešení.
 Může být ukládáno průběžně nejlepší řešení. Slouží i k porovnání při ladění evolučního algoritmu.
 \subsubsection{Paralelní náhodné prohledávání}
-Narozdíl od náhodného prohledávání, které je v principu zcela slepé,
+Na rozdíl od náhodného prohledávání, které je v principu zcela slepé,
 toto vyhledávaní v jednom kroku vygeneruje z aktuálního jedince více mutantů
 (pracuje s populací řešení -- paralelnost) a z nich vybere nejlepšího,
 který se liší od aktuálního, a ten se použije pro mutace v dalším kroku.

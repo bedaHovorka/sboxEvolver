@@ -10,15 +10,15 @@
 %      Bedrich Hovorka
 %
 % -----------------------------------------------------
-Cílem experimentů bylo zjistit zda jsou Evoluční algoritmy
-vhodné pro pro hledání zvolených velikostí s-boxů.
-Za tím účelem bylo porovnáno s náhodným prohledáváním.
-Porovnání běhů dle statistik z Galibu \cite{galib} na několika bězích.
+Cílem experimentů bylo zjistit, zda jsou evoluční algoritmy
+vhodné pro hledání zvolených velikostí s-boxů.
+Za tím účelem bylo provedeno porovnání s náhodným prohledáváním.
+Porovnání běhů dle statistik z Galibu \cite{galib} bylo provedeno na několika bězích.
 Experimenty byly naskriptovány pomocí Pythonu.
-Byly vybrány na základě testovaní programu, kde proběhly jednoběhové zkoušky
+Byly vybrány na základě testování programu, kde proběhly jednoběhové zkoušky
 velikosti populace. Pro dlouhodobější hledání kvalitnějších řešení byly nejprve
 stanoveny parametry evoluce, zejména pravděpodobnosti mutace a křížení.
-Poté se tyto parametry užily pro náročnější experimenty.
+Poté se tyto parametry použily pro náročnější experimenty.
 
 \section{Stanovení pravděpodobností mutace a křížení pro jednotlivá kritéria}
 Nejprve byly stanoveny parametry křížení a mutace pro jednokriteriální
@@ -32,11 +32,11 @@ pro mutaci $0, 0.05, 0.1, 0.2, 0.4, 0.6, 0.8$; pro křížení $0, 0.2, 0.4, 0.6
 Protože výsledky u některých kritérií ve vyšších hodnotách byly obdobné a málo slibnější,
 byl zvolen ještě užší interval $\langle0, 0.2)$. Zkoušeny byly
 dvojice pravděpodobností $0, 0.04, 0.08, 0.12, 0.16$ jak u křížení tak u mutace.
-U každého běhu bylo zaznamenáno uloženo 100 nejlepších jedinců z průběhu celé evoluce
-a všichni jedinci ze všech běhů pro jednu dvojici $(p_{Mut}, p_{Cross})$ byly sloučeni
-dohromady a nad nimy byly spočteny statistiky.
-Výsledky zaneseny do tabulek, které jsou seřazeny od nejhoršího po nejlepší
-podle řadícího klíče (maximum, medián, průměr + odchylka, průměr, minimum).
+U každého běhu bylo zaznamenáno a uloženo 100 nejlepších jedinců z průběhu celé evoluce
+a všichni jedinci ze všech běhů pro jednu dvojici $(p_{Mut}, p_{Cross})$ byli sloučeni
+dohromady a nad nimi byly spočteny statistiky.
+Výsledky byly zaneseny do tabulek, které jsou seřazeny od nejhoršího po nejlepší
+podle řadicího klíče (maximum, medián, průměr + odchylka, průměr, minimum).
 Pro rozhodnutí byl proveden orientační dvouvýběrový t-test výsledků náhodného prohledávání
 a nejlepší kombinace parametrů pro genetický algoritmus.
 \subsubsection{Bent skóre}
@@ -212,13 +212,13 @@ Dalším provedeným experimentem bylo ověření na binárním chromozómu,
 zda EDA algoritmy nacházejí lepší, horší či stejné výsledky v porovnání s nejlepšími parametry předchozího
 experimentu. Byly provedeny stejné výpočty jako v předešlém experimentu, tentokrát však pro
 nejlepší parametry Genetického algoritmu vůči algoritmům BMDA a UMDA a ná\-hod\-né\-mu prohledávání.
-Narozdíl od předchozího však nebyla hledána bijektivní funkce.
+Na rozdíl od předchozího však nebyla hledána bijektivní funkce.
 
 Pro vizualizaci porovnání byly zvoleny tabulky kratší, které ukazují
 kritéria v jednotlivých algoritmech, a krabicové grafy, které porovnávají
 algoritmy mezi sebou. Krabicový graf znázorňuje rozložení stejně početných skupin hodnot.
 Horní a dolní strana modrého obdélníka znázorňuje umístění kvartilů. Prostřední červená
-vodorovná úsečka přestavuje medián. Nahoru a dolů od obdélníka vede tzv. vous \footnote{z anglického whisker}.
+vodorovná úsečka představuje medián. Nahoru a dolů od obdélníka vede tzv. vous \footnote{z anglického whisker}.
 Horní resp. dolní vous znázorňuje nejvyšší resp. nejnižší hodnotu, na kterou má být brán zřetel.
 Křížky jsou označeny odlehlé hodnoty.
 V tabulce \ref{tabGaGaVsEDAComparison} jsou statistiky pro Genetický algoritmus.
@@ -319,7 +319,7 @@ pravidelnosti \footnote{viz tabulka \ref{miniSAC}, větší funkce v \cite{yokoh
 Dvouvstupová booleovská funkce (půl-bajt) splňující MOSAC obsahuje 3 stejné bity, čtvrtý se liší.
 Třívstupová (bajt) se skládá z dvouvstupových, tak že pozice lišícího se bitu v půl-bajtu jsou symetrické
 podle osy vedoucí středem bajtu. U čtyřstup nesmí být dva vedlejší bajty symetrické.
-Otázkou by bylo zda-li se z toho dá vytvořit nějaký pravděpodobnostní model závislostí mezi bity,
+Otázkou by bylo zda se z toho dá vytvořit nějaký pravděpodobnostní model závislostí mezi bity,
 který by byl použitelný v evoluci pomocí EDA. Proti tomu stojí myšlenka, že
 statistický model hledající závislosti mezi bity má pro bezpečnost opačný význam,
 právě, že by bity by měly být vzájemně nezávislé, proto ani nebyl implementován
@@ -530,7 +530,7 @@ vysoce hodnocených bylo několik a každý jedinec byl lepší v něčem jiném
 Při bijektivitě jako zvláštní kritérium byly hodnoty všech kritérií malé.
 Již na 30 generacích a velikosti populace 30 a počtu běhů 4, kdy z jednotlivých běhů byla vytvořena
 sada nedominovaných výsledků.
-Pro všechny výsledky v této nedominované sadě platilo pro rozměry $6 \times 6$ při
+Pro všechny výsledky v této nedominované sadě platí pro rozměry $6 \times 6$ při
 reprezentaci permutace, že $-log_2{LP_{\max}} = 2.38529015$ nebo $2.83007503$ pro algoritmus
 SPEA, u algoritmu VEGA mělo několik jedinců $2$. Stupeň polynomu byl $4$ nebo $5$ u obou
 algoritmů. Oba nalezly různé jedince s $-log_2{DP_{\max}} = 3.41503739$.
@@ -634,3 +634,4 @@ V nalezených zdrojích se nezabývají multikriteriálním prohledáváním s v
 bezpečnosti.
 V \cite{paretoHardware} se zabývají optimální strukturou hardware, avšak hodnoty kritérií
 bezpečnosti nejsou zmíněny.
+

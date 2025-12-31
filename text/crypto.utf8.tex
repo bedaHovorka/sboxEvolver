@@ -14,7 +14,7 @@ především utajováním informace a ověřováním jejího původu
 tj. převodem dat do podoby, která
 je nepoužitelná nežádoucím osobám, které budou dále
  v textu pro zjednodušení souhrnně nazvány slovem \uv{útočník}, přestože nemusí útočit přímo
- a může jich být více. Žádoucí osoby mají narozdíl od těch nežádoucích speciální znalost.
+ a může jich být více. Žádoucí osoby mají na rozdíl od těch nežádoucích speciální znalost.
  Tou znalostí byl v minulosti i postup zašifrování, od toho se v dnešní době upouští a
  tou znalostí je pouze klíč. Předpokládá se, že algoritmus zná i útočník. Dále může i k neutajované
  informaci přidat dodatečnou informaci o jejím původu,
@@ -25,7 +25,7 @@ Takový převod by měl řešit hlavní problémy v bezpečnosti:
   \item[důvěrnost] útočník nesmí získat žádnou užitečnou informaci ze zašifrovaného
   komunikační\-ho kanálu
   \item[autentizaci] ověření identity odesílatele zprávy
-  \item[integritu] útočník nemůže podvrhnout data či jejich část a vydávat je příjemci za taková, jakoby pocházela
+  \item[integritu] útočník nemůže podvrhnout data či jejich část a vydávat je příjemci za taková, jako by pocházela
     od určitého odesílatele -- tj. i změnit či upravit data pocházející od pravého odesílatele
   \item[nepopiratelnost] odesílatel nemůže popřít u jím vytvořené a podepsané zprávy, že ji odeslal on
 \end{description}
@@ -119,13 +119,13 @@ za slabé.
 tento klíč se rozdělí na tři 56-bitové a při šifrování se projde třemi fázemi DESu
 $C = F(K_3,(F^{-1}(K_2(F(K_1, P)))$, prostřední je dešifrování. Z hashovacích jsou uvedeny pouze bezklíčové.
 NIST\footnote{Národní institut pro standardizaci a technologie USA} vypsal soutěž na nový standard SHA3,
-která se nyní nachází ve 2.kole, mezi postupujícími kandidáty jsou například šifry
+která se nyní nachází ve 2. kole, mezi postupujícími kandidáty jsou například šifry
 CubeHash či Luffa(\cite{specLuffa}).
 
 \section{Symetrická kryptografie}
 Symetrické šifry se dělí na blokové a proudové.
 Proudové šifry berou zprávu po bajtech, případně bitech či znacích. Bloková šifra
-bere zprávu po větších blocích (64 až 256 bitů). Vetší velikost bloku zabraňuje statistickým
+bere zprávu po větších blocích (64 až 256 bitů). Větší velikost bloku zabraňuje statistickým
 a slovníkovým útokům. Pro $n$-bitový blok je $2^n$ možných vstupních i výstupních kombinací a
 existuje $2^{n}!$ možných zobrazení.
 Příkladem blokové šifry je například DES který šifruje po 64 bitových blocích. Příkladem proudové šifry
@@ -146,10 +146,10 @@ použit pro inicializaci šifrování prvního bloku, jako další znalost nutn�
   \item[Cipher Block Chaining (CBC)] Bloky jsou zřetězeny. Na rozdíl od ECB je každý blok xorován
   s předchozím výstupním blokem předtím, než bude použit jako vstup šif\-ro\-va\-cí\-ho bloku.
   Blok prvního je xorován s inicializačním vektorem. Znázorněn je na obrázku \ref{cbc}.
-  \item[Cipher Feedback (CFB)] Narozdíl od CBC režimu je blok prostého textu xorován až s výstupem
+  \item[Cipher Feedback (CFB)] Na rozdíl od CBC režimu je blok prostého textu xorován až s výstupem
   bloku šifry a výsledek také přiveden na vstup následujícího šifrujícího bloku. Vstupem prvního bloku je
   inicializační vektor.
-  \item[Output Feedback (OFB)] Narozdíl do CFB režimu je na vstup následujícího bloku poslán výstup předchozího
+  \item[Output Feedback (OFB)] Na rozdíl od CFB režimu je na vstup následujícího bloku poslán výstup předchozího
   ještě před xorováním s plaintextem.
 \end{description}
 
@@ -275,7 +275,7 @@ aproximovat šifrovací algoritmus různými
 lineárními výrazy a nej(ne)pravděpodobnější z nich použít k postupnému získání klíče.
 
 
-Linearita je vztažena vůči mod-2 bitové operaci (např.,
+Linearita je vztažena vůči mod-2 bitové operaci (např.
 exkluzivní součet označený pomocí \uv{$\oplus$}). A lineární výraz je ve formě:
 \begin{equation}
   a_1 \cdot X_{i_1} \oplus a_2 \cdot X_{i_2} \oplus \dots \oplus a_u \cdot X_{i_u} \oplus
@@ -328,7 +328,7 @@ V ideální šifře\footnote{tj. takové, která má na výstupu náhodné vlast
 je pravděpodobnost, že se vyskytuje částečný rozdíl výstupů $\Delta Y$
 při daném částečném rozdílu vstupů $\Delta X$, $p_D = \frac{1}{2}^n$, kde $n$ je počet bitů v $X$.
 Diferenciální kryptoanalýza je použitelná v případech, kde se $\Delta Y$
-vyskytuje společně s $\Delta X$ s velmi velkou $p_D$ (např., o hodně větší než
+vyskytuje společně s $\Delta X$ s velmi velkou $p_D$ (např. o hodně větší než
 $\frac{1}{2}^n$). Dvojice $(\Delta X, \Delta Y)$ je nazývána jako \emph{diferenciál}.
 
 Diferenciální kryptoanalýza je tzv. \uv{chosen plaintext attack},

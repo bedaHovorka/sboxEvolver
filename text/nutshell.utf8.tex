@@ -12,11 +12,11 @@
 Tento krátký manuál je určen těm, kteří budou chtít provádět vlastní experimenty v evo\-luč\-ním
 hledání s-boxů.
 Pro správný (paralelní) chod je nutné mít zkompilovanou knihovnu Galib v upravené podobě.
-Pro sekvenční byla odzkoušena i knihovna původní.
+Pro sekvenční běh byla odzkoušena i původní knihovna.
 Po instalaci knihovny je možné pomocí příkazu \emph{make} zkompilovat dynamickou knihovnu
-pro hledání s-boxů. Pokud nejde z nejakeho důvodu Galib nainstalovat a jen zkompilovat
+pro hledání s-boxů. Pokud z nějakého důvodu nejde Galib nainstalovat a je možné jej jen zkompilovat
 v adresáři, musí se v makefile pomocí přepínačů -I a -L nastavit cesta k této knihovně.
-(V odevzdávané podobě jsou zdrojové kódy tak jak běžely na serveru merlin, takže makefile je nastavený).
+(V odevzdávané podobě jsou zdrojové kódy tak, jak běžely na serveru merlin, takže makefile je nastavený.)
 
 Dále popisované objekty jsou v (i)pythonu přístupné pomocí příkazu:
 \begin{verbatim}
@@ -51,7 +51,7 @@ a \verb|criterion| \\
 \verb|CriterionFunction.POLYNOMIAL_DEGREE| pro stupeň algebraického polynomu
 
 \subsubsection{Definování parametrů hledání, výběr algoritmu}
-Vytvoření nového hledání se provede pomocí zavolání kostruktoru:
+Vytvoření nového hledání se provede pomocí zavolání konstruktoru:
 \begin{verbatim}
 Searching(algorithm, genome, popSize, generations, [specific])
 \end{verbatim}

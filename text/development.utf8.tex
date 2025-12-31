@@ -11,17 +11,17 @@
 %
 Ve fázi návrhu byla vybrána kombinace jazyků C++ a Python. V C++ byly následně s pomocí
 knihovny GAlib naimplementovány
-časově náročnější operace, tj. průběh evoluce, reprezentace s-boxů,
-výpočty kritérií bezpečnosti z výstupů s-boxů.
-K evolučním experimentům byly zvoleny právě i algoritmy, které nejsou
+časově náročnější operace, tj. průběh evoluce, reprezentace s-boxů
+a výpočty kritérií bezpečnosti z výstupů s-boxů.
+K evolučním experimentům byly zvoleny také algoritmy, které nejsou
 součástí knihovny Galib. Dále bylo naimplementováno rozhraní mezi
-Pythonem a C++, aby mohly být experimenty spouštěny Pythonu a tam i zpracovány
+Pythonem a C++, aby mohly být experimenty spouštěny z Pythonu a aby tam byly také zpracovány
 výsledné statistiky.
 
-Třídy v C++ se dělí mezi ty, jenž se týkají reprezentací s-boxů, a ty, které
-provádí prohledávání. Jakoukoliv reprezentaci s-boxu je možné použít v kterémkoliv
+Třídy v C++ se dělí na ty, jež se týkají reprezentací s-boxů, a na ty, které
+provádějí prohledávání. Jakoukoliv reprezentaci s-boxu je možné použít v kterémkoliv
 prohledávacím algoritmu kromě algoritmu EDA, jenž podle definice pracuje s
-číselnými alelami, v této implementaci pouze s binárními.
+číselnými alelami; v této implementaci pouze s binárními.
 V následujícím textu jsou vybrány zajímavé součásti implementace.
 
 \section{Implementace evolučních algoritmů}
@@ -36,8 +36,8 @@ metody a pomocné objekty, které jsou během provedení jedné generace použit
 specializovaně pro konkrétní algoritmus.
 
 \subsubsection{Eda algoritmy}
-Třída EDA algoritmu rozšiřuje základní třídu o vlastnost model, ten může být dvojího
-typu daném třídou objektu. Bázová třída \sourceRef{EdaModel} implementuje UMDA statistický
+Třída EDA algoritmu rozšiřuje základní třídu o vlastnost model; ten může být dvojího
+typu daného třídou objektu. Bázová třída \sourceRef{EdaModel} implementuje UMDA statistický
 model, její podtřída \sourceRef{BmdaModel} totiž též používá prosté pravděpodobnosti výskytů alel
 k jeho výpočtům. Ve třídě \sourceRef{EstimationOfDistributionAlgorithm}
 je definována obecná logika EDA algoritmu a odpovědnost za
@@ -56,11 +56,11 @@ třídu \sourceRef{ContingentTable} a k jeho uložení les\footnote{množina str
 vytvořený pomocí instancí tříd \sourceRef{BmdaNode}. V metodě \sourceRef{learnStructure} nejprve spočítá
 kontingenční tabulky závislostí mezi lokusy. Kontingenční tabulky, u nichž
 vyjde hypotéza \uv{závisí} $\chi^2$-testu, jsou seřazeny podle hodnoty
-tohoto $\chi^2$-testu. Pokud není jsou všechny lokusy nezávislé, algoritmus
+tohoto $\chi^2$-testu. Pokud jsou všechny lokusy nezávislé, algoritmus
 skončí pouze s vypočteným UMDA modelem. V opačném případě jsou ze seřazených
 kontingenčních tabulek vygenerovány stromy
 závislostí\footnote{Algoritmus vytvoření tohoto lesa je uveden např. v \cite{evo}}.
-V metodě \sourceRef{} se podle typu aktuálního uloženého modelu vybere, buď
+V metodě \sourceRef{sampleModel} se podle typu aktuálního uloženého modelu vybere buď
 generování jedinců v nadtřídě, nebo se při generování každého jedince
 projde lesem a hodnoty na jednotlivých lokusech jsou spočítány na základě
 prošlých podmíněných pravděpodobností v uzlech na větvích stromů.
@@ -79,8 +79,8 @@ V implementaci algoritmu VEGA (viz podkapitola \ref{algorithmVEGA})
 ve třídě \sourceRef{VegaAlgorithm} jsou v metodě \sourceRef{mainPopulationToSegments}
 rozděleny jedinci do podpopulací, dle počtu kritérií. V každé podpopulaci
 je jedincům nastavena její přidělená kriteriální funkce,
-případně jsou zneplatněno hodnocení těm,
-kteří byly v minulé generaci vyhodnoceni jiným kritériem.
+případně je zneplatněno hodnocení těm,
+kteří byli v minulé generaci vyhodnoceni jiným kritériem.
 V metodě \sourceRef{segmentsToMainPopulation} jsou jedinci
 v rámci podpopulace vyhodnoceni. Skóre je nastaveno každému jako podíl
 hodnoty vypočteného kritéria jedince a součtu všech. Poté jsou podpopulace
@@ -135,7 +135,7 @@ typů lze popsat:
 Při přidání clusteru v metodě \sourceRef{addCluster} se
 spočítají vzdálenosti nového clusteru se všemi existujícími clustery a
 uloží mezi $clusterDistances$.
-Každý nový pár je také přidán do $pairsForCluster$ k TODO obema klíčům.
+Každý nový pár je také přidán do $pairsForCluster$ k TODO oběma klíčům.
 
 Odebrání clusteru v metodě \sourceRef{removeCluster}:
 Při odebrání clusteru se zneplatní páry, ve kterých je cluster

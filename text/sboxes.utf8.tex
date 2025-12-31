@@ -12,12 +12,12 @@
 %
 %
 \section{Definice s-boxů}
-Substituční box (s-box) je část šifry taková, že jejím výstupem, jak již sám název název napovídá, %tato část věty se nazývá vložka
+Substituční box (s-box) je část šifry taková, že jejím výstupem, jak již sám název napovídá,
 je substituovaný vstup. Právě na s-boxy bývá přenesena většina odpovědnosti za nelineárnost
 a náhodnost výstupu celé šifry. Bezpečnost většiny blokových šifer (především těch na Feistelově síti)
 závisí na vlastnostech s-boxů použitých v jednotlivých kolech. Ty budou popsány níže.
 Většinou se s-box znázorňuje jako \uv{krabička} s jednotlivými vstupy a výstupy, kde
-jsou většinou znázorněny jednotlivé bity v pořadí a číslování, jak je vidět na obr \ref{sboxSchema}.
+jsou většinou znázorněny jednotlivé bity v pořadí a číslování, jak je vidět na obr. \ref{sboxSchema}.
 
 \insertimage[0.25\textwidth]{sboxSchema}{Schéma s-boxu}
 
@@ -129,7 +129,7 @@ Důkaz je uveden v \cite{yokohama} na str. 25
 \end{proof}
 
 \subsection{Bent funkce}
-V \cite{wikiBentFunction} kombinatorice, je \uv{bent funkce} zvláštní typ booleovské funkce.
+V \cite{wikiBentFunction} kombinatorice je \uv{bent funkce} zvláštní typ booleovské funkce.
 \uv{Bent\footnote{česky: křivé} funkce} jsou tak pojmenovány protože jsou odlišné
 od lineárních a afinních funkcí.
 Proto byly obsáhle studovány především pro jejich uplatnění v kryptografii,
@@ -208,7 +208,7 @@ vytvoří se kompletní tabulka četností všech lineárních aproximací odpov
 Řádky resp. sloupce odpovídají jednotlivým parametrům $a$ resp. $b$,
 $\forall a, b$ kde $0 \leq a < n$ a $0 \leq b < m$\footnote{$n$ a $m$ jsou dle def. \ref{defSbox}},
 Každá buňka tabulky \cite{tutorialLADA} reprezentuje
-pravděpodobnost výskytu (či počet shod) z lineárním výrazem odpovídajícímu parametrům $a$ a $b$. A z nich
+pravděpodobnost výskytu (či počet shod) z lineárním výrazem odpovídajícím parametrům $a$ a $b$. A z nich
 se vybere největší linearita a ta se pak použije při hledání s-boxu, který má
 tuto maximální linearitu nejmenší.
 Odchylka je ve vzorci normalizovaná do intervalu $\langle 0,1 \rangle$.
@@ -283,7 +283,7 @@ vyjadřují tyto polynomy třetího stupně:
   y_2 & = & 1 + a + c + a*b*c + a*b*d + c*d\\
   y_3 & = & a + b + c + a*b*c + b*c*d
 \end{eqnarray}
-kde $a = x_0$ je první vstupní bit atd., operace $+$ a $*$ jsou definovány v mod-2 aritmetice.
+kde $a = x_0$ je první vstupní bit~atd. Operace $+$ a $*$ jsou definovány v mod-2 aritmetice.
 A vyjadřují jak moc jsou bity výstupu závislé na vstupních bitech. Pokud má polynom nejvyšší
 možný řád, závisí výstupní bit na všech vstupech. Pro celý s-box je proto zvolen minimální
 řád ze všech polynomů vyjadřující výstupy. Jinou možností

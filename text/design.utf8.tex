@@ -18,7 +18,7 @@ Implementovaný program má v tomto případě tyto hlavní technické nároky, 
 sestupně podle důležitosti:
 \begin{description}
   \item[Snadné definování experimentů] Při popisu experimentů je nutné
-  se vyhnout rutinním krokům, např. komplikovaným deklaracím a době kterou zdržuje kompilace kódu, nejlépe
+  se vyhnout rutinním krokům, např. komplikovaným deklaracím a době, kterou zdržuje kompilace kódu, nejlépe
   pokud by je šlo zadávat a vyhodnocovat interaktivně.
   \item[Rychlost] Běh evoluce a výpočet kritérií se musí provést co nejrychleji.
   \item[Přenositelnost] Program by měl jít zkompilovat a spustit na nejširší možné skupině platforem používaných
@@ -47,8 +47,8 @@ sestupně podle důležitosti:
 
 \section{Prototypový návrh aplikace}
 Po stanovení hlavních požadavků byl nejprve pro ujasnění, kolik toho je třeba naimplementovat,
-sestaven prototyp aplikace,
-ve formě obdobné UML diagramům, obsahuje třídy s prázdnými metodami.
+sestaven prototyp aplikace
+ve formě obdobné UML diagramům; obsahuje třídy s prázdnými metodami.
 Nadtřída evolučních algoritmů uchovává populaci kandidátních řešení. Obsahuje obecnou logiku pro
 průběh evoluce a sběr statistik. Obrázek \ref{evolutionClassDiagram} znázorňuje hlavní evoluční
 algoritmy.
@@ -59,7 +59,7 @@ pomocí metody \sourceRef{variation()}.
 Při konstrukci objektů (před spuštěním \sourceRef{evolution()}) je předán typ reprezentace s-boxu a parametry
 evoluce. Množiny evaluátorů kritérií jsou předány též při konstrukci.
 U EDA algoritmu je důležitý atribut \sourceRef{model()}, který reprezentuje statistický model
-(poddruh EDA) bude použit.
+(poddruh EDA), jenž bude použit.
 Jednoduchost diagramu se ukázala důležitá ve fázi implementace, kdy bylo na základě něho
 vytvořeno rozhraní mezi Pythonem a C++ a byl dále zesložiťován.
 
@@ -71,22 +71,22 @@ Každá z nich má svou specifickou inicializaci, mutaci a křížení.
 \subsection{Seznam výstupů}
 Nejvíce se s-boxy reprezentují jako seznam výstupů (pole) o velikosti všech
 vstupních kombinací, kde vstup s-boxu je indexem a výstup je prvek
-na dané pozici. Pokud má být s-box bijektivní tak tento seznam představuje permutaci.
+na dané pozici. Pokud má být s-box bijektivní, pak tento seznam představuje permutaci.
 Například
 \begin{center}
 2 0 3 1
 \end{center}
 je s-box $2 \times 2$, který je bijektivní.
-U této reprezentace je možné zvolit jestli se má vyžadovat bijektivita.
+U této reprezentace je možné zvolit, jestli se má vyžadovat bijektivita.
 Podle toho jsou určeny genetické operátory. Pro bijektivní se použije mutace
 pomocí prohození genů. Křížení probíhá jako u permutačních problémů na základě pořadí.
-Pokud by se bijektivita nevyžadovala křížilo by se jednobodově, stejně jako u následující
-reprezentace, ale s tím, že zde jiná množina alel.
+Pokud by se bijektivita nevyžadovala, křížilo by se jednobodově, stejně jako u následující
+reprezentace, ale s tím, že je zde jiná množina alel.
 
 \subsection{Binární reprezentace}
 Binární reprezentace je složená z booleovských funkcí pro každý vstup.
 Bit booleovské funkce na $i$-té pozici představuje výstup, když je na vstupu $i$.
-S-box z předcházející reprezentace, lze pomocí binární zapsat takto (sloupce stále přestavují tutéž hodnotu):
+S-box z předcházející reprezentace lze pomocí binární zapsat takto (sloupce stále představují tutéž hodnotu):
 \begin{center}
 0 0 1 1\\
 1 0 1 0
@@ -96,7 +96,7 @@ Mimochodem tento s-box lze reprezentovat i jako polynomy jednotlivých funkcí,
 kde proměnné jsou vstupních bitů:
 $$s(x)_0 = b , s(x)_1 = 1 \oplus a$$
 Pro genetické operátory je seznam booleovských funkcí brán jako jednolitý chromozóm, nad
-kterým je provedeno jednobodové křížení a mutace změnou bitu na náhodné pozici.
+kterým je provedeno jednobodové křížení a mutace změní bit na náhodné pozici.
 
 \subsection{Acyklický graf hradel}
 Tato reprezentace pochází z kartézského genetického programování (značení viz příloha \ref{cgpfunctions})
@@ -114,20 +114,20 @@ v podkapitole \ref{algorithmCGP}.
 
 \subsection{Posloupnost trojinstrukcí platformy i686}\label{secAbouti686}
 Tato reprezentace byla inspirována implementací SubCrumb algoritmu Luffa \cite{specLuffa}.
-S tou obměnou, že je na vstupech a výstupech určená pro bity.
+S tou obměnou, že je na vstupech a výstupech určena pro bity.
 Počet vstupních i výstupních bitů jsou násobky čtyř.
 Jediným parametrem struktury je počet čtveřic bitů $p$ na vstupech a výstupech (počet vstupů a výstupů se shoduje).
 Reprezentace je modelem procesorů řady i686, z důvodu hledání optimální realizace na
 těchto procesorech -- optimální v softwaru. Model je složen z pěti registrů, v každém je uloženo $p$ bitů.
 Výpočet každého s-boxu je složen z šesti cyklů. V každém cyklu jsou tři instrukce o
 nichž se předpokládá, že je procesor provede paralelně, proto se nesmí opakovat stejný
-registr na výstupu instrukce (paralelismus CREW). Instrukcemi, které se mohou vyskytnout v každém cyklu jsou
+registr na výstupu instrukce (paralelismus CREW). Instrukcemi, které se mohou vyskytnout v každém cyklu, jsou
 XOR, AND, OR, NOT. Navíc v prvním cyklu je možné provést MOV a v posledním NOP.
 
 Průběh výpočtu začíná rozdělením vstupu na čtyři části $a_0$, $a_1$, $a_2$, $a_3$.
 Každá část $a_i$ má $p$ bitů a je nahrána do registru $r_i$, $r_4 = 0$.
 V simulaci jednoho cyklu se nejprve uloží hodnoty registrů do dočasných proměnných a provedením jednotlivých
-instrukcí nastaveny hodnoty nové. Výstup s-boxu je složen z $p$-bitových částí $y_i$
+instrukcí se nastaví hodnoty nové. Výstup s-boxu je složen z $p$-bitových částí $y_i$
 takto: $y_0 = r_0$, $y_1 = r_1$, $y_2 = r_3$ a $y_3 = r_4$.
 
 Pro seznam výstupů
@@ -162,12 +162,12 @@ je posloupnost trojinstrukcí
 \end{verbatim}
 \end{center}
 Instrukce jsou ve tvaru \verb|INST výstup, vstup|.
-U NOT je vstup zároveň výstupem k jeho definici se použije první operand.
+U NOT je vstup zároveň výstupem; k jeho definici se použije první operand.
 A NOP nemá žádné operandy. Takže se nepotřebné operandy ignorují.
 
 Křížení probíhá na úrovni cyklů. S cykly od rodičů se provede jednobodové křížení.
 Při mutaci se prochází všemi cykly. V každém je s pravděpodobností $pMut$ vybrána
-instrukce ke změně. Pokud je instrukce vybrána vybere se rovnoměrným rozložením
+instrukce ke změně. Pokud je instrukce vybrána, vybere se rovnoměrným rozložením
 pravděpodobnosti jedna ze tří možných změn:
 \begin{enumerate}
   \item změna typu instrukce --  s rovnoměrným rozložením pravděpodobnosti se vybere jedna z povolených
@@ -181,7 +181,7 @@ Tabulka \ref{tabReprezantationUsability} ukazuje, u kterého prohledávacího al
 těchto algoritmů.
 Pro acyklický graf hradel není definováno křížení, takže je nutné ho zakázat.
 Pokud EDA algoritmus pracuje s číselnými alelami, může hledat i číselný seznam, avšak
-ten statistický model bude zbytečně komplikovaný. Algoritmy VEGA a SPEA vlastně zvládnou to co GP,
+ten statistický model bude zbytečně komplikovaný. Algoritmy VEGA a SPEA vlastně zvládnou to co GP;
 v této tabulce je zohledněna potřeba multikriteriální optimalizace.
 \begin{table}[t]
   \begin{center}
