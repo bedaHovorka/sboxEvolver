@@ -1,9 +1,9 @@
 %
 %      Brno University of Technology
 %      Faculty of Information Technology
-% 
+%
 %      MSc Thesis	2009/2010
-% 
+%
 %      Design of S-Boxes Using Genetic Algorithms
 %
 %
@@ -22,7 +22,7 @@ Dále popisované objekty jsou v (i)pythonu přístupné pomocí příkazu:
 \begin{verbatim}
   from evolution import *
 \end{verbatim}
-tak jak vidět v souboru experiments.py. 
+tak jak vidět v souboru experiments.py.
 V tomto souboru jsou též provedené experimenty jako příklady.
 
 \subsubsection{Definování genomu}
@@ -42,9 +42,9 @@ počet výstupních bitů, počet sloupců, počet řádků, maximální počet 
 
 a \verb|criterion| \\
 (pro multikriteriální optimalizaci ignorován, lze však zadat \verb|CriterionFunction.NONE_FITNESS|)
-\verb|CriterionFunction.BENT_AND_MOSAC| pro zvolení kritéria bent skóre,\\ 
+\verb|CriterionFunction.BENT_AND_MOSAC| pro zvolení kritéria bent skóre,\\
 \verb|CriterionFunction.LP_MAX| pro linear probability, \\
-\verb|CriterionFunction.DP_MAX| pro differential probability,\\ 
+\verb|CriterionFunction.DP_MAX| pro differential probability,\\
 \verb|CriterionFunction.BIJECTIVE_SCORE| pro bijektivní skóre,\\
 \verb|CriterionFunction.SAC| pro řád Strict avalanche criterion,\\
 \verb|CriterionFunction.BF| pro faktor větvení,\\
@@ -56,11 +56,11 @@ Vytvoření nového hledání se provede pomocí zavolání kostruktoru:
 Searching(algorithm, genome, popSize, generations, [specific])
 \end{verbatim}
 \verb|algorithm| je\\
-\verb|"Ga"| pro jednokriteriální genetický algoritmus (genetické programování); \\ \verb|specific| pravděpodobnost mutace, 
+\verb|"Ga"| pro jednokriteriální genetický algoritmus (genetické programování); \\ \verb|specific| pravděpodobnost mutace,
  pravděpodobnost křížení, zapnutí elitismu\\
-\verb|"Vega"| pro algoritmus VEGA; \verb|specific| pravděpodobnost mutace, 
+\verb|"Vega"| pro algoritmus VEGA; \verb|specific| pravděpodobnost mutace,
  pravděpodobnost křížení, seznam kritérií\\
-\verb|"Spea"| pro algoritmus SPEA; \verb|specific| pravděpodobnost mutace, 
+\verb|"Spea"| pro algoritmus SPEA; \verb|specific| pravděpodobnost mutace,
  pravděpodobnost křížení, seznam kritérií\\
 \verb|"Eda"| pro algoritmus EDA; \verb|specific| typ (\verb|False| pro UMDA, \verb|True| BMDA)\\
 \verb|"Random"| pro náhodné prohledávání; velikost populace znamená počet uchovávaných nejlepších výsledků\\

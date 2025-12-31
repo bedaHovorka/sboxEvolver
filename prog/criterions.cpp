@@ -66,7 +66,7 @@ float lagrangeObjective(GAGenome &g) {
 }
 
 GAGenome::Evaluator criterionsEnumToFunction(CriterionsFitness fitness) {
-    switch (fitness) {
+	switch (fitness) {
 		case BENT_AND_MOSAC:
 			return bentAndMosacObjective;
 		case LP_MAX:
@@ -91,5 +91,5 @@ GAGenome::Evaluator criterionsEnumToFunction(CriterionsFitness fitness) {
 			assert(false);
 			break;
 	}
-    return NULL;
+	return NULL;
 }

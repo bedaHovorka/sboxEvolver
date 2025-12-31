@@ -14,7 +14,7 @@
 #include "multicriterial.h"
 
 void VegaAlgorithm::initialize(uint seed) {
-    commonPreInit(seed);
+	commonPreInit(seed);
 
 	createSegments();
 	mainPopulationToSegments();
@@ -71,7 +71,7 @@ inline void VegaAlgorithm::createSegments() {
 
 void VegaAlgorithm::step() {
 	std::swap(oldPop, pop);
-    variation(oldPop);
+	variation(oldPop);
 	mainPopulationToSegments();
 	segmentsToMainPopulation();
 	stats.update(*pop);
@@ -95,17 +95,17 @@ inline bool MulticriterialGeneticAlgorithm::is1dominatingOver2(GAGenome &g1, GAG
 	//silna dominance
 	Sbox &box1 = dynamic_cast<Sbox&>(g1);
 	Sbox &box2 = dynamic_cast<Sbox&>(g2);
-    const MultievaluationValues &values1 = box1.multievaluate(criterions);
-    const MultievaluationValues &values2 = box2.multievaluate(criterions);
-    assert(values1.size() == values2.size());
-    bool isOneGreater = false;
-    for (MultievaluationValues::const_iterator i1 = values1.begin() , i2 = values2.begin(); i1 != values1.end() && i2 != values2.end(); i1++, i2++) {
-    	assert(i1->first == i2->first);
-    	double cmp = i1->second - i2->second;
-    	if (cmp < 0) return false;
-    	if (cmp > 0) isOneGreater = true;
-    }
-    return isOneGreater;
+	const MultievaluationValues &values1 = box1.multievaluate(criterions);
+	const MultievaluationValues &values2 = box2.multievaluate(criterions);
+	assert(values1.size() == values2.size());
+	bool isOneGreater = false;
+	for (MultievaluationValues::const_iterator i1 = values1.begin() , i2 = values2.begin(); i1 != values1.end() && i2 != values2.end(); i1++, i2++) {
+		assert(i1->first == i2->first);
+		double cmp = i1->second - i2->second;
+		if (cmp < 0) return false;
+		if (cmp > 0) isOneGreater = true;
+	}
+	return isOneGreater;
 }
 
 inline void MulticriterialGeneticAlgorithm::computeNondominancePopulation(const GAPopulation &pop, GAPopulation &nondominance) {
@@ -274,10 +274,10 @@ inline void SpeaAlgorithm::evaluation() {
 }
 
 inline void MulticriterialGeneticAlgorithm::commonPreInit(uint seed) {
-    GARandomSeed(seed);
-    params.set(gaNnBestGenomes, 0);
-    stats.nBestGenomes(pop->individual(0), 0);
-    pop->initialize();
+	GARandomSeed(seed);
+	params.set(gaNnBestGenomes, 0);
+	stats.nBestGenomes(pop->individual(0), 0);
+	pop->initialize();
 }
 
 inline void MulticriterialGeneticAlgorithm::commonPostInit(GAPopulation *tmpPop) {
@@ -289,58 +289,58 @@ inline void MulticriterialGeneticAlgorithm::commonPostInit(GAPopulation *tmpPop)
 }
 
 inline void MulticriterialGeneticAlgorithm::variation(GAPopulation *tmpPop) {
-    // spolecna metoda pro VEGA a SPEA, pochazi z Galibu, pridano volani invalidate...
-    int i, mut, c1, c2;
-    for(i = 0;i < pop->size() - 1;i += 2){
-        // takes care of odd population
-        GAGenome *mom = &(tmpPop->select());
-        GAGenome *dad = &(tmpPop->select());
-        stats.numsel += 2; // keep track of number of selections
-        c1 = c2 = 0;
-        if(GAFlipCoin(pCrossover())){
-            stats.numcro += (*scross)(*mom, *dad, &pop->individual(i), &pop->individual(i + 1));
-            invalidate(&pop->individual(i));
-            invalidate(&pop->individual(i + 1));
-            c1 = c2 = 1;
-        } else {
-            pop->individual(i).copy(*mom);
-            pop->individual(i + 1).copy(*dad);
-        }
-        stats.nummut += (mut = pop->individual(i).mutate(pMutation()));
-        if(mut > 0) {
-        	invalidate(&pop->individual(i));
-        	c1 = 1;
-        }
+	// spolecna metoda pro VEGA a SPEA, pochazi z Galibu, pridano volani invalidate...
+	int i, mut, c1, c2;
+	for(i = 0;i < pop->size() - 1;i += 2){
+		// takes care of odd population
+		GAGenome *mom = &(tmpPop->select());
+		GAGenome *dad = &(tmpPop->select());
+		stats.numsel += 2; // keep track of number of selections
+		c1 = c2 = 0;
+		if(GAFlipCoin(pCrossover())){
+			stats.numcro += (*scross)(*mom, *dad, &pop->individual(i), &pop->individual(i + 1));
+			invalidate(&pop->individual(i));
+			invalidate(&pop->individual(i + 1));
+			c1 = c2 = 1;
+		} else {
+			pop->individual(i).copy(*mom);
+			pop->individual(i + 1).copy(*dad);
+		}
+		stats.nummut += (mut = pop->individual(i).mutate(pMutation()));
+		if(mut > 0) {
+			invalidate(&pop->individual(i));
+			c1 = 1;
+		}
 
-        stats.nummut += (mut = pop->individual(i + 1).mutate(pMutation()));
-        if(mut > 0) {
-        	invalidate(&pop->individual(i + 1));
-        	c2 = 1;
-        }
-        stats.numeval += c1 + c2;
-    }
-    if(is_odd(pop->size())){
-        // do the remaining population member
-        GAGenome *mom = &(tmpPop->select());
-        GAGenome *dad = &(tmpPop->select());
-        stats.numsel += 2; // keep track of number of selections
-        c1 = 0;
-        if(GAFlipCoin(pCrossover())){
-            stats.numcro += (*scross)(*mom, *dad, &pop->individual(i), (GAGenome*)(0));
-            invalidate(&pop->individual(i));
-            c1 = 1;
-        } else {
-            if(GARandomBit())
-                pop->individual(i).copy(*mom);
-            else
-                pop->individual(i).copy(*dad);
-        }
-        stats.nummut += (mut = pop->individual(i).mutate(pMutation()));
-        if(mut > 0) {
-        	invalidate(&pop->individual(i));
-        	c1 = 1;
-        }
-        stats.numeval += c1;
-    }
-    stats.numrep += pop->size();
+		stats.nummut += (mut = pop->individual(i + 1).mutate(pMutation()));
+		if(mut > 0) {
+			invalidate(&pop->individual(i + 1));
+			c2 = 1;
+		}
+		stats.numeval += c1 + c2;
+	}
+	if(is_odd(pop->size())){
+		// do the remaining population member
+		GAGenome *mom = &(tmpPop->select());
+		GAGenome *dad = &(tmpPop->select());
+		stats.numsel += 2; // keep track of number of selections
+		c1 = 0;
+		if(GAFlipCoin(pCrossover())){
+			stats.numcro += (*scross)(*mom, *dad, &pop->individual(i), (GAGenome*)(0));
+			invalidate(&pop->individual(i));
+			c1 = 1;
+		} else {
+			if(GARandomBit())
+				pop->individual(i).copy(*mom);
+			else
+				pop->individual(i).copy(*dad);
+		}
+		stats.nummut += (mut = pop->individual(i).mutate(pMutation()));
+		if(mut > 0) {
+			invalidate(&pop->individual(i));
+			c1 = 1;
+		}
+		stats.numeval += c1;
+	}
+	stats.numrep += pop->size();
 }

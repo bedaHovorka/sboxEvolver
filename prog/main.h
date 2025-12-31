@@ -44,19 +44,19 @@ extern "C" { // je treba ceckova deklarace...
 	} TGenome;
 
 	typedef struct {
-	    float online; //average of all scores
-	    float offlineMax; // average of the maximum scores
-	    float offlineMin; // average of the minimum scores
-	    float maxEver; // maximum score ever encountered
-	    float minEver; // minimum score ever encountered
+		float online; //average of all scores
+		float offlineMax; // average of the maximum scores
+		float offlineMin; // average of the minimum scores
+		float maxEver; // maximum score ever encountered
+		float minEver; // minimum score ever encountered
 
-	    int generation;  // current generation number
-	    float convergence; // current convergence. Here convergence means the ratio of the nth previous best-of-generation to the current best-of-generation.
-	    int selections; // number of selections that have occurred since initialization
-	    int crossovers; // number of crossovers that have occurred since initialization
-	    int mutations; // number of mutations that have occurred since initialization
-	    int replacements; // number of replacements that have occurred since initialization
-	    int nBestGenomes;
+		int generation;  // current generation number
+		float convergence; // current convergence. Here convergence means the ratio of the nth previous best-of-generation to the current best-of-generation.
+		int selections; // number of selections that have occurred since initialization
+		int crossovers; // number of crossovers that have occurred since initialization
+		int mutations; // number of mutations that have occurred since initialization
+		int replacements; // number of replacements that have occurred since initialization
+		int nBestGenomes;
 	} TStatistics;
 
 	typedef enum {

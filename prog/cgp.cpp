@@ -41,41 +41,41 @@ int CgpGenome::write(std::ostream & fout) const {
 int CgpGenome::blocksUsed() const {
 //	cout << "CgpGenome::BLOCKS_USED" << " " << algorithm() << endl;
 //	cout << this << " : "<< p_chrom << endl;
-    
-    int used[maxidx_out];
-    memset(used, 0, maxidx_out*sizeof(int));
-    chromozome p_pom;
-    
-    //oznacit jako pouzite bloky napojene na vystupy
-    p_pom = p_chrom + outputidx;
-    for (int i=0; i < param_outputs; i++) {
+
+	int used[maxidx_out];
+	memset(used, 0, maxidx_out*sizeof(int));
+	chromozome p_pom;
+
+	//oznacit jako pouzite bloky napojene na vystupy
+	p_pom = p_chrom + outputidx;
+	for (int i=0; i < param_outputs; i++) {
 //    	cout << p_pom << " : ";
-    	int in = *p_pom++;
+		int in = *p_pom++;
 //    	cout << "in: "<< in << endl;
-        used[in] = 1;
-    }
+		used[in] = 1;
+	}
 
-    int idx = maxidx_out-1;
-    int poc = 0;
-    
-    //pruchod od vystupu ke vstupum
-    p_pom = p_chrom + outputidx - 1;
-    for (int i=param_columns; i > 0; i--) {
-        for (int j=param_rows; j > 0; j--,idx--) {
-            p_pom--; //fce
-            if (used[idx] == 1) { //pokud je blok pouzit, oznacit jako pouzite i bloky, na ktere je napojen
-               int in = *p_pom--; //in2
-               used[in] = 1;
-               in = *p_pom--; //in1
-               used[in] = 1;
-               poc++;
-            } else {
-               p_pom -= block_in; //posun na predchozi blok
-            }
-        }
-    }
+	int idx = maxidx_out-1;
+	int poc = 0;
 
-    return poc;
+	//pruchod od vystupu ke vstupum
+	p_pom = p_chrom + outputidx - 1;
+	for (int i=param_columns; i > 0; i--) {
+		for (int j=param_rows; j > 0; j--,idx--) {
+			p_pom--; //fce
+			if (used[idx] == 1) { //pokud je blok pouzit, oznacit jako pouzite i bloky, na ktere je napojen
+				int in = *p_pom--; //in2
+				used[in] = 1;
+				in = *p_pom--; //in1
+				used[in] = 1;
+				poc++;
+			} else {
+				p_pom -= block_in; //posun na predchozi blok
+			}
+		}
+	}
+
+	return poc;
 }
 
 inline int CgpGenome::mutation() {
@@ -166,42 +166,42 @@ int CgpGenome::equal(const GAGenome & other) const {
 int CgpGenome::output(int x) const {
 	int *vystupy;
 	vystupy = new int[maxidx_out+param_outputs];
-    int *p_vystup = vystupy + param_inputs; //posunuti az za hodnoty vstupu
-    chromozome p_pom = p_chrom;
-    
-    for (int i = 0; i < param_inputs; i++) {
-    	vystupy[i] = (x & (1<<i)) > 0;
-    }
+	int *p_vystup = vystupy + param_inputs; //posunuti az za hodnoty vstupu
+	chromozome p_pom = p_chrom;
 
-    for (int i = 0; i < param_columns; i++) {  //vyhodnoceni funkce pro sloupec
-    	for (int j = 0; j < param_rows; j++) { //vyhodnoceni funkce pro radky sloupce
-    		int in1 = vystupy[*p_pom++];
-    		int in2 = vystupy[*p_pom++];
-    		int fce = *p_pom++;
-    		switch (fce) {
+	for (int i = 0; i < param_inputs; i++) {
+		vystupy[i] = (x & (1<<i)) > 0;
+	}
+
+	for (int i = 0; i < param_columns; i++) {  //vyhodnoceni funkce pro sloupec
+		for (int j = 0; j < param_rows; j++) { //vyhodnoceni funkce pro radky sloupce
+			int in1 = vystupy[*p_pom++];
+			int in2 = vystupy[*p_pom++];
+			int fce = *p_pom++;
+			switch (fce) {
 				case 0: *p_vystup++ = in1; break;       //in1
 
 				case 1: *p_vystup++ = in1 & in2; break; //and
 				case 2: *p_vystup++ = in1 | in2; break; //or
 				case 3: *p_vystup++ = in1 ^ in2; break; //xor
-				
+
 				case 4: *p_vystup++ = ~in1; break;  //not in1
 				case 5: *p_vystup++ = ~in2; break;  //not in2
-				
+
 				case 6: *p_vystup++ = in1 & ~in2; break;
 				case 7: *p_vystup++ = ~(in1 & in2); break;
 				case 8: *p_vystup++ = ~(in1 | in2); break;
 				default: *p_vystup++ = 0xffffffff; //log 1
-    		}
-    	}
-    }
+			}
+		}
+	}
 
-    int res = 0;
-    for (int i = 0; i < getOutputsCount(); i++) {
-    	res += (vystupy[*p_pom++]&1) << i;
-    }
-    delete[] vystupy;
-    return res;
+	int res = 0;
+	for (int i = 0; i < getOutputsCount(); i++) {
+		res += (vystupy[*p_pom++]&1) << i;
+	}
+	delete[] vystupy;
+	return res;
 }
 
 int CgpGenome::inputsCount() const {

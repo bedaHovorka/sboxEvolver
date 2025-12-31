@@ -67,17 +67,17 @@ public:
 	inline const intVector computeOutputs() const {
 		const int inputsCombinations = 1<<inputsCount();
 		intVector outputs;
-	    outputs.reserve(inputsCombinations);
-	    for(int x = 0;x < inputsCombinations;x++){
-	    	const int y = output(x);
-	    	assert( (y < 1<<outputsCount()) && (y >= 0));
-	    	outputs.push_back(y);
-	    }
-	    return outputs;
+		outputs.reserve(inputsCombinations);
+		for(int x = 0;x < inputsCombinations;x++){
+			const int y = output(x);
+			assert( (y < 1<<outputsCount()) && (y >= 0));
+			outputs.push_back(y);
+		}
+		return outputs;
 	}
 
 	inline float computeCriterionsFunction(const CriterionsFitness fitness, const intVector &outputsArg=intVector()) {
-	    const intVector &outputs = (outputsArg.empty()) ? computeOutputs() : outputsArg;
+		const intVector &outputs = (outputsArg.empty()) ? computeOutputs() : outputsArg;
 
 		switch (fitness) {
 			case BENT_AND_MOSAC:
@@ -127,7 +127,7 @@ public:
 				assert(false);
 				break;
 		}
-	    return 0.0;
+		return 0.0;
 	}
 
 	inline const MultievaluationValues &multievaluate(const CriterionsSet &criterions) {

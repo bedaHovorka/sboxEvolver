@@ -71,7 +71,7 @@
 \def\@keywords@CS{Klíèová slova}
 \def\@keywords@EN{Keywords}
 \def\@cite@CS{Citace}
-\def\@copyright@CS{Tato práce vznikla jako ¹kolní dílo na Vysokém uèení technickém v Brnì, Fakultì informaèních technologií. 
+\def\@copyright@CS{Tato práce vznikla jako ¹kolní dílo na Vysokém uèení technickém v Brnì, Fakultì informaèních technologií.
 Práce je chránìna autorským zákonem a její u¾ití bez udìlení oprávnìní autorem je nezákonné, s výjimkou zákonem definovaných pøípadù.}
 \def\@tdecl@CS{Prohlá¹ení}
 \def\@tackn@CS{Podìkování}
@@ -130,7 +130,7 @@ Práce je chránìna autorským zákonem a její u¾ití bez udìlení oprávnìní autorem j
 %-----------------------------------------------------------------------------
 % Projectinfo - parametrizace sablony
 %-----------------------------------------------------------------------------
-%Parametry 
+%Parametry
 \define@key{projinfo}{title.cs}{\global\def\@title@CS{#1}}
 \define@key{projinfo}{title.en}{\global\def\@title@EN{#1}}
 \define@key{projinfo}{title.break}{\global\def\@titlebreak{#1}}
@@ -154,8 +154,8 @@ Práce je chránìna autorským zákonem a její u¾ití bez udìlení oprávnìní autorem j
 
 %Vychozi hodnoty
 \setkeys{projinfo}{
-  title.cs={Název práce (èesky)},title.en={Název práce(anglicky)}, 
-  date=\today, project=BP, department=UIFS, declaration=, 
+  title.cs={Název práce (èesky)},title.en={Název práce(anglicky)},
+  date=\today, project=BP, department=UIFS, declaration=,
   abstract.cs=, abstract.en=, keywords.cs=, keywords.en=,
   author=Jmeno Prijmeni, supervisor=Jmeno Prijmeni
 }%
@@ -192,7 +192,7 @@ Práce je chránìna autorským zákonem a její u¾ití bez udìlení oprávnìní autorem j
 \newcommand\makecover{\thispagestyle{empty}\null%
 %===================================================
 \fontfamily{phv}\selectfont%
-%  
+%
 \mkuctxt{24}{\@vut@CS}
 \mkuctxt{11}{\@vut@EN}
 
@@ -233,14 +233,14 @@ Práce je chránìna autorským zákonem a její u¾ití bez udìlení oprávnìní autorem j
 
 
  \newcommand\noprinting
- { 
+ {
     \input{zadani}
      \newpage
-%      
+%
 %     \thispagestyle{empty}\null
-%     
+%
 %      \mktxt{16}{Licenèní smlouva} Licenèní smlouva je ulo¾ena v archívu Fakulty informaèních technologií Vysokého uèení technického v Brnì.
-%     
+%
 %      \vfill
  }
 

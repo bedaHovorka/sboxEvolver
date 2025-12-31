@@ -1,9 +1,9 @@
 #
 #      Brno University of Technology
 #      Faculty of Information Technology
-# 
+#
 #      MSc Thesis	2009/2010
-# 
+#
 #      $Date:: 2010-01-15 0#$:
 #
 #
@@ -38,7 +38,7 @@ all:        $(patsubst %.eps,%.pdf,$(wildcard *.eps)  $(WMFEPSS) $(BMPEPSS) $(DI
 	autotrace -dpi 1200 -filter-iterations 64 $< -output-format eps > $@
 
 .svg.eps:
-	inkscape $< --export-eps=$@	
+	inkscape $< --export-eps=$@
 ###########################################
 
 clean:

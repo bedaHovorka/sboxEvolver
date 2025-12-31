@@ -1,0 +1,79 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Python files
+[*.py]
+charset = utf-8
+indent_style = space
+indent_size = 4
+max_line_length = 120
+
+# C++ source files
+[*.{cpp,cc,cxx}]
+charset = utf-8
+indent_style = tab
+tab_width = 4
+max_line_length = 120
+
+# C++ header files
+[*.{h,hpp,hxx}]
+charset = utf-8
+indent_style = tab
+tab_width = 4
+max_line_length = 120
+
+# Markdown files
+[*.md]
+charset = utf-8
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+
+# Configuration files
+[*.{json,yml,yaml,toml}]
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+# Shell scripts
+[*.sh]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+
+# Makefiles require tabs
+[{Makefile,*.mk}]
+indent_style = tab
+
+# Git configuration files
+[.gitignore]
+charset = utf-8
+insert_final_newline = true
+
+# CMake files
+[{CMakeLists.txt,*.cmake}]
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+# LaTeX files (UTF-8)
+[*.tex]
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+# LaTeX bibliography and style files (Latin-2)
+[*.{bib,bst,cls,dat}]
+charset = latin2
+indent_style = space
+indent_size = 2

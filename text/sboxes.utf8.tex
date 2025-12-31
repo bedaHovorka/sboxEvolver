@@ -1,9 +1,9 @@
 %
 %      Brno University of Technology
 %      Faculty of Information Technology
-% 
+%
 %      MSc Thesis	2009/2010
-% 
+%
 %      Design of S-Boxes Using Genetic Algorithms
 %
 %
@@ -13,8 +13,8 @@
 %
 \section{Definice s-boxů}
 Substituční box (s-box) je část šifry taková, že jejím výstupem, jak již sám název název napovídá, %tato část věty se nazývá vložka
-je substituovaný vstup. Právě na s-boxy bývá přenesena většina odpovědnosti za nelineárnost 
-a náhodnost výstupu celé šifry. Bezpečnost většiny blokových šifer (především těch na Feistelově síti) 
+je substituovaný vstup. Právě na s-boxy bývá přenesena většina odpovědnosti za nelineárnost
+a náhodnost výstupu celé šifry. Bezpečnost většiny blokových šifer (především těch na Feistelově síti)
 závisí na vlastnostech s-boxů použitých v jednotlivých kolech. Ty budou popsány níže.
 Většinou se s-box znázorňuje jako \uv{krabička} s jednotlivými vstupy a výstupy, kde
 jsou většinou znázorněny jednotlivé bity v pořadí a číslování, jak je vidět na obr \ref{sboxSchema}.
@@ -24,39 +24,39 @@ jsou většinou znázorněny jednotlivé bity v pořadí a číslování, jak je
 Formálně se s-box dá definovat takto:
 \begin{definition}\cite{practicalSboxDesign}
 $n \times m$ s-box $S$ je zobrazení $S: \{0,1\}^n \rightarrow \{0,1\}^m$.
-$S$ může být reprezentován jako $2^n$ $m$-bitová čísla, označená $r_0, \dots, r_{2^n-1}$, 
+$S$ může být reprezentován jako $2^n$ $m$-bitová čísla, označená $r_0, \dots, r_{2^n-1}$,
 v tom případě $S(x) = r_x$ , $0 \leq x < 2^n$ a $r_i$ jsou řádky
-s-boxu. Alternativně, $S(x) = \left[ c_{m−1}(x) \, c_{m−2}(x) \dots c_{0}(x) \right] $ 
-kde $c_i$ je pevná Booleovská funkce $c_i : \{0,1\}^n \rightarrow \{0,1\} \, \forall i$; 
+s-boxu. Alternativně, $S(x) = \left[ c_{m−1}(x) \, c_{m−2}(x) \dots c_{0}(x) \right] $
+kde $c_i$ je pevná Booleovská funkce $c_i : \{0,1\}^n \rightarrow \{0,1\} \, \forall i$;
 to jsou sloupce s-boxu.
 \label{defSbox}
 \end{definition}
 Velikost s-boxů se často zapisuje jako $n \times m$.
 Velké s-boxy \cite{bigSboxes} jsou obecně pokládány za bezpečnější
 než malé, ale za cenu větší složitosti realizace a validace.
-S-boxy s malým vstupem a velkým výstupem mají velmi dobrou lineární aproximaci. 
+S-boxy s malým vstupem a velkým výstupem mají velmi dobrou lineární aproximaci.
 U s-boxů s dostatečně větším výstupem než vstupem je garantována nejméně jedna
 perfektní lineární aproximace.
 
 \section{Kritéria bezpečnosti s-boxů}\label{secCriterions}
-Kritéria, jež se dají použít jako\footnote{nebo podle nichž se dají sestavit} 
-heuristické či hodnotící funkce, mohou být použita k prohledávání stavového prostoru. 
-Téměř všechny vycházejí (či mají nějaký vztah) 
+Kritéria, jež se dají použít jako\footnote{nebo podle nichž se dají sestavit}
+heuristické či hodnotící funkce, mohou být použita k prohledávání stavového prostoru.
+Téměř všechny vycházejí (či mají nějaký vztah)
 z lineární a diferenciální kryptoanalýzy.
 Vycházejí z možných útoků na šifru, mohou být různě matematicky dokázány odolnosti vůči
 těmto útokům, jiným se spíše věří, že fungují.
 
 \subsection{SAC}\label{critSAC}
-Strict Avalanche Criterion \cite{yokohama} je založen na tzv. \uv{lavinovém efektu}. 
+Strict Avalanche Criterion \cite{yokohama} je založen na tzv. \uv{lavinovém efektu}.
 U s-boxů se zkoumá, kolik bitů výstupu se změní při změně jednoho bitu vstupu. Při vyzkoušení
 změny jednoho bitu u všech možných vstupů, by průměr změn na výstupu měl být polovina počtu výstupních
 bitů.
 
-\begin{definition}[Avalanche efekt] Funkce $f: \{0,1\}^n \rightarrow \{0,1\}^m$ 
+\begin{definition}[Avalanche efekt] Funkce $f: \{0,1\}^n \rightarrow \{0,1\}^m$
 ukazuje lavinový efekt pokud a jen tehdy:
-	\begin{equation}
-		\sum\limits_{x \in \{0,1\}^n} wt(f(x) \oplus f(x \oplus c^{(n)}_i)) = m 2^{n-1}
-	\end{equation}  
+  \begin{equation}
+    \sum\limits_{x \in \{0,1\}^n} wt(f(x) \oplus f(x \oplus c^{(n)}_i)) = m 2^{n-1}
+  \end{equation}
 pro $\forall i: 1 \leq i \leq n$, kde $wt(x)$ je Hammingova váha\footnote{počet jedničkových bitů}
 a $c^{(n)}_i$ je $n$-dimenzionální vektor s $wt(c^{(n)}_i) = 1$ s nastavenou pozicí $i$.
 \end{definition}
@@ -71,7 +71,7 @@ pro $\forall i: 1 \leq i \leq n$ platí tyto rovnice:
   Každá funkce $f$ splňující SAC je nazývána \uv{silný s-box}
 \end{definition}
 
-Pokud funkce splňuje SAC, každý její výstupní bit by se měl změnit s poloviční prav\-dě\-po\-dob\-no\-stí, 
+Pokud funkce splňuje SAC, každý její výstupní bit by se měl změnit s poloviční prav\-dě\-po\-dob\-no\-stí,
 pokaždé co je změněn jeden vstupní bit. Pokud nějaký výstup závisí na pouze několika málo vstupních
 bitech, potom může útočník těchto vztahů využít k nalezení klíče.
 SAC bylo dále rozšířeno:
@@ -81,17 +81,17 @@ pokud a jen tehdy:
   \begin{itemize}
     \item $f$ splňuje SAC 0. řádu
     \item každá funkce získaná z $f$, tak že zachovává jeden $i$-tý bit konstantní a rovný $c$
-      splňuje SAC pro každé $i \in \{1,2,\dots,n\}$ a $c = 0$ nebo $c = 1$. 
+      splňuje SAC pro každé $i \in \{1,2,\dots,n\}$ a $c = 0$ nebo $c = 1$.
   \end{itemize}
 \end{definition}
 
 Obecně lze rozšíření definovat rekurzivně, a to až do řádu $k \leq n - 2$:
 
-\begin{definition}[SAC $k$-tého řádu] Funkce $f: \{0,1\}^n \rightarrow \{0,1\}^m$ splňuje 
+\begin{definition}[SAC $k$-tého řádu] Funkce $f: \{0,1\}^n \rightarrow \{0,1\}^m$ splňuje
 SAC $k$-tého řádu pokud a jen tehdy:
   \begin{itemize}
     \item $f$ splňuje SAC $(k - 1)$-ho řádu
-    \item každá funkce získaná z $f$, tak že zachovává $k$ jejích bitů konstantních 
+    \item každá funkce získaná z $f$, tak že zachovává $k$ jejích bitů konstantních
     (pro všechny možné kombinace pozic a hodnot) a splňuje SAC
   \end{itemize}
 \end{definition}
@@ -116,10 +116,10 @@ SAC $k$-tého řádu pokud a jen tehdy:
 \end{table}
 
 SAC nejvyššího možného řádu $k = n - 2$ má zvláštní označení MOSAC\footnote{z anglického \uv{maximal order}}.
-V tabulce \ref{miniSAC} jsou v řádcích uvedeny základní booleovské funkce splňující MOSAC. 
+V tabulce \ref{miniSAC} jsou v řádcích uvedeny základní booleovské funkce splňující MOSAC.
 Tyto funkce mají 2-bitový vstup uvedený ve sloupcích a splňují SAC 0. řádu. Sloupce reprezentují všechny
 kombinace vstupů. Jak je patrné, výstupy jsou u každé funkce u třech bitů jsou stejné a jeden se
-liší. 
+liší.
 
 \begin{theorem}
 Silný s-box není lineární ani afinní.
@@ -131,14 +131,14 @@ Důkaz je uveden v \cite{yokohama} na str. 25
 \subsection{Bent funkce}
 V \cite{wikiBentFunction} kombinatorice, je \uv{bent funkce} zvláštní typ booleovské funkce.
 \uv{Bent\footnote{česky: křivé} funkce} jsou tak pojmenovány protože jsou odlišné
-od lineárních a afinních funkcí. 
-Proto byly obsáhle studovány především pro jejich uplatnění v kryptografii, 
-ačkoliv jejich spektrum aplikací je široké i v teorii kódování a návrhu kombinačních obvodů. 
+od lineárních a afinních funkcí.
+Proto byly obsáhle studovány především pro jejich uplatnění v kryptografii,
+ačkoliv jejich spektrum aplikací je široké i v teorii kódování a návrhu kombinačních obvodů.
 Definice může být rozšířena v mnoha možnostech.
 
-\begin{definition}\cite{yokohama} Booleovská funkce $g(w): \{0,1\}^n \rightarrow \{0,1\}$, 
-$n = 2l, l \in \mathcal{N}$ je bent funkcí, 
-pokud každý koeficient 
+\begin{definition}\cite{yokohama} Booleovská funkce $g(w): \{0,1\}^n \rightarrow \{0,1\}$,
+$n = 2l, l \in \mathcal{N}$ je bent funkcí,
+pokud každý koeficient
 Fourierovy transformace\footnote{tento zvláštní případ se nazývá častěji Walshova transformace}
 $G(w)$ Walshovy funkce $(-1)^{g(w)}$ definované
 pro všechna $w \in \{0,1\}^n$
@@ -154,7 +154,7 @@ má jednotkovou velikost
 \begin{theorem}[Vztah mezi bent funkcemi a funkcemi splňujícími SAC]
 \label{bentTheorem}
 Nechť $\mathcal{A}_n $ označuje množinu všech $n$-bitových booleovských funkcí,
-$\mathcal{B}_n $ množinu $n$-bitových bent funkcí 
+$\mathcal{B}_n $ množinu $n$-bitových bent funkcí
 a $\mathcal{S}_n $ množinu $n$-bitových booleovských funkcí splňujících SAC.
 A obzvlášť můžeme označit mno\-ži\-nu $n$-bitových booleovských funkcí splňujících
 MOSAC jako $\mathcal{S}^{\max}_n$. Vztah mezi těmito množinami pro sudá $n$ lze
@@ -169,7 +169,7 @@ Důkaz je uveden v \cite{yokohama} na str. 31
 \end{proof}
 Toho lze využít k zúžení prohledávacího prostoru, při hledání funkcí splňujících SAC.
 Pro s-boxy s více výstupy lze z definice \ref{defSbox} předpokládat, že každý výstup je
-booleovská funkce a podle toho sestavit hodnotící funkci. Pro představu jsou v tabulce 
+booleovská funkce a podle toho sestavit hodnotící funkci. Pro představu jsou v tabulce
 \ref{bentSetTable} uvedeny velikostí některých množin.
 
 \begin{table}
@@ -179,7 +179,7 @@ booleovská funkce a podle toho sestavit hodnotící funkci. Pro představu jsou
   n & 2 & 3 & 4 & 5 & 6 \\ \hline
   $|\mathcal{A}_n|$ & $16$ & $256$ & $65536$ & $2^{32}$ & $2^{64}$ \\ \hline
   $|\mathcal{S}_n|$ & $8$ & $64$ & $4128$ & ? & ? \\ \hline
-  $|\mathcal{B}_n|$ & $8$ & -- & $896$ & -- & $2^{32.3}$ \\ \hline 
+  $|\mathcal{B}_n|$ & $8$ & -- & $896$ & -- & $2^{32.3}$ \\ \hline
   $|\mathcal{S}^{\max}_n|$ & $8$ & $16$ & $32$ & $64$ & $128$ \\ \hline
   \end{tabular}
   \caption{Velikost množin z věty \ref{bentTheorem} \cite{yokohama}}
@@ -188,7 +188,7 @@ booleovská funkce a podle toho sestavit hodnotící funkci. Pro představu jsou
 \end{table}
 
 \subsection{Největší odchylka z lineárních výrazů}
-K výpočtu nelinearity boolovské funkce $f$ můžeme použít vzorec z \cite{yokohama}, 
+K výpočtu nelinearity boolovské funkce $f$ můžeme použít vzorec z \cite{yokohama},
 založený na Hammingově vzdálenosti od množiny afinních funkcí a na Walshově transformaci
 $\hat{F}$ funkce $\hat{f}: \{0,1\}^n \rightarrow \{1, -1\}$, obdobně jak u SAC:
 \begin{eqnarray}
@@ -203,28 +203,28 @@ podle vzorce z \cite{twofish} :
 LP_{\max}(q) = \max_{a, b \neq 0} \left( 2 Pr_X[X \cdot a = q(X) \cdot b] - 1 \right)^2
 \end{equation}
 
-Tento vzorec je založen na postupu, že se nejprve 
-vytvoří se kompletní tabulka četností všech lineárních aproximací odpovídající tvaru rovnice \ref{eqLinearAprox}. 
-Řádky resp. sloupce odpovídají jednotlivým parametrům $a$ resp. $b$, 
+Tento vzorec je založen na postupu, že se nejprve
+vytvoří se kompletní tabulka četností všech lineárních aproximací odpovídající tvaru rovnice \ref{eqLinearAprox}.
+Řádky resp. sloupce odpovídají jednotlivým parametrům $a$ resp. $b$,
 $\forall a, b$ kde $0 \leq a < n$ a $0 \leq b < m$\footnote{$n$ a $m$ jsou dle def. \ref{defSbox}},
 Každá buňka tabulky \cite{tutorialLADA} reprezentuje
 pravděpodobnost výskytu (či počet shod) z lineárním výrazem odpovídajícímu parametrům $a$ a $b$. A z nich
-se vybere největší linearita a ta se pak použije při hledání s-boxu, který má 
-tuto maximální linearitu nejmenší. 
-Odchylka je ve vzorci normalizovaná do intervalu $\langle 0,1 \rangle$. 
+se vybere největší linearita a ta se pak použije při hledání s-boxu, který má
+tuto maximální linearitu nejmenší.
+Odchylka je ve vzorci normalizovaná do intervalu $\langle 0,1 \rangle$.
 Jak vyplývá z textu uvedeného výše, zajímavá je její velikost, ne znaménko.
 
 \pagebreak
 
 \subsection{Největší pravděpodobnost z diferenciálů}
-Pro výpočet největší pravděpodobnosti diferenciálu s-boxu $q$ 
+Pro výpočet největší pravděpodobnosti diferenciálu s-boxu $q$
 použijeme tento vzorec \cite{twofish}, vycházející z diferenciální kryptoanalýzy:
 \begin{equation}
   DP_{\max}(q) = \max_{a \neq 0 , b} Pr_X[q(X \oplus a) \oplus q(X) = b]
 \end{equation}
 Tento vzorec je opět založen na tabulce \cite{tutorialLADA} počtu výskytů
-(rozložení pravděpodobnosti) rozdílů, ve které každý řádek reprezentuje hodnoty 
-$\Delta X = a$ a sloupce reprezentují hodnoty $\Delta Y = b$. 
+(rozložení pravděpodobnosti) rozdílů, ve které každý řádek reprezentuje hodnoty
+$\Delta X = a$ a sloupce reprezentují hodnoty $\Delta Y = b$.
 Každá buňka tabulky reprezentuje počet případů, kdy je
 výstupní rozdíl roven $b$, pokud je vstupní rozdíl $a$. Poznamenejme, že například případ vyloučený
 z výpočtu mající parametry ($a = 0$, $b = 0$), má vždy největší pravděpodobnost v tabulce,
@@ -233,7 +233,7 @@ pravděpodobnost použita z tabulky k minimalizaci.
 V \cite{practicalSboxDesign} je toto kritérium nazýváno \uv{tabulka XOR}.
 
 \subsection{Faktor větvení}\label{secBF}
-Proces šifrování by měl kódovanou informaci pokud možno rozptýlit tak, 
+Proces šifrování by měl kódovanou informaci pokud možno rozptýlit tak,
 aby prohledávací prostor byl pro útočníka co nejsložitější. Představme si
 prohledávací prostor ve tvaru stromu. Minimální počet následovníků každého uzlu
 určuje spodní odhad složitosti prohledávání, který je na něm závislý exponenciálně.
@@ -249,14 +249,14 @@ Faktor větvení je míra mocnosti rozptýlení:
   \begin{eqnarray}
     \min_{\Delta x \neq 0, x} \left( wt(\Delta x) + wt(\Delta f(x)) \right)\\
     \Delta f(x) = f(x) \oplus f(x \oplus \Delta x)
-  \end{eqnarray}  
+  \end{eqnarray}
 \end{definition}
 Na vstupu a výstupu jsou ve skutečnosti rozdíly, počítá se minimální součet počtu změn ve vstupu a výstupu dohromady.
 Toto kritérium se použije k maximalizaci.
- 
+
 \subsection{Řád algebraického polynomu}
 Funkci, jež popisuje s-box, je možné aproximovat nejen lineárními výrazy v $GF(2)$ aritmetice,
-ale i interpolovat polynomy v této aritmetice pro každý výstupní bit. Polynom pro jeden z bitů 
+ale i interpolovat polynomy v této aritmetice pro každý výstupní bit. Polynom pro jeden z bitů
 výstupu $y_i$ lze definovat pomocí vzorce:
 \begin{equation}
   y_i(x) = \sum\limits_{a \in \mathcal{A}} \left(\prod\limits_{j=0}^{n} a_j \cdot z_j \right)
@@ -272,15 +272,15 @@ Pro celý s-box je pak jako kritérium použitelný minimální řád z polynom�
 \pagebreak
 S-box $4 \times 4$ daný posloupností
 \begin{verbatim}
-  [ 7 11 15 2 8 4 1 3 6 9 14 5 12 0 13 10 ] 
+  [ 7 11 15 2 8 4 1 3 6 9 14 5 12 0 13 10 ]
 \end{verbatim}
 \nopagebreak
 vyjadřují tyto polynomy třetího stupně:
 \nopagebreak
 \begin{eqnarray}
-  y_0 & = & 1 + a*b + c + b*c + a*b*c + d + a*d + a*b*d + c*d + a*c*d\\ 
-  y_1 & = & 1 + c + a*b*c + a*d + a*c*d\\ 
-  y_2 & = & 1 + a + c + a*b*c + a*b*d + c*d\\ 
+  y_0 & = & 1 + a*b + c + b*c + a*b*c + d + a*d + a*b*d + c*d + a*c*d\\
+  y_1 & = & 1 + c + a*b*c + a*d + a*c*d\\
+  y_2 & = & 1 + a + c + a*b*c + a*b*d + c*d\\
   y_3 & = & a + b + c + a*b*c + b*c*d
 \end{eqnarray}
 kde $a = x_0$ je první vstupní bit atd., operace $+$ a $*$ jsou definovány v mod-2 aritmetice.
@@ -290,13 +290,13 @@ možný řád, závisí výstupní bit na všech vstupech. Pro celý s-box je pr
 by mohl být i počet použitých proměnných, sčítání však vypovídá o linearitě.
 
 \subsection{Bijektivita}
-Některé kryptosystémy\footnote{pokud $n=m$ tak v tom případně by měly logicky snad všechny} vyžadují, 
+Některé kryptosystémy\footnote{pokud $n=m$ tak v tom případně by měly logicky snad všechny} vyžadují,
 aby funkce, kterou reprezentuje s-box byla bijektivní -- tj. každý vstup byl zobrazen na
 unikátní výstup.
 Čehož lze sice jednoduše dosáhnout zakódováním problému jako permutace (viz dále), avšak pokud
 je chceme použít jiný typ reprezentace, musíme například bijektivitu stanovit jako další kritérium.
 V \cite{yokohama} je dále zmíněno omezení skládání bijektivního s-boxu
-z booleovských funkcí splňujících MOSAC. Mějme bijektivní funkci 
+z booleovských funkcí splňujících MOSAC. Mějme bijektivní funkci
 $f: \{0,1\}^n \rightarrow \{0,1\}^n$, každá lineární kombinace booleovských funkcí
 z nichž je složena musí mít Hammingovu váhu rovnu polovině možných výstupních kombinací:
 \begin{equation}
@@ -364,20 +364,20 @@ Vnější bity	& \multicolumn{8}{|c|}{Vnitřní 4 bity vstupu} \\ \hline
   \label{desSbox}
 \end{center}
 \end{table}
-Pro 6-bitový vstup je 4-bitový výstup určen vybráním řádku použitím dvou vnějších bitů (první a poslední), 
-sloupec je určen vnitřními čtyřmi bity. Např. vstup \uv{011011} má vnější bity \uv{01} a vnitřní \uv{1101}. 
+Pro 6-bitový vstup je 4-bitový výstup určen vybráním řádku použitím dvou vnějších bitů (první a poslední),
+sloupec je určen vnitřními čtyřmi bity. Např. vstup \uv{011011} má vnější bity \uv{01} a vnitřní \uv{1101}.
 Odpovídající výstup je \uv{1001}.
 Osm s-boxů algoritmu DES bylo před mnoha lety předmětem intenzivního studia s podezřením na zadní
-vrátka, zranitelnost známá pouze jeho tvůrcům, která by mohla být umístěna v šifře. 
-Kritéria návrhu s-boxů   byla nakonec zveřejněna (Don Coppersmith, 1994), 
-po znovuobjevení diferenciální kryptoanalýzy, 
-přičemž byly pečlivě vylepšeny v odolnosti vůči tomuto útoku. 
+vrátka, zranitelnost známá pouze jeho tvůrcům, která by mohla být umístěna v šifře.
+Kritéria návrhu s-boxů   byla nakonec zveřejněna (Don Coppersmith, 1994),
+po znovuobjevení diferenciální kryptoanalýzy,
+přičemž byly pečlivě vylepšeny v odolnosti vůči tomuto útoku.
 Pozdější výzkum ukázal, že právě tyto malé změny mohly značně zeslabit DES.
 
 \subsection{S-box v AES}
-Šifra Rijndeal\cite{rijndael, wikiRijnDaelSbox} používá s-boxy ve fázi zvané \uv{ByteSub}. 
+Šifra Rijndeal\cite{rijndael, wikiRijnDaelSbox} používá s-boxy ve fázi zvané \uv{ByteSub}.
 Zde se jedná o s-boxy $8 \times 8$,
-tj. bajt na bajt. Byl navržen s ohledem na odolnost vůči lineární a diferenciální kryptoanalýze, 
+tj. bajt na bajt. Byl navržen s ohledem na odolnost vůči lineární a diferenciální kryptoanalýze,
 aby měl nejvyšší stupeň polynomu byl invertibilní a jednoduše popsatelný.
 Proto vybrali následující afinní transformaci, modulární násobení
 následované sčítáním:

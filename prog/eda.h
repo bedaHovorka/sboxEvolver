@@ -33,11 +33,11 @@ private:
 	float testResult;
 	int data[N][N];// 0, .., N-1 - jednotlive cetnosti
 public:
-	
+
 	ContingentTable(int ii, int jj) : tested(false), pos_i(ii), pos_j(jj), testResult(CHI_ON_DF1_AT95) {
 		memset(data, 0, N*N*sizeof(int));
 	};
-	
+
 	ContingentTable(const ContingentTable<N> &old) : tested(old.tested), pos_i(old.pos_i), pos_j(old.pos_j), testResult(old.testResult) {
 		memcpy(data, old.data, N*N*sizeof(int));
 	};
@@ -61,10 +61,10 @@ public:
 	inline int get(int i, int j) const {
 		return data[i][j];
 	}
-	
+
 	inline bool chiTest(const int *onesCounts, const int popSize) {
 		float result = 0.0;
-		
+
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				result += ((float) (data[i][j]*data[i][j])) / ((float)(onesCounts[pos_i]*onesCounts[pos_j]));
@@ -123,11 +123,11 @@ private:
 	const int position;
 	int countWithOne;
 	int countWithZero;
-	
+
 	BmdaNode *parent;
 	BmdaNodeVector children;
 public:
-	explicit BmdaNode(int pos, int o=0, int z=0, BmdaNode *par=NULL) : position(pos), countWithOne(o), 
+	explicit BmdaNode(int pos, int o=0, int z=0, BmdaNode *par=NULL) : position(pos), countWithOne(o),
 			countWithZero(z), parent(par) {}
 	virtual ~BmdaNode();
 
@@ -195,9 +195,9 @@ private:
 	GAPopulation *tmpPop;
 public:
 	GADefineIdentity("EstimationOfDistributionAlgorithm", 288);
-	EstimationOfDistributionAlgorithm(const GAGenome& g, bool bmda, int popsize) : 
+	EstimationOfDistributionAlgorithm(const GAGenome& g, bool bmda, int popsize) :
 		SboxSearchAlgorithmBase(g),
-		genomeLength(((GA1DBinaryStringGenome &) g).length()), 
+		genomeLength(((GA1DBinaryStringGenome &) g).length()),
 		model(bmda ? new BmdaModel(genomeLength, popsize) : new EdaModel(genomeLength, popsize))	{
 
 		populationSize(popsize);
@@ -223,14 +223,14 @@ template <int N> void printLine(int i, std::ostream& output, const ContingentTab
 }
 
 template <int N> std::ostream& operator<<(std::ostream& output, const ContingentTable<N> & table) {
-   for (int i = 0; i < N; i++) {
-	   printLine(i, output, table);
-   }
+	for (int i = 0; i < N; i++) {
+		printLine(i, output, table);
+	}
 //   output << "----------------------" << endl;
 //   printLine(N, output, table);
-   output << table.getTestResult() << endl;
-   
-   return output;
+	output << table.getTestResult() << endl;
+
+	return output;
 }
 
 template <int N> std::ostream& operator<<(std::ostream& output, ContingentTable<N> *table) {

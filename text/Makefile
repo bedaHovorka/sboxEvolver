@@ -1,9 +1,9 @@
 #
 #      Brno University of Technology
 #      Faculty of Information Technology
-# 
+#
 #      MSc Thesis	2009/2010
-# 
+#
 #      Design of S-Boxes Using Genetic Algorithms
 #
 #

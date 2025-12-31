@@ -57,7 +57,7 @@ inline int binaryDot(int x, int y) {
 
 inline PyAPI_FUNC(PyObject *) createPythonString(const std::string & str) {
 	PyAPI_FUNC(PyObject*) pyString_Decode = PyString_FromStringAndSize(str.c_str(), str.size());
-    return pyString_Decode;
+	return pyString_Decode;
 }
 
 template <typename PtrType > inline void freeAndNULL(PtrType *ptr) {

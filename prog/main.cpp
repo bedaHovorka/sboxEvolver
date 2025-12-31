@@ -23,12 +23,12 @@ inline void stopOnError(std::string message) {
 void setParameters(SboxSearchAlgorithmBase & ga, const int popsize, const int ngen, const float pmut, const float pcross,
 		const int bestGenomes)
 {
-    ga.populationSize(popsize);
-    ga.nGenerations(ngen);
-    ga.nBestGenomes(bestGenomes);
-    ga.nConvergence(ngen>100 ? ngen/10 : 10); // i kdyz nevim zda neodvozovat od popsize, ci jestli nenastavovat misto neho
-    ga.pMutation(pmut);
-    ga.pCrossover(pcross);
+	ga.populationSize(popsize);
+	ga.nGenerations(ngen);
+	ga.nBestGenomes(bestGenomes);
+	ga.nConvergence(ngen>100 ? ngen/10 : 10); // i kdyz nevim zda neodvozovat od popsize, ci jestli nenastavovat misto neho
+	ga.pMutation(pmut);
+	ga.pCrossover(pcross);
 }
 
 // statistiky budou uchovavat popSize nejlepsich vysledku, avsak nahodne prohledavani ma popSize 0, tak je treba dospecikovat zvlast
@@ -83,7 +83,7 @@ void ParallelRandomSearchAlgorithm::step() {
 
 void RandomSearchAlgorithm::step()
 {
-    GAGenome &actual = pop->individual(0);
+	GAGenome &actual = pop->individual(0);
 	stats.nummut += actual.mutate(pmut);
 	stats.update(*pop);
 }
@@ -198,20 +198,20 @@ TGenome createGenome(GenomeType type, CriterionsFitness criterion, int argc, ...
 	VARARGS_TO_VECTOR
 
 	GAGenome::Evaluator evaluator = criterionsEnumToFunction(criterion);
-    TGenome privateCreateGenome0 = privateCreateGenome(type, evaluator, arguments);
-    /*report << privateCreateGenome0.ptr << endl;*/
-    return privateCreateGenome0;
+	TGenome privateCreateGenome0 = privateCreateGenome(type, evaluator, arguments);
+	/*report << privateCreateGenome0.ptr << endl;*/
+	return privateCreateGenome0;
 }
 
 TGenome createSymbolicalRegresionGenome(GenomeType type, int *expectedOutputs, int argc, ...) {
 	VARARGS_TO_VECTOR
 
 	GAGenome::Evaluator evaluator = symbolicalRegresionObjective;
-    TGenome genome = privateCreateGenome(type, evaluator, arguments);
-    Sbox *sbox = dynamic_cast<Sbox*>(genome.ptr);
-    intVector *outputs = new intVector(expectedOutputs, expectedOutputs+(1<<sbox->inputsCount()));
-    sbox->setExpectedValues(outputs);
-    return genome;
+	TGenome genome = privateCreateGenome(type, evaluator, arguments);
+	Sbox *sbox = dynamic_cast<Sbox*>(genome.ptr);
+	intVector *outputs = new intVector(expectedOutputs, expectedOutputs+(1<<sbox->inputsCount()));
+	sbox->setExpectedValues(outputs);
+	return genome;
 }
 
 void processSearching(TSearching searching, TerminatorCondition condition, uint seed) {
@@ -245,40 +245,40 @@ void parallelProcessSearching(const int taskCount, const TSearching tasks[], Ter
 
 inline void statisticsLikePing(std::ostringstream & out, const GAPopulation & population)
 {
-    out << "fitness min/avg/max/mdev : " <<  population.fitmin() << '/' << population.fitave() << '/';
+	out << "fitness min/avg/max/mdev : " <<  population.fitmin() << '/' << population.fitave() << '/';
 	out << population.fitmax() << '/' << population.fitdev() << endl;
 }
 
 inline void simpleReportAboutGenome(std::ostream & out, GAGenome & individual) throw()
 {
-    out << std::setprecision(2) << individual.evaluate(gaTrue) << '\t';
-    try {
-        Sbox & sbox = dynamic_cast<Sbox& >(individual);
+	out << std::setprecision(2) << individual.evaluate(gaTrue) << '\t';
+	try {
+		Sbox & sbox = dynamic_cast<Sbox& >(individual);
 
-        const int inputsCount = sbox.inputsCount();
-        const int outputsCount = sbox.outputsCount();
-        const intVector & function = sbox.computeOutputs();
-        out << bentScore(inputsCount, outputsCount, function) << '\t';
-        out << strictAvelancheCriterion(inputsCount, outputsCount, function) << '\t';
-        out << computeLPMax(function) << '\t';
-        out << computeDPMax(function) << '\t';
-        out << isBijective(function) << '\t';
-        out << isBidirectional(function) << '\t';
-        out << computeBranchingFactor(function) << '\t';
+		const int inputsCount = sbox.inputsCount();
+		const int outputsCount = sbox.outputsCount();
+		const intVector & function = sbox.computeOutputs();
+		out << bentScore(inputsCount, outputsCount, function) << '\t';
+		out << strictAvelancheCriterion(inputsCount, outputsCount, function) << '\t';
+		out << computeLPMax(function) << '\t';
+		out << computeDPMax(function) << '\t';
+		out << isBijective(function) << '\t';
+		out << isBidirectional(function) << '\t';
+		out << computeBranchingFactor(function) << '\t';
 //        out << lagrangePolynomialDegree(function, outputsCount) << '\t';
-        out << sbox.computeCriterionsFunction(POLYNOMIAL_DEGREE, function) << '\t';
-        out << polynomialToString(computePolynomial(function)) << endl;
+		out << sbox.computeCriterionsFunction(POLYNOMIAL_DEGREE, function) << '\t';
+		out << polynomialToString(computePolynomial(function)) << endl;
 
-        out << "outputs:\t";
-        for (intVector::const_iterator i = function.begin(); i != function.end(); i++) {
-        	out << *i << ' ';
-        }
-    } catch(std::bad_cast e) {
-        for(int i = 0;i < 9;i++)
-            out << "-\t";
+		out << "outputs:\t";
+		for (intVector::const_iterator i = function.begin(); i != function.end(); i++) {
+			out << *i << ' ';
+		}
+	} catch(std::bad_cast e) {
+		for(int i = 0;i < 9;i++)
+			out << "-\t";
 
-    }
-    out << endl << "Chromozome:\t" << individual << endl << endl;
+	}
+	out << endl << "Chromozome:\t" << individual << endl << endl;
 }
 
 const PyAPI_FUNC(PyObject *) simpleReportSearching(TSearching searching) {
@@ -286,15 +286,15 @@ const PyAPI_FUNC(PyObject *) simpleReportSearching(TSearching searching) {
 	GAPopulation population = ga->bestResults();
 	std::ostringstream out;
 	out << "convergence: " << ga->statistics().convergence() << endl;
-    out << population.size() << " best results: "; statisticsLikePing(out, population);
+	out << population.size() << " best results: "; statisticsLikePing(out, population);
 
-    out << "Fit\tBent\tSAC\tLpMax\tDpMax\tBij\tBidir\tBF\tMinDeg\tPolynoms" << endl;
-    for (int i=0; i < population.size(); i++) {
-    	GAGenome & individual = population.individual(i);
-    	simpleReportAboutGenome(out, individual);
-    }
+	out << "Fit\tBent\tSAC\tLpMax\tDpMax\tBij\tBidir\tBF\tMinDeg\tPolynoms" << endl;
+	for (int i=0; i < population.size(); i++) {
+		GAGenome & individual = population.individual(i);
+		simpleReportAboutGenome(out, individual);
+	}
 
-    return createPythonString(out.str());
+	return createPythonString(out.str());
 }
 
 void testSoftwareBox() {

@@ -25,10 +25,10 @@ class Enumerate(object):
             self.enumerate = enumerate
             self.name = name
             self.ordinal = ordinal
-            
+
         def __repr__(self):
             return self.name
-    
+
     def __init__(self, names):
         self.values = []
         for ordinal, name in enumerate(names.split()):
@@ -47,10 +47,10 @@ CRITERIONS_COUNT = 8
 # zastupuje Ceckovu strukturu, pomoci ktere se predava ukazatel na objekt algoritmu
 class TSearching(ctypes.Structure):
     _fields_ = [("algorithm", ctypes.c_void_p)]
-    
+
 class TGenome(ctypes.Structure):
     _fields_ = [("ptr", ctypes.c_void_p)]
-    
+
 # zastupuje Ceckovu strukturu, pomoci ktere se predavaji statistiky behu
 class TStatistics(ctypes.Structure):
     _fields_ = [
@@ -68,7 +68,7 @@ class TStatistics(ctypes.Structure):
                 ("replacements", ctypes.c_int), # number of replacements that have occurred since initialization
                 ("nBestGenomes", ctypes.c_int)
                ]
-    
+
 def pickleLoadFrom(fileName):
     file = open(fileName, "r")
     obj = pickle.load(file)
@@ -79,15 +79,15 @@ def picleSaveTo(obj, fileName):
     file = open(fileName, "w")
     pickle.dump(obj, file)
     file.close()
-        
-# vytvoreni a manipulace s procesem evoluce                     
+
+# vytvoreni a manipulace s procesem evoluce
 class Searching:
     def __init__(self, algorithm, genome, *args):
         specificRepr = ''
         func = libsboxevolution.__getattr__("new"+algorithm+"Searching")
         if algorithm == "Ga" or algorithm == "Vega" or algorithm == "Spea":
             specificRepr += "probability of mutation: %f probability of crossover: %f" %(args[2], args[3])
-        
+
         if algorithm == "Ga":
             func.argtypes = [TGenome, ctypes.c_int, ctypes.c_int, ctypes.c_float, ctypes.c_float, ctypes.c_int]
         elif algorithm == "ParallelRandom":
@@ -105,74 +105,74 @@ class Searching:
             func.argtypes = [TGenome, ctypes.c_int, ctypes.c_int, ctypes.c_int]
         elif algorithm == "Random":
             func.argtypes = [TGenome, ctypes.c_int, ctypes.c_int]
-        
+
         self.popSize = args[0]
         nGen = args[1]
         self.outputsCount = genome.outputsCount
         self.inputsCount = genome.inputsCount
-        
+
         #print hex(genome.delegat.ptr)
         func.restype = TSearching
         self.delegat = func(genome.delegat, *args)
         self.repr = '%s searching with population size: %d and generation count: %d\ngenome: %s\n%s' % (algorithm, self.popSize, nGen, genome, specificRepr)
-        
+
     def __getattr__(self, name):
         return lambda *args: libsboxevolution.__getattr__(name+"Searching")(self.delegat, *args)
-    
+
     def simpleReport(self):
         print(self)
         ptr = libsboxevolution.simpleReportSearching(self.delegat)
         print(ptr)
-        
+
     def bestPopulationStrings(self):
         return libsboxevolution.bestPopulationStringsSearching(self.delegat)
-        
+
     def simpleEvolveAndClose(self, terminator=TerminationCondition.GENERATION):
         self.simpleEvolve(terminator)
         self.close()
-        
+
     def simpleEvolve(self, terminator=TerminationCondition.GENERATION):
         self.process(terminator.ordinal, self.randomSeed())
         self.simpleReport()
-        
+
     def statistics(self):
         libsboxevolution.getStatisticsSearching.restype = TStatistics
-        libsboxevolution.getStatisticsSearching.argtypes = [TSearching, 
-                                                            numpy.ctypeslib.ndpointer(dtype = numpy.float32), 
+        libsboxevolution.getStatisticsSearching.argtypes = [TSearching,
+                                                            numpy.ctypeslib.ndpointer(dtype = numpy.float32),
                                                             numpy.ctypeslib.ndpointer(dtype = numpy.float32),
                                                             numpy.ctypeslib.ndpointer(dtype = ctypes.c_int)]
-        
+
         bestScores = numpy.empty(self.popSize, dtype=numpy.float32)
         bestPopulationCriterionsValues = numpy.empty([self.popSize, CRITERIONS_COUNT], dtype=numpy.float32)
         bestPopulationOutputs = numpy.empty([self.popSize, 2**self.inputsCount], dtype=ctypes.c_int)
-        
+
         stats = libsboxevolution.getStatisticsSearching(self.delegat, bestScores, bestPopulationCriterionsValues, bestPopulationOutputs)
         stats.bestPopulationScores = bestScores[0:stats.nBestGenomes]
         stats.bestPopulationCriterionsValues = bestPopulationCriterionsValues[0:stats.nBestGenomes]
         stats.bestPopulationOutputs = bestPopulationOutputs[0:stats.nBestGenomes]
         return stats
-        
+
     def __str__(self):
         return self.repr
-    
+
     @classmethod
     def randomSeed(self):
         return random.randint(0, 2**32-1)
-    
+
     @classmethod
     def parallelSearching(cls, list, terminator=TerminationCondition.GENERATION):
         TArray = TSearching * len(list)
         TSeedArray = ctypes.c_uint32 * len(list)
         libsboxevolution.parallelProcessSearching.argtypes = [ctypes.c_int, TArray, ctypes.c_int, TSeedArray]
-        
+
         array = TArray()
         seedArray = TSeedArray()
         for i in xrange(len(array)):
             array[i] = list[i].delegat
             seedArray[i] = cls.randomSeed()
-            
+
         libsboxevolution.parallelProcessSearching(len(list), array, terminator.ordinal, seedArray)
-        
+
     @classmethod
     def parallelSimpleSearching(cls, list, terminator=TerminationCondition.GENERATION):
         cls.parallelSearching(list, terminator);
@@ -189,14 +189,14 @@ class Genome:
 
         #print "init", hex(self.delegat.ptr)
         self.setInputsAndOutputs(type, *args)
-        
+
         self.repr = '%s %s' % (type, args)
         if criterionFunction is not CriterionFunction.NONE_FITNESS:
             self.repr += ' criterion: %s' % criterionFunction
-            
+
     def __str__(self):
         return self.repr
-    
+
     def setInputsAndOutputs(self, type, *args):
         if type == ChromozomeType.SOFTWARE_IMPL:
             self.outputsCount = args[0]*4
@@ -207,7 +207,7 @@ class Genome:
         else:
             self.inputsCount = args[0]
             self.outputsCount = args[1]
-    
+
 class SymbolicalRegresionGenome(Genome):
     def __init__(self, type, expectedOutputs, *args):
         self.setInputsAndOutputs(type, *args)
@@ -216,9 +216,9 @@ class SymbolicalRegresionGenome(Genome):
         libsboxevolution.createSymbolicalRegresionGenome.argtypes = [ctypes.c_uint, numpy.ctypeslib.ndpointer(dtype = ctypes.c_int), ctypes.c_int] + [ctypes.c_int]*l
         libsboxevolution.createSymbolicalRegresionGenome.restype = TGenome
         self.delegat = libsboxevolution.createSymbolicalRegresionGenome(type.ordinal, numpy.asarray(expectedOutputs, dtype=ctypes.c_int), l, *args)
-        
+
         self.repr = '%s %s' % (type, args)
-        self.repr += ' symbolical regresion ' 
-     
+        self.repr += ' symbolical regresion '
+
 def errorHandling():
     libsboxevolution.initialization()

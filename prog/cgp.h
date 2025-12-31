@@ -44,49 +44,49 @@ private:
 	int outputidx, maxidx_out, columnSize;
 
 	chromozome p_chrom;
-	
+
 	int init () {
 		columnSize = param_rows*(block_in+1); //pocet polozek ktery zabira sloupec v chromozomu
 		outputidx   = param_columns*columnSize; //index v poli chromozomu, kde zacinaji vystupy
 		maxidx_out  = param_rows*param_columns + param_inputs; //max. index pouzitelny jako vstup  pro vystupy
-				
+
 		int chromSize = (outputidx + param_outputs);
 		if (!p_chrom) {
 			p_chrom = new chromozomDataType[chromSize];
 		}
 		return chromSize;
 	}
-	
+
 	inline void randomize();
 public:
 	CgpGenome(int in, int out, int m, int n, int mutMax, int l=1, int f=9) : GAGenome(Init, Mutate, Compare), block_in(2),
 		param_inputs(in), param_outputs(out), param_columns(m), param_rows(n), mutationMax(mutMax), l_back(l), functions(f), p_chrom(NULL) {
-		evaluator(Evaluate); 
+		evaluator(Evaluate);
 		crossover(Cross);
-		
+
 		int chromSize = init();
 		memset(p_chrom, 0, chromSize * sizeof(chromozomDataType));
 	}
-	
-	
+
+
 	CgpGenome(const CgpGenome& orig) : Sbox(orig), GAGenome(Init, Mutate, Compare), block_in(orig.block_in), param_inputs(orig.param_inputs),
 			param_outputs(orig.param_outputs), param_columns(orig.param_columns), param_rows(orig.param_rows), mutationMax(orig.mutationMax),
 			l_back(orig.l_back), functions(orig.functions), p_chrom(NULL) {
 		copy(orig);
 	}
-	
+
 	virtual ~CgpGenome() {
 		delete[] p_chrom;
 	}
-	
+
 	CgpGenome& operator=(const GAGenome& orig){
 		assert(false);
 		if(&orig != this) copy(orig);
 		return *this;
 	}
-	
+
 	virtual GAGenome* clone(CloneMethod) const {return new CgpGenome(*this);}
-	
+
 	virtual void copy(const GAGenome& o) {
 		GAGenome::copy(o);
 		CgpGenome & orig = (CgpGenome &) o;
@@ -94,14 +94,14 @@ public:
 		int chromSize = init();
 		memcpy(p_chrom, orig.p_chrom, chromSize * sizeof(chromozomDataType));
 	}
-	
+
 	virtual int equal(const GAGenome &) const;
 	virtual int write(std::ostream&) const;
 	virtual int output(int) const;
 	virtual int inputsCount() const;
 	virtual int outputsCount() const;
 	virtual int realizationEfficiency() const;
-	
+
 	inline int getInputsCount() const {
 		return param_inputs;
 	}
@@ -138,7 +138,7 @@ protected:
 	inline SboxSearchAlgorithmBase * algorithm() const {
 		return (SboxSearchAlgorithmBase *) geneticAlgorithm();
 	};
-	
+
 	int blocksUsed() const;
 };
 

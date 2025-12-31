@@ -1,17 +1,17 @@
 %
 %      Brno University of Technology
 %      Faculty of Information Technology
-% 
+%
 %      MSc Thesis	2009/2010
-% 
+%
 %      Design of S-Boxes Using Genetic Algorithms
 %
 %
 %      Bedrich Hovorka
 %
-% 
 %
-Evoluční algoritmy jsou informované metody prohledávání stavového prostoru, 
+%
+Evoluční algoritmy jsou informované metody prohledávání stavového prostoru,
 které \cite{evo} jsou založeny na metafoře evoluce v přírodě. Řešení nějaké úlohy je
 převedeno na proces evoluce populace náhodně vygenerovaných řešení. Každé
 řešení je zakódováno do řetězce symbolů (parametrů) a ohodnoceno tzv. fitness
@@ -51,7 +51,7 @@ Chromozóm (jedinec/individuum) kódující řešení je reprezentován binárn�
 Nechť $f$ je účelová/cenová funkce definovaná nad množinou binárních vektorů
 délky $n$
 \begin{equation}
-	f: \{0,1\}^n \rightarrow \mathcal{R}
+  f: \{0,1\}^n \rightarrow \mathcal{R}
 \end{equation}
 která ohodnotí každý binární vektor $\vec{x}$ reálným číslem. Cílem je nalézt globální
 extrém funkce $f$. V případě minimalizační úlohy jde o nalezení vektoru
@@ -84,8 +84,8 @@ maximálním počtem generací nebo detekcí stagnace vývojového procesu.
 Genetický algoritmus může mít několik typů křížení a mutace. Některé operátory bývají navrženy
 podle typu řešené úlohy. Mutace je většinou provedena inverzí bitu/ů na náhodných pozicích.
 Křížení může být například jednobodové či dvoubodové. Po vybrání dvou rodičů se nejprve se zvolí
-bod(y), ve kterém se chromozóm obou rodičů rozdělí na dvě části. Vznikají dva potomci. 
-První z nich je složen z první části prvního rodiče a z druhé části druhého rodiče. 
+bod(y), ve kterém se chromozóm obou rodičů rozdělí na dvě části. Vznikají dva potomci.
+První z nich je složen z první části prvního rodiče a z druhé části druhého rodiče.
 A chromozóm druhého potomka je poskládán ze zbývajících částí. Selekce může probíhat:
 \begin{itemize}
   \item turnajem mezi $N$ náhodně vybranými jedinci,
@@ -119,31 +119,31 @@ vystihuje řešený problém. A k této struktuře navrhnout vlastní operátory
 
 
 \subsection{Kartézské genetické programování}\label{algorithmCGP}
-Kartézské genetické programování (CGP) \cite{vasicek} lze chápat jako variantu genetického programování, 
-která v reprezentaci řešeného problému používá acyklický graf s pevným počtem uzlů. 
-Každý z uzlů může realizovat jednu z několika pevně daných funkcí a může být spojen na výstup některého z předešlých uzlů. 
-Konektivitu ovlivňuje tzv. \emph{l-back} parametr. 
+Kartézské genetické programování (CGP) \cite{vasicek} lze chápat jako variantu genetického programování,
+která v reprezentaci řešeného problému používá acyklický graf s pevným počtem uzlů.
+Každý z uzlů může realizovat jednu z několika pevně daných funkcí a může být spojen na výstup některého z předešlých uzlů.
+Konektivitu ovlivňuje tzv. \emph{l-back} parametr.
 Chromozom je určitá posloupnost celočíselných hodnot mající fixní délku. V tom lze
 spatřovat dělení na genotyp a fenotyp jako u klasických GA.
-Algoritmus používaný v CGP odpovídá evoluční strategii $(1+L)$, 
-kde hodnota $L$ se pohybuje řádově v jednotkách. 
+Algoritmus používaný v CGP odpovídá evoluční strategii $(1+L)$,
+kde hodnota $L$ se pohybuje řádově v jednotkách.
 Používá se pouze operátor mutace.
 
 \subsubsection{Kódování řešeného problému}
-Chromozom je složen z $m \cdot n$ trojic ($m$ - počet sloupců, $n$ - počet řad) celočíselných hodnot, kde první dvě hodnoty udávají číslo výstupu, na který je připojen první a druhý vstup trojici příslušejícího elementu, třetí hodnota udává jakou logickou funkci element realizuje. 
-Na konci chromozomu je $o$-tice o velikosti shodné s počtem výstupů hledaného obvodu. 
-Každý prvek $o$-tice určuje index elementu (jeho výstupu), 
+Chromozom je složen z $m \cdot n$ trojic ($m$ - počet sloupců, $n$ - počet řad) celočíselných hodnot, kde první dvě hodnoty udávají číslo výstupu, na který je připojen první a druhý vstup trojici příslušejícího elementu, třetí hodnota udává jakou logickou funkci element realizuje.
+Na konci chromozomu je $o$-tice o velikosti shodné s počtem výstupů hledaného obvodu.
+Každý prvek $o$-tice určuje index elementu (jeho výstupu),
 na který bude primární výstup obvodu připojen. Dalšími parametry jsou $i$ - počet vstupů,
 $l$ - \emph{l-back}, $F$ - množina funkcí.
 
-Uvažujme následující tvar chromozomu, 
+Uvažujme následující tvar chromozomu,
 odpovídající jednoduché booleovské funkci\footnote{Eliminací hradel z ní lze získat AND,
 prostě nejjednodušší bent funkce uvedená pro názornost},
-splňující SAC: 
+splňující SAC:
 \begin{verbatim}
     {2,1,2,2,2,1,3}([2]1,1,8)([3]0,0,7)([4]1,3,0)([5]3,2,8)(5)
 \end{verbatim}
-Tvar chromozómu je vysvětlen v příloze \ref{cgpfunctions}. 
+Tvar chromozómu je vysvětlen v příloze \ref{cgpfunctions}.
 Na obrázku \ref{simpleBent} je tento chromozóm znázorněn v grafové podobě.
 
 \insertimage[260px]{simpleBent}{Příklad jednoduché Booleovské funkce splňující SAC nalezené
@@ -151,7 +151,7 @@ kartézským genetickým programováním}
 \subsubsection{Programová implementace}
 Během \cite{millerThomson} generování nových jedinců nebo při mutaci musí být splněno několik podmínek, aby
 chromozóm reprezentoval správný program.
-Nechť ${c^n}_{kj}$ reprezentuje gen $k$-tého vstupu ve 
+Nechť ${c^n}_{kj}$ reprezentuje gen $k$-tého vstupu ve
 sloupci $j$ (nejlevější sloupec má $j = 0$), potom musí splňovat tato omezení:
 \begin{eqnarray}
   c_{kj} < e_{\max} & pokud & j < l \\
@@ -176,15 +176,15 @@ by byla komplikovanější a i proto se raději nepoužívá.
 
 
 \section{EDA}\label{algorithmEDA}
-\cite{evo} Během operace křížení klasického genetického algoritmu dochází k rozbíjení stavebních bloků. 
-Tato skutečnost je častou příčinou špatné konvergence optimalizačního procesu. 
+\cite{evo} Během operace křížení klasického genetického algoritmu dochází k rozbíjení stavebních bloků.
+Tato skutečnost je častou příčinou špatné konvergence optimalizačního procesu.
 Proto byly navrženy algoritmy, které se tento problém snaží vyřešit pomocí globálního pohledu
-na celou populaci. V celé populaci jsou spočteny statistiky výskytů a závislostí alel na 
+na celou populaci. V celé populaci jsou spočteny statistiky výskytů a závislostí alel na
 jednotlivých pozicích. Podle těchto statistik jsou následně generováni jedinci noví.
 Tyto algoritmy jsou souhrnně nazývány EDA -- Estimation of Distribution Algorithm.
 
 \subsection{Činnost EDA algoritmu}
-Na rozdíl do GA se v každém kroku vybere $M < N$ \uv{slibných} jedinců, ze 
+Na rozdíl do GA se v každém kroku vybere $M < N$ \uv{slibných} jedinců, ze
 kterých se provede odhad pravděpodobnostního rozložení vybraných jedinců $p(X | Ds(t))$.
 Poté se vygeneruje množina potomků $O(t)$ s mohutností $M < N$ (vzorkováním získaného rozložení).
 Nová populace $D(t+1)$ je vytvořena nahrazením části populace $D(t)$ jedinci z $O(t)$.
@@ -226,7 +226,7 @@ Algorithm) připouští i podvojné závislosti mezi lokusy, které jsou zjišť
 statistickými testy. Pro generování hodnot na závislých pozicích je využíván aparát
 podmíněné pravděpodobnosti.
 Opět uvažujeme populaci $P$ o velikosti $N$ s chromozomy délky $n$. Pro každé dvě
-pozice $i \neq j \in \{0..n-1\}$ a každé dvě možné allely $x_i \in \{0,\dots,r_{i-1}\}$, 
+pozice $i \neq j \in \{0..n-1\}$ a každé dvě možné allely $x_i \in \{0,\dots,r_{i-1}\}$,
 $x_j \in \{0,\dots,r_{j-1}\}$ na
 těchto pozicích definujeme $p_{i,j}(x_i,x_j)$ jako četnost výskytu řetězců s hodnotami $x_i$
 a $x_j$ na pozicích $i$ a $j$:
@@ -235,7 +235,7 @@ a $x_j$ na pozicích $i$ a $j$:
 \end{equation}
 Podmíněná pravděpodobnost
 \begin{equation}
-	p_{i,j}(x_i | x_j) = \frac{p_{i,j}(x_i, x_j)}{p_j(x_j)}
+  p_{i,j}(x_i | x_j) = \frac{p_{i,j}(x_i, x_j)}{p_j(x_j)}
 \end{equation}
 je pak odhadována z četnosti výskytu allely $x_i$ na pozici $i$ v případech, kdy je $x_j$
 na $j$-té pozici.
@@ -274,14 +274,14 @@ Další varianty EDA algoritmů (např. BOA) z důvodů uvedených níže nebyly
 \section{Multikriteriální optimalizace}
 Úloha hledání s-boxů může být založena na více kritériích, které mohou jít proti sobě.
 V multikriteriální optimalizaci nehledáme prosté optimum jako v jednokriteriální, ale snažíme se najít vhodný
-kompromis při optimalizaci jednotlivých kritérií. Formálně tedy hledáme vektor parametrů 
+kompromis při optimalizaci jednotlivých kritérií. Formálně tedy hledáme vektor parametrů
 $ \vec{x}^* = [x^*_1, x^*_2, \dots, x^*_n]^T$ který:
 \begin{itemize}
   \item splňuje $m$ omezení: $g_i(\vec{x}) \leq 0, i = 1,2,\dots, m$
   \item splňuje $p$ omezení: $h_i(\vec{x}) = 0, i = 1,2,\dots, p$
   \item bude optimalizovat funkci: $f(\vec{x}) = \left(f_1(\vec{x}), f_2(\vec{x}), \dots, f_p(\vec{x}) \right)$
 \end{itemize}
-Z toho důvodu bylo třeba tento problém zahrnout do evolučních algoritmů. 
+Z toho důvodu bylo třeba tento problém zahrnout do evolučních algoritmů.
 K tomuto účelu bylo navrženo několik postupů.
 
 \subsection{Pareto optimum}
@@ -289,15 +289,15 @@ K tomuto účelu bylo navrženo několik postupů.
   \item Pro jakékoliv dva vektory $\vec{a}$, $\vec{b}$ říkáme, že vektor $\vec{a}$ silně
   dominuje nad vektorem $\vec{b}$, když platí:
   \begin{enumerate}
-    \item $f_i(\vec{a}) \geq f_i(\vec{b})$ pro $\forall i = 1,\dots, p$ 
-    \item a zároveň platí: $f_i(\vec{a}) > f_i(\vec{b})$ alespoň pro jedno $i$ 
+    \item $f_i(\vec{a}) \geq f_i(\vec{b})$ pro $\forall i = 1,\dots, p$
+    \item a zároveň platí: $f_i(\vec{a}) > f_i(\vec{b})$ alespoň pro jedno $i$
   \end{enumerate}
-  \item Vektor $\vec{a}$ pak slabě dominuje nad $\vec{b}$, když platí pouze první podmínka 
-  \item Na základě Pareto dominance lze definovat pojem \uv{Pareto Optimum}: 
-  Vektor $\vec{a}$ je Pareto optimální pokud neexistuje žádný vektor $\vec{b}$ takový, který dominuje vektoru $\vec{a}$. 
+  \item Vektor $\vec{a}$ pak slabě dominuje nad $\vec{b}$, když platí pouze první podmínka
+  \item Na základě Pareto dominance lze definovat pojem \uv{Pareto Optimum}:
+  Vektor $\vec{a}$ je Pareto optimální pokud neexistuje žádný vektor $\vec{b}$ takový, který dominuje vektoru $\vec{a}$.
   Jinými slovy: vektor $\vec{a}$ je Pareto optimální, pokud v rozhodovacím
   prostoru neexistuje žádný vektor $\vec{b}$, který by snížil nějaké kritérium bez toho, aniž by způsobil souběžné zvýšení alespoň jednoho dalšího kritéria.
-  \item Tento koncept nám ale nedává jen jediné řešení, ale většinou celou množinu řešení, 
+  \item Tento koncept nám ale nedává jen jediné řešení, ale většinou celou množinu řešení,
   tzv. Pareto optimální množinu řešení (Pareto optimalset).
   \item Vektory $\vec{a}$, které jsou i v Pareto optimální množině (POS) jsou
 nazývány nedominantními. Křivka/hyperplocha vedená těmito nedominantními vektory z POS se
@@ -351,17 +351,17 @@ Ve skutečnosti se v algoritmu SPEA nejprve přiděluje fitness (síla) $S_i$ ke
 každému členu $i$ z externí populace. Síla $S_i$ je úměrná počtu nynějších členů
 populace ($n_i$), kteří externímu řešení $i$ dominují:
 \begin{equation}
-	S_i = \frac{n_i}{N+1}
+  S_i = \frac{n_i}{N+1}
 \end{equation}
 Tím je zajištěno, že větší sílu má elita, která ovládá více řešení v aktuální
 populaci. Dělení hodnotou $(N + 1)$ zabezpečí, že maximální hodnota síly
 libovolného členu externí populace bude vždy menší nežli $1$. Navíc, nedominované
 řešení dominující nad menšími řešeními má lepší fitness. Fitness
 nynějšího člena populace $j$ je určena jako suma sil všech externích členů, které
-silně\footnote{v původním textu \cite{evo} je slabě, v implementaci však byla použita dominance silná} 
+silně\footnote{v původním textu \cite{evo} je slabě, v implementaci však byla použita dominance silná}
 dominují řešení $j$:
 \begin{equation}
-	F_j = 1 + \sum\limits_{i \in {P_t}_e \wedge i \leq j} S_i
+  F_j = 1 + \sum\limits_{i \in {P_t}_e \wedge i \leq j} S_i
 \end{equation}
 Přidání jedničky dělá hodnotu fitness libovolného nynějšího člena populace $P_t$
 větší než hodnotu fitness jakéhokoliv externího člena populace ${P_t}_e$.
@@ -394,7 +394,7 @@ vymazána.
     \begin{longtable}{| r || p{0.4\textwidth} | p{0.4\textwidth} | }
       \hline
       ~ & Výhody & Nevýhody \\ \hline\hline
-      VEGA 
+      VEGA
       & \begin{itemize}
           \item jednoduchá idea, snadná k realizaci
           \item potřeba jen nepatrných změn jednokriteriálního GA
@@ -406,10 +406,10 @@ vymazána.
           \item nenalézá různorodá řešení v populaci, směřuje všechna řešení k jednomu šampiónovi
         \end{itemize}
       \\ \hline
-      SPEA 
+      SPEA
       & \begin{itemize}
-      	 \item ukládá řešení nejbližší Pareto-optimální frontě za celý průběh evoluce
-      	 \item shlukování umožňuje lépe rozprostřít omezenou velikost optimálních řešení
+         \item ukládá řešení nejbližší Pareto-optimální frontě za celý průběh evoluce
+         \item shlukování umožňuje lépe rozprostřít omezenou velikost optimálních řešení
         \end{itemize}
       & \begin{itemize}
           \item parametr $N_e$ -- musí být zajištěna rovnováha s $N$ vhodným poměrem
@@ -427,7 +427,7 @@ kritériu, SPEA se snaží najít širší spektrum řešení.
 \pagebreak
 
 \section{Další metody k hledání s-boxů}
-K hledání s-boxů by bylo možné použít i další metody prohledávání stavového prostoru. 
+K hledání s-boxů by bylo možné použít i další metody prohledávání stavového prostoru.
 Pro informované metody se kritérium použije jako heuristická funkce dané metody.
 Cílový stav je definován požadovanou hodnotou kritéria, časem či
 počtem kroků (generací). O použití heuristik v prohledávání s-boxů je zmínka např.
@@ -437,38 +437,38 @@ v \cite{goodsboxes}.
 Vybírá \cite{ui1} k expanzi odvozený uzel, který je nejslibnější. Rodič i sourozenci jsou zapomenuti.
 Pokud jsou všechny odvozené uzly horší, algoritmus končí. Takto často končí v lokálním extrému.
 \subsubsection{Uspořádané prohledávání}
-Narozdíl od gradientního algoritmu ukládá neexpandované uzly do prioritní fronty 
+Narozdíl od gradientního algoritmu ukládá neexpandované uzly do prioritní fronty
 (či seřazeného seznamu) podle ohodnocení. Nevýhodou je velká paměťová náročnost.
-Velikost fronty lze omezit, ale tím se toto prohledávání přiblíží ke gradientnímu a 
+Velikost fronty lze omezit, ale tím se toto prohledávání přiblíží ke gradientnímu a
 bude náchylné na skončení/uvíznutí v lokálním extrému.
 \subsubsection{Náhodné prohledávání}
 Je použito v \cite{twofish}. Toto prohledávání je jako jediné z uvedených slepé.
-Odvodí nové řešení náhodnou změnou (mutací) aktuálního řešení. 
+Odvodí nové řešení náhodnou změnou (mutací) aktuálního řešení.
 Může být ukládáno průběžně nejlepší řešení. Slouží i k porovnání při ladění evolučního algoritmu.
 \subsubsection{Paralelní náhodné prohledávání}
-Narozdíl od náhodného prohledávání, které je v principu zcela slepé, 
-toto vyhledávaní v jednom kroku vygeneruje z aktuálního jedince více mutantů 
-(pracuje s populací řešení -- paralelnost) a z nich vybere nejlepšího, 
-který se liší od aktuálního, a ten se použije pro mutace v dalším kroku. 
-Defakto se používá v Kartézském genetickém programováni 
+Narozdíl od náhodného prohledávání, které je v principu zcela slepé,
+toto vyhledávaní v jednom kroku vygeneruje z aktuálního jedince více mutantů
+(pracuje s populací řešení -- paralelnost) a z nich vybere nejlepšího,
+který se liší od aktuálního, a ten se použije pro mutace v dalším kroku.
+Defakto se používá v Kartézském genetickém programováni
 (viz str. \pageref{algorithmCGP}).
 
 Srovnání těchto náhodného a paralelního náhodného prohledávání
 je součástí ná\-sle\-du\-jí\-cí\-ho textu v podkapitole \ref{secParalelRandomComparison}.
 
 \section{Hledání s-boxů vs. symbolická regrese}
-Pokud lze hledání s-boxů, tedy alespoň jeho část, 
+Pokud lze hledání s-boxů, tedy alespoň jeho část,
 převést na nějaký teoretický problém řešitelný pomocí
 evoluce, bude to nejspíš symbolická regrese.
 Symbolickou regresí se míní hledání matematického výrazu, jenž popisuje data z trénovací
 množiny. Výraz může být reprezentován jako jedinec v evolučním procesu, pro kterého
 jsou v průběhu výpočtu hodnotící funkce zkoušeny hodnoty trénovací množiny.
 Hodnotící funkce je dána například sumou kvadrátů odchylek na požadovaných výstupech nebo
-počet shod. 
+počet shod.
 Proces evoluce je v tomto pohledu analogický s učením neuronové sítě.
-Výraz lze reprezentovat jako strom (původní genetické programování), 
+Výraz lze reprezentovat jako strom (původní genetické programování),
 derivaci gramatiky (gramatická evoluce) či jakoukoliv instanci spustitelné struktury
-či chromozóm, jenž nejlépe vystihuje řešený problém, 
+či chromozóm, jenž nejlépe vystihuje řešený problém,
 pokud například hledáme optimální hardwarovou
 či softwarovou realizaci.
 
@@ -476,11 +476,11 @@ Při hledání s-boxů můžeme uvažovat tyto varianty hledání:
 \begin{enumerate}
   \item Nedá se hovořit o žádné trénovací/testovací množině.
     Je hledáno podle kritérií bez\-peč\-no\-sti, tudíž nejde o symbolickou regresi.
-  \item Je hledán výraz jenž přesně vyhovuje trénovací množině, získané z předchozí fáze.  
-  Například pokud napřed nalezneme vhodnou (bezpečnou) permutaci 
+  \item Je hledán výraz jenž přesně vyhovuje trénovací množině, získané z předchozí fáze.
+  Například pokud napřed nalezneme vhodnou (bezpečnou) permutaci
   a poté k ní necháme najít optimální realizaci.
   Trénovací množina je složena ze všech možných vstupních kombinací.
 \end{enumerate}
 
 Symbolickou regresi lze využít pouze jako pomocný mechanizmus k hledání optimální
-realizace. Symbolická regrese však musí nejprve najít přesnou realizaci. 
+realizace. Symbolická regrese však musí nejprve najít přesnou realizaci.

@@ -169,12 +169,12 @@ inline int Cycle::randomOperand(const intVector &list) {
 
 inline int Cycle::randomOperand()
 {
-    return GARandomInt(0, SoftwareSboxGenome::REGISTERS_COUNT - 1);
+	return GARandomInt(0, SoftwareSboxGenome::REGISTERS_COUNT - 1);
 }
 
 inline TInstructionType Cycle::randomType(bool isFirst, bool isLast)
 {
-    return (TInstructionType)(GARandomInt(isFirst ? MOV : MOV + 1, isLast ? NOP : NOP - 1));
+	return (TInstructionType)(GARandomInt(isFirst ? MOV : MOV + 1, isLast ? NOP : NOP - 1));
 }
 
 Cycle Cycle::randomInstance(bool isFirst, bool isLast) {

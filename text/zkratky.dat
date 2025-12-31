@@ -12,7 +12,7 @@ DES "Data Encryption Standard" ¹ifra s 56-bitovým klíèem vyvinutá v 70. letech, 
 AES "Advanced Encryption Standard" ¹ifra Rijndael schválená jako standard
 UML "Unified Modeling Language" sada zformalizovaných grafických reprezentací návrhu/modelu programu
 GaLib "Genetic Algorithm Library" knihovna pro Genetický algoritmus a genetické programování \cite{galib}
-CREW "Concurent Read Exclusive Write" jeden z mo¾ných modelù paralelizmu 
+CREW "Concurent Read Exclusive Write" jeden z mo¾ných modelù paralelizmu
 MOSAC "maximal order SAC" SAC nejvy¹¹ího mo¾ného øádu
 RC4 "Rivest Cipher 4" jedna ze symetrických proudových ¹ifer Rona Rivesta, který mj. spolupracoval na RSA
 MD5 "Message Digest 5" jeden z hashovacích algoritmù Rona Rivesta, který mj. spolupracoval na RSA

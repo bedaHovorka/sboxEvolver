@@ -136,10 +136,10 @@ inline int strictAvelancheCriterion(const int inputsCount, const int outputsCoun
  */
 inline float bentScore(const int inputsCount, const int outputsCount, const intVector & function)
 {
-    register int score = 0;
-    const int inputsCombinations = 1<<inputsCount;
+	register int score = 0;
+	const int inputsCombinations = 1<<inputsCount;
 	// kongruence * a +
-    for (int w = 0; w < inputsCombinations; w++) {
+	for (int w = 0; w < inputsCombinations; w++) {
 		for (int y = 0; y < outputsCount; y++) {
 			register int sum = 0;
 
@@ -150,9 +150,9 @@ inline float bentScore(const int inputsCount, const int outputsCount, const intV
 			if (fabs( ((float) sum) / (1<<(inputsCount>>1)) ) == 1.0) score++;
 		}
 	}
-    // bent boolean funkce by mela splnovat rad 0 SACu
-    if (outputsCount == 1) assert(score < inputsCombinations || sac(0, inputsCount, outputsCount, function));
-    return score;
+	// bent boolean funkce by mela splnovat rad 0 SACu
+	if (outputsCount == 1) assert(score < inputsCombinations || sac(0, inputsCount, outputsCount, function));
+	return score;
 }
 
 /**

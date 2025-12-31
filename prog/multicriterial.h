@@ -142,10 +142,10 @@ private:
 
 	inline void checkNonDominance() {
 #ifndef NDEBUG
-        for(int i = 0;i < elite->size();i++){
-            invalidate(&elite->individual(i));
-        }
-        for (int i = 0; i < elite->size(); i++) {
+		for(int i = 0;i < elite->size();i++){
+			invalidate(&elite->individual(i));
+		}
+		for (int i = 0; i < elite->size(); i++) {
 			for (int j = 0; j < elite->size(); j++) {
 				if (is1dominatingOver2(elite->individual(i), elite->individual(j))) {
 					Sbox &box1 = dynamic_cast<Sbox&>(elite->individual(i));
@@ -157,13 +157,13 @@ private:
 			}
 		}
 #endif
-    }
+	}
 
-    inline const virtual GAPopulation & bestResults()
-    {
-        clustering(elite, uint(getBestGenomes()));
-        checkNonDominance();
-        return *elite;
+	inline const virtual GAPopulation & bestResults()
+	{
+		clustering(elite, uint(getBestGenomes()));
+		checkNonDominance();
+		return *elite;
 	}
 };
 

@@ -16,19 +16,19 @@
  */
 #include "eda.h"
 
-void EstimationOfDistributionAlgorithm::step() { 
-  stats.nummut += variation();
-  
-  for(int i = 0; i < tmpPop->size(); i++)
-    pop->add(tmpPop->individual(i));
+void EstimationOfDistributionAlgorithm::step() {
+	stats.nummut += variation();
 
-  pop->evaluate();
-  pop->scale();
+	for(int i = 0; i < tmpPop->size(); i++)
+	pop->add(tmpPop->individual(i));
 
-  for(int i = 0; i < tmpPop->size(); i++)
-    pop->destroy(GAPopulation::WORST, GAPopulation::SCALED);
+	pop->evaluate();
+	pop->scale();
 
-  stats.update(*pop);
+	for(int i = 0; i < tmpPop->size(); i++)
+	pop->destroy(GAPopulation::WORST, GAPopulation::SCALED);
+
+	stats.update(*pop);
 }
 
 int EstimationOfDistributionAlgorithm::variation() {
@@ -40,7 +40,7 @@ void BmdaModel::learnStructure(GAPopulation* pop, int size) {
 	//inicializace vsech kontingencnich tabulek
 	memset(onesCounts, 0, length * sizeof(int));
 	std::vector<BinaryCT *> tables[length];
-	
+
 	//prochazeni vsemi chromozomy:
 	for (int n = 0; n < size; n++) {
 		GA1DBinaryStringGenome & genome = (GA1DBinaryStringGenome &) pop->individual(n);
@@ -75,7 +75,7 @@ void BmdaModel::learnStructure(GAPopulation* pop, int size) {
 //			cout << '[' << i << ',' << j << ']' << endl << tables[i][j] << endl;
 		}
 	}
-	
+
 	for (unsigned int i = 0; i < length; i++) {
 		for (unsigned int j = i+1; j < length; j++) {
 			delete tables[i][j];
@@ -85,7 +85,7 @@ void BmdaModel::learnStructure(GAPopulation* pop, int size) {
 	rootsClear();
 //	report << "dep: " << dependencies.size() << endl;
 	if (!dependencies.size()) return;// UMDA
-	
+
 	//inicializace pripravenych uzlu
 	intVector readyNodes;
 	BmdaNode *nodes[length];
@@ -130,24 +130,24 @@ void BmdaModel::learnStructure(GAPopulation* pop, int size) {
 int BmdaModel::sampleModel(GAPopulation* tmpPop) {
 //	report << "roots: " << roots.size() << endl;
 	if (roots.size() == length || roots.size() == 0) return EdaModel::sampleModel(tmpPop);// UMDA
-	
+
 	for (int i=0; i < tmpPop->size(); i++) {
 		GA1DBinaryStringGenome *genome = (GA1DBinaryStringGenome *) &tmpPop->individual(i);
 		BmdaNodeVector work(roots);
-		
+
 		while (work.size() > 0) {
 			BmdaNode* current = work.front();
 			work.insert(work.end(), current->childrenBegin(), current->childrenEnd());
 			work.erase(work.begin());
 			int position = current->getPosition();
-			
+
 			if (current->getParent()) {
 				int parentPosition = current->getParent()->getPosition();
 				bool parentValue = genome->gene(parentPosition);
-				
+
 				// podminena pravdepodobnost P(current=1 | parent=x) = P(current=1 ^ previous=x) / P (previous=x)
 				float currentValue = (parentValue) ? ((float) current->getCountWithOne()) / onesCounts[parentPosition] :
-						(onesCounts[parentPosition] == popSize) ? 0 : 
+						(onesCounts[parentPosition] == popSize) ? 0 :
 							((float) current->getCountWithZero()) / (popSize - onesCounts[parentPosition]);
 				assert(currentValue >= 0 && currentValue <= 1);
 				genome->gene(position, GARandomFloat(0, 1) < currentValue);
@@ -156,30 +156,30 @@ int BmdaModel::sampleModel(GAPopulation* tmpPop) {
 			}
 		}
 	}
-	
+
 	return tmpPop->size();
 }
 
 void EdaModel::learnStructure(GAPopulation* pop, int size) {//UMDA
 	// spocte pocet jednicek na jednotlivych pozicich
 	memset(onesCounts, 0, length * sizeof(int));
-	
+
 	for (int n = 0; n < size; n++) {
 		GA1DBinaryStringGenome & genome = (GA1DBinaryStringGenome &) pop->individual(n);
 		for (unsigned int i = 0; i < length; i++) {
 			onesCounts[i] += genome.gene(i);
 		}
 	}
-	
+
 	for (unsigned int i = 0; i < length; i++) {
 		assert(onesCounts[i] <=pop->size() && onesCounts[i] >= 0);
 	}
 }
 
 int EdaModel::sampleModel(GAPopulation* tmpPop) {//UMDA
-//	cout << "tmpPop size " << tmpPop->size() << endl; 
+//	cout << "tmpPop size " << tmpPop->size() << endl;
 //	cout << "new genomes: ";
-	
+
 	for (int n=0; n < tmpPop->size(); n++) {
 		GA1DBinaryStringGenome *child = (GA1DBinaryStringGenome *) &tmpPop->individual(n);
 		for (int i = 0; i < child->length(); i++) {
