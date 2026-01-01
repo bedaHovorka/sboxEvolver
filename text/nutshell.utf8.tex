@@ -9,101 +9,101 @@
 %
 %      Bedrich Hovorka
 %
-Tento krátký manuál je určen těm, kteří chtějí provádět vlastní experimenty v evolučním
-hledání S-boxů.
-Pro správný (paralelní) chod je nutné mít zkompilovanou upravenou verzi knihovny GAlib.
-Pro sekvenční běh byla odzkoušena i původní verze knihovny.
-Po instalaci knihovny je možné pomocí příkazu \emph{make} zkompilovat dynamickou knihovnu
-pro hledání S-boxů. Pokud z nějakého důvodu nelze GAlib nainstalovat a je možné ji pouze zkompilovat
-v adresáři, musí se v souboru makefile pomocí přepínačů -I a -L nastavit cesta k této knihovně.
-(V odevzdané podobě jsou zdrojové kódy ve stavu, v jakém běžely na serveru Merlin, takže makefile je již nastaven.)
+This short manual is intended for those who want to conduct their own experiments in evolutionary
+S-box search.
+For proper (parallel) operation, it is necessary to have a compiled modified version of the GAlib library.
+For sequential execution, the original version of the library has also been tested.
+After installing the library, the dynamic library for S-box search
+can be compiled using the \emph{make} command. If for some reason GAlib cannot be installed and can only be compiled
+in a directory, the path to this library must be set in the makefile using the -I and -L switches.
+(In the submitted form, the source codes are in the state in which they ran on the Merlin server, so the makefile is already configured.)
 
-Dále popisované objekty jsou v (I)Pythonu přístupné pomocí příkazu:
+The objects described below are accessible in (I)Python using the command:
 \begin{verbatim}
   from evolution import *
 \end{verbatim}
-jak je vidět v souboru experiments.py.
-V tomto souboru jsou jako příklady uvedeny i provedené experimenty.
+as can be seen in the experiments.py file.
+The conducted experiments are also listed as examples in this file.
 
-\subsubsection{Definování genomu}
-Pro zvolení reprezentace slouží konstruktor objektu Genome, kterému je třeba předat typ a
-objektivní funkci pro jednokriteriální optimalizaci:
+\subsubsection{Defining the Genome}
+The Genome object constructor is used to select the representation, to which the type and
+objective function for single-criterion optimization must be passed:
 \begin{verbatim}
   Genome(chromosomeType, criterion, [specific])
 \end{verbatim}
-kde \verb|chromosomeType| může být\\
-\verb|ChromosomeType.BINARY| pro binární reprezentaci; \verb|specific| jsou počet vstupních bitů, počet výstupních bitů\\
-\verb|ChromosomeType.PERMUTATION| pro reprezentaci jako seznam výstupů; \verb|specific| vyžadování permutace, počet vstupních bitů,
-počet výstupních bitů\\
-\verb|ChromosomeType.CGP| pro reprezentaci jako acyklický graf hradel; \verb|specific| počet vstupních bitů,
-počet výstupních bitů, počet sloupců, počet řádků, maximální počet mutací jednoho prvku\\
-\verb|ChromosomeType.SOFTWARE_IMPL| pro reprezentaci jako posloupnost trojinstrukcí i686;\\
-\verb|specific| počet čtveřic bitů na vstupu a výstupu zároveň\\
+where \verb|chromosomeType| can be\\
+\verb|ChromosomeType.BINARY| for binary representation; \verb|specific| are number of input bits, number of output bits\\
+\verb|ChromosomeType.PERMUTATION| for representation as a list of outputs; \verb|specific| permutation requirement, number of input bits,
+number of output bits\\
+\verb|ChromosomeType.CGP| for representation as an acyclic graph of gates; \verb|specific| number of input bits,
+number of output bits, number of columns, number of rows, maximum number of mutations per element\\
+\verb|ChromosomeType.SOFTWARE_IMPL| for representation as a sequence of i686 triple-instructions;\\
+\verb|specific| number of 4-bit groups at input and output simultaneously\\
 
-a \verb|criterion| \\
-(pro multikriteriální optimalizaci je ignorován, lze však zadat \verb|CriterionFunction.NONE_FITNESS|)
-\verb|CriterionFunction.BENT_AND_MOSAC| pro kritérium bent skóre,\\
-\verb|CriterionFunction.LP_MAX| pro lineární pravděpodobnost, \\
-\verb|CriterionFunction.DP_MAX| pro diferenciální pravděpodobnost,\\
-\verb|CriterionFunction.BIJECTIVE_SCORE| pro bijektivní skóre,\\
-\verb|CriterionFunction.SAC| pro řád Strict Avalanche Criterion,\\
-\verb|CriterionFunction.BF| pro faktor větvení,\\
-\verb|CriterionFunction.POLYNOMIAL_DEGREE| pro stupeň algebraického polynomu
+and \verb|criterion| \\
+(for multi-criteria optimization it is ignored, but \verb|CriterionFunction.NONE_FITNESS| can be specified)
+\verb|CriterionFunction.BENT_AND_MOSAC| for bent score criterion,\\
+\verb|CriterionFunction.LP_MAX| for linear probability, \\
+\verb|CriterionFunction.DP_MAX| for differential probability,\\
+\verb|CriterionFunction.BIJECTIVE_SCORE| for bijective score,\\
+\verb|CriterionFunction.SAC| for Strict Avalanche Criterion order,\\
+\verb|CriterionFunction.BF| for branching factor,\\
+\verb|CriterionFunction.POLYNOMIAL_DEGREE| for algebraic polynomial degree
 
-\subsubsection{Definování parametrů hledání a výběr algoritmu}
-Nové hledání se vytvoří pomocí zavolání konstruktoru:
+\subsubsection{Defining Search Parameters and Algorithm Selection}
+A new search is created by calling the constructor:
 \begin{verbatim}
 Searching(algorithm, genome, popSize, generations, [specific])
 \end{verbatim}
-\verb|algorithm| je\\
-\verb|"Ga"| pro jednokriteriální genetický algoritmus (genetické programování); \\ \verb|specific| pravděpodobnost mutace,
- pravděpodobnost křížení, zapnutí elitismu\\
-\verb|"Vega"| pro algoritmus VEGA; \verb|specific| pravděpodobnost mutace,
- pravděpodobnost křížení, seznam kritérií\\
-\verb|"Spea"| pro algoritmus SPEA; \verb|specific| pravděpodobnost mutace,
- pravděpodobnost křížení, seznam kritérií\\
-\verb|"Eda"| pro algoritmus EDA; \verb|specific| typ (\verb|False| pro UMDA, \verb|True| pro BMDA)\\
-\verb|"Random"| pro náhodné prohledávání; velikost populace znamená počet uchovávaných nejlepších výsledků\\
-\verb|"ParallelRandom"| pro paralelní náhodné prohledávání; \verb|specific| pravděpodobnost mutace\\
+\verb|algorithm| is\\
+\verb|"Ga"| for single-criterion genetic algorithm (genetic programming); \\ \verb|specific| mutation probability,
+ crossover probability, elitism enabled\\
+\verb|"Vega"| for VEGA algorithm; \verb|specific| mutation probability,
+ crossover probability, list of criteria\\
+\verb|"Spea"| for SPEA algorithm; \verb|specific| mutation probability,
+ crossover probability, list of criteria\\
+\verb|"Eda"| for EDA algorithm; \verb|specific| type (\verb|False| for UMDA, \verb|True| for BMDA)\\
+\verb|"Random"| for random search; population size means number of stored best results\\
+\verb|"ParallelRandom"| for parallel random search; \verb|specific| mutation probability\\
 
-\verb|genome| je reprezentace vytvořená podle pravidel výše
-a \verb|popSize| resp. \verb|generations| je velikost populace resp. počet generací.
+\verb|genome| is the representation created according to the rules above
+and \verb|popSize| respectively \verb|generations| is the population size respectively number of generations.
 
 
-\subsubsection{Spuštění evoluce a získání výsledků}
-Třída Searching obsahuje:
+\subsubsection{Running Evolution and Obtaining Results}
+The Searching class contains:
 \begin{itemize}
-  \item instanční metodu  \verb|simpleEvolve()| -- spustí jeden experiment
-  \item třídní metodu \verb|parallelSearching(list)| -- provede paralelně seznam \verb|list| objektů typu Searching
-  \item instanční metodu \verb|statistics()| -- po provedení evoluce vrátí objekt TStatistics
-  \item instanční metodu \verb|bestPopulationStrings()| -- vrátí seznam řetězcových reprezentací všech \verb|statistics().nBestGenomes| nejlepších jedinců za celý průběh evoluce
+  \item instance method  \verb|simpleEvolve()| -- runs a single experiment
+  \item class method \verb|parallelSearching(list)| -- performs parallel execution of a \verb|list| of Searching objects
+  \item instance method \verb|statistics()| -- after evolution completes, returns a TStatistics object
+  \item instance method \verb|bestPopulationStrings()| -- returns a list of string representations of all \verb|statistics().nBestGenomes| best individuals throughout the evolution
 \end{itemize}
 
-Třída TStatistics obsahuje:
+The TStatistics class contains:
 \begin{itemize}
-  \item \verb|online| -- průměrné skóre za celý průběh evoluce
-  \item \verb|offlineMax| -- průměr maximálních skóre
-  \item \verb|offlineMin| -- průměr minimálních skóre
-  \item \verb|bestPopulationScores| -- skóre všech \verb|nBestGenomes| nejlepších jedinců za celý průběh evoluce
-  \item \verb|bestPopulationCriterionsValues| -- hodnoty jednotlivých kritérií všech \verb|nBestGenomes| nejlepších jedinců za celý průběh evoluce
-  \item \verb|bestPopulationOutputs| -- výstupy všech \verb|nBestGenomes| nejlepších jedinců za celý průběh evoluce
-  \item \verb|maxEver| -- největší dosažené skóre
-  \item \verb|minEver| -- nejmenší dosažené skóre
-  \item \verb|generation| -- poslední generace
-  \item \verb|convergence| -- konvergence evoluce
-  \item \verb|selections| -- počet provedených selekcí za celý průběh evoluce
-  \item \verb|crossovers| -- počet provedených křížení za celý průběh evoluce
-  \item \verb|mutations| -- počet provedených mutací za celý průběh evoluce
-  \item \verb|replacements| -- počet provedených nahrazení za celý průběh evoluce
-  \item \verb|nBestGenomes| -- počet uchovávaných nejlepších jedinců\\
+  \item \verb|online| -- average score throughout the evolution
+  \item \verb|offlineMax| -- average of maximum scores
+  \item \verb|offlineMin| -- average of minimum scores
+  \item \verb|bestPopulationScores| -- scores of all \verb|nBestGenomes| best individuals throughout the evolution
+  \item \verb|bestPopulationCriterionsValues| -- values of individual criteria of all \verb|nBestGenomes| best individuals throughout the evolution
+  \item \verb|bestPopulationOutputs| -- outputs of all \verb|nBestGenomes| best individuals throughout the evolution
+  \item \verb|maxEver| -- highest score achieved
+  \item \verb|minEver| -- lowest score achieved
+  \item \verb|generation| -- last generation
+  \item \verb|convergence| -- evolution convergence
+  \item \verb|selections| -- number of selections performed throughout the evolution
+  \item \verb|crossovers| -- number of crossovers performed throughout the evolution
+  \item \verb|mutations| -- number of mutations performed throughout the evolution
+  \item \verb|replacements| -- number of replacements performed throughout the evolution
+  \item \verb|nBestGenomes| -- number of stored best individuals\\
 \end{itemize}
 
-Položky \verb|bestPopulationScores| apod. jsou typu \verb|numpy.Array|.
+Items \verb|bestPopulationScores| etc. are of type \verb|numpy.Array|.
 
-\subsubsection{Provedení symbolické regrese z výsledku předchozího hledání}
-Pro symbolickou regresi je třeba vytvořit specializovaný genom:
+\subsubsection{Performing Symbolic Regression from Previous Search Results}
+For symbolic regression, it is necessary to create a specialized genome:
 \begin{verbatim}
   SymbolicalRegressionGenome(chromosomeType, list, [specific])
 \end{verbatim}
-kde \verb|list| je seznam požadovaných výstupů a musí odpovídat parametrům boxu.
-Ostatní parametry jsou shodné s třídou \verb|Genome|.
+where \verb|list| is the list of required outputs and must match the S-box parameters.
+Other parameters are identical to the \verb|Genome| class.

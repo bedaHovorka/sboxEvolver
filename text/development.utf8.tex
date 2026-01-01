@@ -9,99 +9,98 @@
 %      Bedrich Hovorka
 % -----------------------------------------------------
 %
-Ve fázi návrhu byla vybrána kombinace jazyků C++ a Python. V C++ byly následně s pomocí
-knihovny GAlib naimplementovány
-časově náročnější operace, tj. průběh evoluce, reprezentace S-boxů
-a výpočty kritérií bezpečnosti z výstupů S-boxů.
-K evolučním experimentům byly zvoleny také algoritmy, které nejsou
-součástí knihovny GAlib. Dále bylo naimplementováno rozhraní mezi
-Pythonem a C++, aby mohly být experimenty spouštěny z Pythonu a aby tam byly také zpracovány
-výsledné statistiky.
+In the design phase, a combination of C++ and Python languages was selected. Subsequently, in C++ with the help of
+the GAlib library, the more time-consuming operations were implemented,
+namely the evolution process, S-box representations,
+and calculations of security criteria from S-box outputs.
+For evolutionary experiments, algorithms that are not
+part of the GAlib library were also chosen. Furthermore, an interface between
+Python and C++ was implemented so that experiments could be launched from Python and the
+resulting statistics could also be processed there.
 
-Třídy v C++ se dělí na ty, jež se týkají reprezentací S-boxů, a na ty, které
-provádějí prohledávání. Jakoukoliv reprezentaci S-boxu je možné použít v kterémkoliv
-prohledávacím algoritmu kromě algoritmu EDA, jenž podle definice pracuje s
-číselnými alelami; v této implementaci pouze s binárními.
-V následujícím textu jsou vybrány zajímavé součásti implementace.
+The classes in C++ are divided into those that concern S-box representations and those that
+perform searching. Any S-box representation can be used in any
+search algorithm except the EDA algorithm, which by definition works with
+numerical alleles; in this implementation only with binary ones.
+In the following text, interesting components of the implementation are selected.
 
-\section{Implementace evolučních algoritmů}
-Nejprve byly naimplementovány chybějící prohledávací algoritmy. Všechny
-prohledávací algoritmy jsou zděděny od bázové třídy \sourceRef{SboxSearchAlgorithmBase},
-která dědí od \sourceRef{GASimpleGA} z GAlibu. Tímto způsobem bylo možno použít obecnější
-rozhraní k prohledávacím algoritmům. Většina logiky následujících algoritmů byla
-implementována v předefinované metodě \sourceRef{step()},
-která provede jednu generaci evolučního procesu, z nadtřídy
-\sourceRef{GASimpleGA} v GAlibu. Následující text popisuje implementované
-metody a pomocné objekty, které jsou během provedení jedné generace použity
-specializovaně pro konkrétní algoritmus.
+\section{Implementation of Evolutionary Algorithms}
+First, the missing search algorithms were implemented. All
+search algorithms are inherited from the base class \sourceRef{SboxSearchAlgorithmBase},
+which inherits from \sourceRef{GASimpleGA} from GAlib. In this way, it was possible to use a more general
+interface for search algorithms. Most of the logic of the following algorithms was
+implemented in the overridden method \sourceRef{step()},
+which performs one generation of the evolutionary process, from the superclass
+\sourceRef{GASimpleGA} in GAlib. The following text describes the implemented
+methods and auxiliary objects that are used during the execution of one generation
+specifically for a particular algorithm.
 
-\subsubsection{Algoritmy EDA}
-Třída algoritmu EDA rozšiřuje základní třídu o vlastnost model; ten může být dvojího
-typu daného třídou objektu. Bázová třída \sourceRef{EdaModel} implementuje statistický
-model UMDA, její podtřída \sourceRef{BmdaModel} totiž též používá prosté pravděpodobnosti výskytů alel
-k jeho výpočtům. Ve třídě \sourceRef{EstimationOfDistributionAlgorithm}
-je definována obecná logika algoritmu EDA a odpovědnost za
-vytvoření statistického modelu a vygenerování nových jedinců se přenese
-právě na instanci třídy \sourceRef{EdaModel}.
+\subsubsection{EDA Algorithms}
+The EDA algorithm class extends the base class with a model property; it can be of two
+types given by the object class. The base class \sourceRef{EdaModel} implements the statistical
+UMDA model, while its subclass \sourceRef{BmdaModel} also uses simple allele occurrence probabilities
+for its calculations. In the class \sourceRef{EstimationOfDistributionAlgorithm}
+the general logic of the EDA algorithm is defined, and the responsibility for
+creating the statistical model and generating new individuals is transferred
+to an instance of the class \sourceRef{EdaModel}.
 
-Ve třídě \sourceRef{EdaModel} byly naimplementovány dvě hlavní polymorfní metody
-pojmenované
-\sourceRef{learnStructure}, která jednoduše projde všemi jedinci a zaznamená počty
-výskytů jedničkových bitů v poli o délce binárního chromozomu,
-a \sourceRef{sampleModel}, která toto pole používá ke generování jedinců
-s pravděpodobností $P(genome[i] = 1) = count[i]/popSize$.
+In the class \sourceRef{EdaModel}, two main polymorphic methods were implemented,
+named
+\sourceRef{learnStructure}, which simply iterates through all individuals and records the counts
+of one-bits in an array of the length of the binary chromosome,
+and \sourceRef{sampleModel}, which uses this array to generate individuals
+with probability $P(genome[i] = 1) = count[i]/popSize$.
 
-Třída \sourceRef{BmdaModel} používá pro vytvoření statistického modelu
-třídu \sourceRef{ContingentTable} a k jeho uložení les\footnote{množina stromů}
-vytvořený pomocí instancí tříd \sourceRef{BmdaNode}. V metodě \sourceRef{learnStructure} nejprve spočítá
-kontingenční tabulky závislostí mezi lokusy. Kontingenční tabulky, u nichž
-vyjde hypotéza \uv{závisí} $\chi^2$-testu, jsou seřazeny podle hodnoty
-tohoto $\chi^2$-testu. Pokud jsou všechny lokusy nezávislé, algoritmus
-skončí pouze s vypočteným modelem UMDA. V opačném případě jsou ze seřazených
-kontingenčních tabulek vygenerovány stromy
-závislostí\footnote{Algoritmus vytvoření tohoto lesa je uveden např. v \cite{evo}}.
-V metodě \sourceRef{sampleModel} se podle typu aktuálního uloženého modelu vybere buď
-generování jedinců v nadtřídě, nebo se při generování každého jedince
-projde lesem a hodnoty na jednotlivých lokusech jsou spočítány na základě
-prošlých podmíněných pravděpodobností v uzlech na větvích stromů.
+The class \sourceRef{BmdaModel} uses the class \sourceRef{ContingentTable} for creating the statistical model
+and a forest\footnote{a set of trees}
+created using instances of the \sourceRef{BmdaNode} classes for its storage. In the method \sourceRef{learnStructure}, it first calculates
+contingency tables of dependencies between loci. Contingency tables for which
+the hypothesis "dependent" of the $\chi^2$-test holds are sorted according to the value
+of this $\chi^2$-test. If all loci are independent, the algorithm
+terminates with only the calculated UMDA model. Otherwise, dependency trees
+are generated from the sorted contingency tables\footnote{The algorithm for creating this forest is given e.g. in \cite{evo}}.
+In the method \sourceRef{sampleModel}, either generation of individuals in the superclass is selected according to the type of the currently stored model,
+or when generating each individual,
+the forest is traversed and values at individual loci are calculated based on
+the conditional probabilities encountered in nodes on tree branches.
 
 \bigskip
 
-Nadtřída multikriteriálních
-algoritmů\footnote{ve zdrojových kódech \sourceRef{MulticriterialGeneticAlgorithm}}
-se stará o množinu požadovaných kritérií. Dále obsahuje rutiny, které
-používají oba multikriteriální algoritmy. Mezi ně patří například
-rozhodnutí o dominanci a výpočet nedominované elity metodou
-průběžně aktualizovaného přístupu.
+The superclass of multi-criteria
+algorithms\footnote{in the source code \sourceRef{MulticriterialGeneticAlgorithm}}
+manages the set of required criteria. It also contains routines that
+both multi-criteria algorithms use. These include, for example,
+decision about dominance and calculation of the non-dominated elite using the
+continuously updated approach method.
 
-\subsubsection{Algoritmus VEGA}
-V implementaci algoritmu VEGA (viz podkapitola \ref{algorithmVEGA})
-ve třídě \sourceRef{VegaAlgorithm} jsou v metodě \sourceRef{mainPopulationToSegments}
-rozděleni jedinci do podpopulací, dle počtu kritérií. V každé podpopulaci
-je jedincům nastavena její přidělená kriteriální funkce,
-případně je zneplatněno hodnocení těm,
-kteří byli v minulé generaci vyhodnoceni jiným kritériem.
-V metodě \sourceRef{segmentsToMainPopulation} jsou jedinci
-v rámci podpopulace vyhodnoceni. Skóre je nastaveno každému jako podíl
-hodnoty vypočteného kritéria jedince a součtu všech. Poté jsou podpopulace
-sloučeny do jedné.
+\subsubsection{VEGA Algorithm}
+In the implementation of the VEGA algorithm (see subsection \ref{algorithmVEGA})
+in the class \sourceRef{VegaAlgorithm}, in the method \sourceRef{mainPopulationToSegments},
+individuals are divided into subpopulations according to the number of criteria. In each subpopulation,
+individuals are assigned its designated criterion function,
+or the evaluation is invalidated for those
+who were evaluated by a different criterion in the previous generation.
+In the method \sourceRef{segmentsToMainPopulation}, individuals
+are evaluated within the subpopulation. The score is set for each as the ratio
+of the calculated criterion value of the individual and the sum of all. Then the subpopulations
+are merged into one.
 
-\subsubsection{Algoritmus SPEA}
-Algoritmus SPEA (viz podkapitola \ref{algorithmSPEA}) ve třídě \sourceRef{SpeaAlgorithm}
-je díky výpočtu nedominované sady řešení a shlukování
-výpočetně nejsložitější. Výpočet sil v metodě nazvané \sourceRef{computePowers}
-nejprve všem jedincům z normální populace nastaví sílu na jedna.
-Poté prochází všemi jedinci v elitě $E$ a v každém kroku pro každého
-jedince $E_i$ provede:
+\subsubsection{SPEA Algorithm}
+The SPEA algorithm (see subsection \ref{algorithmSPEA}) in the class \sourceRef{SpeaAlgorithm}
+is computationally the most complex due to the calculation of the non-dominated solution set and clustering.
+The computation of strengths in the method named \sourceRef{computePowers}
+first sets the strength of all individuals from the normal population to one.
+Then it iterates through all individuals in the elite $E$ and in each step for each
+individual $E_i$ it performs:
 \begin{enumerate}
-  \item zaznamená všechny jedince $D^i$ z normální populace, jež jsou dominováni jedincem $E_i$
-  \item jejich počet $|D^i|$ využije ke stanovení síly jedince $E_i$
-  \item všem dominovaným jedincům ${D^i}_j$ je připočtena síla jedince $E_i$
+  \item records all individuals $D^i$ from the normal population that are dominated by individual $E_i$
+  \item uses their count $|D^i|$ to determine the strength of individual $E_i$
+  \item the strength of individual $E_i$ is added to all dominated individuals ${D^i}_j$
 \end{enumerate}
 
 
-Pro implementaci shlukování (uvedeného na str. \pageref{secClustering}) slouží ve třídě \sourceRef{SpeaAlgorithm}
-tyto datové typy:
+For the implementation of clustering (described on page \pageref{secClustering}), the following
+data types are used in the class \sourceRef{SpeaAlgorithm}:
 \begin{verbatim}
   typedef std::vector<Sbox*> Cluster;
   class ClusterPair : public std::pair<Cluster*, Cluster*>;
@@ -109,156 +108,156 @@ tyto datové typy:
   typedef std::multimap<double, ClusterPair*> ClusterDistances;
   typedef std::map<Cluster*,  ClusterPairVector> PairsForCluster;
 \end{verbatim}
-Clusterem je tedy seznam ukazatelů na jedince. Třída \sourceRef{ClusterPair}
-je pomocná pro výpočet vzdáleností mezi clustery. V ní je kvůli správě
-paměti příznak, zda ještě platí. Pomocný typ \sourceRef{ClusterPairVector} slouží
-pro uložení platných i neplatných párů pro \sourceRef{ClusterDistances},
-který uchovává páry seřazené podle vzdáleností mezi clustery v páru.
-Klíč typu double slouží k průběžnému seřazení, ne k přístupu k prvkům pomocí typu double.
-A pomocný typ \sourceRef{PairsForCluster} eviduje všechny páry, ve kterých je cluster
-obsažen. Celý algoritmus shlukování v metodě \sourceRef{clustering} s použitím těchto
-typů lze popsat:
+A cluster is thus a list of pointers to individuals. The class \sourceRef{ClusterPair}
+is auxiliary for calculating distances between clusters. It contains a flag
+for memory management indicating whether it is still valid. The auxiliary type \sourceRef{ClusterPairVector} is used
+to store both valid and invalid pairs for \sourceRef{ClusterDistances},
+which maintains pairs sorted according to distances between clusters in the pair.
+The double type key is used for continuous sorting, not for accessing elements using the double type.
+And the auxiliary type \sourceRef{PairsForCluster} records all pairs in which a cluster
+is contained. The entire clustering algorithm in the method \sourceRef{clustering} using these
+types can be described:
 \begin{enumerate}
-  \item inicializace $pairsForCluster$ typu \sourceRef{PairsForCluster} \\ a
-   $clusterDistances$ typu \sourceRef{ClusterDistances}
-  \item nejprve se projde celou elitou, a z každého jedince je vytvořen cluster
-   a přidán mezi ostatní
-  \item procházení všemi $clusterDistances$ od nejmenší vzdálenosti, dokud počet
-  clusterů je větší než požadovaná velikost elity, neplatné páry jsou přeskočeny
+  \item initialization of $pairsForCluster$ of type \sourceRef{PairsForCluster} \\ and
+   $clusterDistances$ of type \sourceRef{ClusterDistances}
+  \item first, the entire elite is traversed, and from each individual a cluster is created
+   and added among the others
+  \item traversing all $clusterDistances$ from the smallest distance, as long as the number
+  of clusters is greater than the required elite size, invalid pairs are skipped
   \begin{enumerate}
-    \item přidání nového clusteru obsahujícího oba jedince ze současného páru
-    \item odebrání obou starých clusterů
+    \item adding a new cluster containing both individuals from the current pair
+    \item removing both old clusters
   \end{enumerate}
-  \item generování nové elity z jedinců nejbližších středu clusteru
+  \item generating a new elite from individuals closest to the cluster center
 \end{enumerate}
 
-Při přidání clusteru v metodě \sourceRef{addCluster} se
-spočítají vzdálenosti nového clusteru se všemi existujícími clustery a
-uloží mezi $clusterDistances$.
-Každý nový pár je také přidán do $pairsForCluster$ k oběma klíčům.
+When adding a cluster in the method \sourceRef{addCluster},
+the distances of the new cluster with all existing clusters are calculated and
+stored in $clusterDistances$.
+Each new pair is also added to $pairsForCluster$ for both keys.
 
-Odebrání clusteru v metodě \sourceRef{removeCluster}:
-Při odebrání clusteru se zneplatní páry, ve kterých je cluster
-obsažen a odstraní se jejich seznam pro aktuální cluster v
+Removing a cluster in the method \sourceRef{removeCluster}:
+When removing a cluster, pairs in which the cluster
+is contained are invalidated and their list is removed for the current cluster in
 $pairsForCluster$.
 
-\subsubsection{Kartézské genetické programování, náhodné prohledávání}
-Kartézské genetické programování bylo rozděleno na tzv. \uv{paralelní náhodné prohledávání}
-a acyklický graf hradel, jehož implementace je popsána dále, protože v této práci je
-považována za reprezentaci S-boxu. Při implementaci jak náhodného, tak paralelního náhodného prohledávání
-bylo zděděno od stejné bázové třídy jako ostatní evoluční algoritmy, z důvodu snadného porovnání
-díky sběru statistik, jenž provádí GAlib. Proto využívají ke generování dalších
-řešení i mutaci genomu.
+\subsubsection{Cartesian Genetic Programming, Random Search}
+Cartesian genetic programming was divided into so-called "parallel random search"
+and an acyclic gate graph, whose implementation is described below, because in this work it is
+considered as an S-box representation. In the implementation of both random and parallel random search,
+inheritance from the same base class as other evolutionary algorithms was used, for the purpose of easy comparison
+thanks to the collection of statistics performed by GAlib. Therefore, they also use genome mutation
+to generate further solutions.
 
-\section{Implementace reprezentací S-boxů}
-Pro implementaci reprezentací S-boxů bylo využito též specializovaných tříd obsažených v GAlibu.
-Tedy nejen odvozením od \sourceRef{GAGenome}.
-Na obrázku \ref{sboxClassDiagram} je znázorněn diagram tříd reprezentací a jejich odvození
-z GAlibu, které jsou označeny modře. Touto samou barvou je označena i větev dědičnosti od
+\section{Implementation of S-box Representations}
+For the implementation of S-box representations, specialized classes contained in GAlib were also used,
+not only by deriving from \sourceRef{GAGenome}.
+Figure \ref{sboxClassDiagram} shows the class diagram of representations and their derivation
+from GAlib, which are marked in blue. This same color also marks the inheritance branch from
 \sourceRef{Genome}.
-Černou jsou označeny vlastní třídy reprezentací substitučních boxů. Touto samou barvou je
-znázorněno dědění od bázové třídy S-boxu. Z obrázku je patrné, že byla použita vícenásobná
-dědičnost. Původně byla třída \sourceRef{Sbox} navržena jako čistě virtuální,
-ale některé funkčnosti, které jsou společné pro všechny S-boxy bylo přehlednější napsat do ní než
-někam mimo třídu. Mezi tyto metody patří například uložení všech možných vstupů do pole,
-rozhraní k výpočtu jednotlivých kritérií či provedení multievaluace.
-Naproti tomu třída \sourceRef{GAGenome} pracuje pouze s jedním kritériem.
-V ní jsou definovány jako vlastnost callbacky
-pro inicializaci, mutaci a křížení genomu. V podtřídách jsou tyto callbacky
-implementovány a nastaveny.
+In black are marked the custom classes of substitution box representations. This same color shows
+the inheritance from the S-box base class. From the figure it is evident that multiple
+inheritance was used. Originally, the class \sourceRef{Sbox} was designed as purely virtual,
+but some functionalities that are common to all S-boxes were clearer to write into it than
+somewhere outside the class. These methods include, for example, storing all possible inputs in an array,
+an interface for calculating individual criteria, or performing multi-evaluation.
+In contrast, the class \sourceRef{GAGenome} works only with one criterion.
+In it, callbacks are defined as properties
+for initialization, mutation, and crossover of the genome. In subclasses, these callbacks
+are implemented and set.
 
-\insertimage{sboxClassDiagram}{Diagram tříd reprezentací S-boxů s vyznačením napojení do GAlibu}
+\insertimage{sboxClassDiagram}{Class diagram of S-box representations with marked connection to GAlib}
 
-Zatímco v \sourceRef{PermutationSboxTemplate} jsou výstupem geny na odpovídajících pozicích, u
-ostatních reprezentací je nutné provést výpočet. Proto je v bázové třídě možnost tyto výsledky
-(i kritérií) uložit a případně zneplatnit.
-Kód \sourceRef{CgpGenomu} byl inspirován implementací \cite{vasicek}.
-Výpočet výstupů reprezentace i686 je uveden v \ref{secAbouti686}.
+While in \sourceRef{PermutationSboxTemplate} the output is the genes at corresponding positions, in
+other representations it is necessary to perform a calculation. Therefore, in the base class there is the possibility to store these results
+(and also criteria) and possibly invalidate them.
+The code of \sourceRef{CgpGenome} was inspired by the implementation \cite{vasicek}.
+The calculation of outputs for the i686 representation is given in \ref{secAbouti686}.
 
-\section{Naimplementovaná kritéria a jejich vyhodnocení}
+\section{Implemented Criteria and Their Evaluation}
 
-V \sourceRef{multievaluate} (též na obr. \ref{sboxClassDiagram}) se napřed uloží výstupy S-boxu do pomocného slovníku
-a z něho jsou spočítány hodnoty kritérií a poté uloženy v objektu, aby se nemusely
-počítat znovu.
-V multikriteriálních algoritmech je tedy nutné navíc po mutaci
-jedince zavolat metodu \sourceRef{invalidate}, aby se uložené hodnoty kritérií zneplatnily.
-Některá vypočtená kritéria potřebují před předáním evolučnímu algoritmu upravit, zde jsou
-uvedeny jejich úpravy:
+In \sourceRef{multievaluate} (also in Fig. \ref{sboxClassDiagram}), the S-box outputs are first stored in an auxiliary dictionary
+and from it the criterion values are calculated and then stored in the object so they do not have to be
+calculated again.
+In multi-criteria algorithms, it is therefore necessary to additionally call the method \sourceRef{invalidate} after mutation
+of an individual so that the stored criterion values are invalidated.
+Some calculated criteria need to be adjusted before being passed to the evolutionary algorithm; here are
+their adjustments:
 \begin{description}
-  \item[bent skóre] počet $w$ jejichž $|G(w)| = 1$
-  \item[řád SAC] k řádu přičtena jednička, protože GAlib nebere záporné hodnoty
-  \item[bent + SAC] pokud je bent skóre rovno $2^n$, tak se přičte řád SAC
-  \item[diferenciální pravděpodobnost] minimalizace provedená pomocí: $-\log_2(DP_{\max})$
-  \item[lineární pravděpodobnost] minimalizace provedená pomocí: $-\log_2(LP_{\max})$
-  \item[bijektivní skóre] obdobné bent skóre
+  \item[bent score] the number of $w$ whose $|G(w)| = 1$
+  \item[SAC order] one is added to the order because GAlib does not accept negative values
+  \item[bent + SAC] if the bent score equals $2^n$, then the SAC order is added
+  \item[differential probability] minimization performed using: $-\log_2(DP_{\max})$
+  \item[linear probability] minimization performed using: $-\log_2(LP_{\max})$
+  \item[bijective score] similar to bent score
 \end{description}
-Výstupy jsou počítány celočíselnou aritmetikou. Pro GAlib, který pracuje s
-fitness v pohyblivé desetinné čárce se převede až na konec po vypočtení celého kritéria.
-Výstupy některých kritérií, jak při testování, tak závěrečné výsledky, byly srovnány s matematickým
-systémem SageMath a jeho funkcemi pro S-box\footnote{\url{http://www.sagemath.org/doc/reference/sage/crypto/mq/sbox.html}}.
-Které nebylo vhodné použít přímo, neboť evoluce z důvodu rychlosti probíhá v C++ a neobsahuje všechna
-kritéria, kterými se práce zabývá.
+Outputs are calculated using integer arithmetic. For GAlib, which works with
+fitness in floating-point, conversion is done only at the end after calculating the entire criterion.
+The outputs of some criteria, both during testing and final results, were compared with the mathematical
+system SageMath and its functions for S-box\footnote{\url{http://www.sagemath.org/doc/reference/sage/crypto/mq/sbox.html}}.
+Which was not suitable to use directly, because evolution for speed reasons runs in C++ and does not contain all
+the criteria that the work deals with.
 
-\section{Rozhraní komunikace s Pythonem}
-Původní prototypové schéma na obrázku \ref{evolutionClassDiagram} bylo změněno tím, že
-se třídy pro evoluční algoritmy přesunuly do C++. Pythonu proto zůstává pouze rozhraní
-pro jejich nadtřídu. Toto rozhraní umožňuje v konstruktoru specifikovat, který algoritmus
-a genom se má pro prohledávání použít.
-Při vytváření tohoto rozhraní byla co nejvíce použita knihovna ctypes, která umožňuje
-spouštět funkce v
-jazyce C\footnote{funkce C++ se dají jednoduše deklarovat v
-\sourceRef{extern "C"} bloku}
-umístěné v dynamicky linkované knihovně. Primitivní datové typy jsou
-většinou převáděny do Pythonu automaticky. Někdy je nutné v Pythonu specifikovat typ
-argumentu či návratové hodnoty funkce, ale to není problém, pokud se
-céčkové funkce příliš nemění. Knihovna ctypes
-podporuje i struktury jazyka C.
-Předávání velkých polí dat zajišťují
-funkce knihovny numpy, která je použita ke zpracování výsledků při experimentech.
-Pro předávání řetězců bylo nakonec použito Python C API.
+\section{Python Communication Interface}
+The original prototype schema in Figure \ref{evolutionClassDiagram} was modified by
+moving the classes for evolutionary algorithms to C++. Python therefore retains only the interface
+for their superclass. This interface allows specifying in the constructor which algorithm
+and genome should be used for searching.
+When creating this interface, the ctypes library was used as much as possible, which allows
+running functions in
+the C language\footnote{C++ functions can be simply declared in an
+\sourceRef{extern "C"} block}
+located in a dynamically linked library. Primitive data types are
+mostly converted to Python automatically. Sometimes it is necessary in Python to specify the type
+of an argument or return value of a function, but this is not a problem if
+the C functions do not change too much. The ctypes library
+also supports C language structures.
+Passing large data arrays is handled by
+functions from the numpy library, which is used for processing results in experiments.
+For passing strings, the Python C API was ultimately used.
 
-V příloze \ref{nutshell} je rozhraní rozvedeno trochu podrobněji z pohledu jeho používání.
+In Appendix \ref{nutshell}, the interface is explained in a bit more detail from the perspective of its usage.
 
-\section{Diskuze možností paralelizace výpočtů}
-Aby se paralelizace vyplatila, nejprve se provedla
-profilace kódu, při které se našly části kódu, které trvaly
-nejdéle. Co již nešlo více zrychlit sekvenčně, vybralo se k paralelizaci.
-Pro orientační odhad, zda se paralelizace vyplatila, bylo využito
-unixového nástroje \sourceRef{time}, který ukazuje spotřebovaný strojový
-a reálný čas programu. Strojový čas pro více procesorů (jader) je ve
-výstupu tohoto nástroje součtem ze všech použitých procesorů.
-Strojový čas paralelního běhu a sekvenčního běhu musel být přibližně stejný.
+\section{Discussion of Parallel Computation Possibilities}
+For parallelization to be worthwhile, code profiling was first performed,
+during which parts of the code that took
+the longest were found. What could no longer be accelerated further sequentially was selected for parallelization.
+For an indicative estimate of whether parallelization was worthwhile, the
+Unix tool \sourceRef{time} was used, which shows the consumed CPU
+and real time of the program. CPU time for multiple processors (cores) is in
+the output of this tool the sum from all used processors.
+The CPU time of parallel execution and sequential execution had to be approximately the same.
 
-Paralelizovat lze na úrovni běhů evoluce, na každém jádře/procesoru pojede jeden běh evoluce. Daly by se řešit i případy, kdy jeden běh
-skončí dříve a ostatní běhy (většinou poslední) by mohly využít volného času nezaměstnaného jádra, ale tato situace je spíše výjimečná pro případy, kdy
-bude program použit. Běhy mezi sebou takřka nesdílejí
-žádná data, a tudíž se paralelizace na víceprocesorovém systému vyplatí. Jediné
-co sdílejí a bylo třeba ošetřit je stav pseudonáhodného generátoru.
+Parallelization can be done at the level of evolution runs, with one evolution run running on each core/processor. Cases could also be handled where one run
+finishes earlier and other runs (usually the last) could use the free time of an idle core, but this situation is rather exceptional for cases where
+the program will be used. The runs share almost
+no data with each other, and therefore parallelization on a multi-processor system is worthwhile. The only
+thing they share and needed to be handled is the state of the pseudorandom generator.
 
-K paralelizaci bylo využito direktiv OpenMP, které jsou obecnější,
-přenositelnější a mají jednodušší a přehlednější zápis
-než např. vlákna POSIX. Kód pro POSIX vlákna tam vygeneruje překladač GCC, ostatní
-překladače tam mohou vygenerovat jiný kód specifický pro určitou architekturu procesoru.
+For parallelization, OpenMP directives were used, which are more general,
+more portable, and have a simpler and clearer notation
+than, for example, POSIX threads. The code for POSIX threads is generated there by the GCC compiler, other
+compilers can generate different code specific to a particular processor architecture.
 
-Právě díky OpenMP bylo možné označit jako
-privátní\footnote{privátní z pohledu sdílení více procesory}
-proměnné, jenž ukládají
-stav pseudonáhodného generátoru v Galibu:
+Thanks to OpenMP, it was possible to mark as
+private\footnote{private from the perspective of sharing by multiple processors}
+variables that store
+the state of the pseudorandom generator in GAlib:
 \begin{verbatim}
   #pragma omp threadprivate(seed, iseed, idum2, iy, iv, idum)
 \end{verbatim}
-Tato úprava nezasáhla do
-rozhraní Galibu a je možné při překladu pro sekvenční provádění
-použít původní Galib.
+This modification did not interfere with
+the GAlib interface and it is possible when compiling for sequential execution
+to use the original GAlib.
 
-Jinou možnou paralelizací by bylo paralelně počítat objektivní
-funkce jedinců uvnitř populace. Třída \sourceRef{GAPopulation} uchovávající seznam jedinců
-v populaci by musela být naimplementovaná bezpečně pro
-použití více vlákny, tj. dodané synchronizace.
+Another possible parallelization would be to calculate the objective
+functions of individuals within the population in parallel. The class \sourceRef{GAPopulation} maintaining the list of individuals
+in the population would have to be implemented safely for
+use by multiple threads, i.e., with added synchronization.
 \pagebreak
-Uvažovanou paralelizací se rozumí následující kód:
+By the considered parallelization, the following code is meant:
 \begin{verbatim}
-// definice evaluátoru populace
+// definition of population evaluator
 void OmpPopulationEvaluator(GAPopulation & p) {
   const int size = p.size();
   #pragma omp parallel for shared(p) schedule(guided)
@@ -266,12 +265,12 @@ void OmpPopulationEvaluator(GAPopulation & p) {
     p.individual(i).evaluate();
 }
 
-// nastavení evaluátoru např. v tovární metodě objektu GAGeneticAlgorithm
+// setting the evaluator e.g. in the factory method of GAGeneticAlgorithm object
 GAPopulation initPopulation(ga.population());
 initPopulation.evaluator(OmpPopulationEvaluator);
 ga.population(initPopulation);
 \end{verbatim}
 
-I bez všech potřebných synchronizací stejně nakonec trvalo toto paralelní řešení delší strojový čas
-než sekvenční řešení, takže by se touto paralelizací moc pro většinu kritérií nezískalo,
-ledaže by byl výpočet některého kritéria složitější např. $LP_{\max}$.
+Even without all necessary synchronizations, this parallel solution ultimately still took longer CPU time
+than the sequential solution, so not much would be gained by this parallelization for most criteria,
+unless the calculation of some criterion were more complex, e.g., $LP_{\max}$.

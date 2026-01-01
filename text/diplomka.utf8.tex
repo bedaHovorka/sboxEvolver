@@ -9,7 +9,7 @@
 %      Bedrich Hovorka
 % -----------------------------------------------------
 %
-\documentclass[cover]{cls/fitthesis}
+\documentclass[cover, english]{cls/fitthesis}
 \usepackage[latin2]{inputenc}
 \usepackage{amsfonts}
 \usepackage{amsthm}
@@ -18,13 +18,13 @@
 \usepackage{longtable}
 %\usepackage{lscape}
 
-% balíčky amsmath, babel, graphics a epsfig (resp. graphicx) jsou již zařazeny
+% packages amsmath, babel, graphics and epsfig (resp. graphicx) are already included
 
 % =======================================================================
-% balíček "hyperref" vytváří klikací odkazy v pdf, pokud tedy použijeme pdflatex
-% problém je, že balíček hyperref musí být uveden jako poslední, takže nemůže
-% být v šabloně
-\ifx\pdfoutput\undefined % nejedeme pod pdflatexem
+% package "hyperref" creates clickable links in pdf, if we use pdflatex
+% the problem is that the hyperref package must be listed last, so it cannot
+% be in the template
+\ifx\pdfoutput\undefined % not running under pdflatex
 \else
   \usepackage{color}
   \usepackage[colorlinks,hyperindex,plainpages=false,pdftex]{hyperref}
@@ -32,42 +32,42 @@
   \definecolor{anchors}{rgb}{1,0,0}
   \def\AnchorColor{anchors}
   \def\LinkColor{links}
-  \def\pdfBorderAttrs{/Border [0 0 0] } % bez okrajů kolem odkazů
+  \def\pdfBorderAttrs{/Border [0 0 0] } % without borders around links
   \pdfcompresslevel=9
 \fi
 
-%  sekce globálních nastavení ------------------------------------------
+%  global settings section ------------------------------------------
 
-%Informace o praci/projektu
+%Work/project information
 %---------------------------------------------------------------------------
 \projectinfo{
-  %Prace
-  project=DP,           %typ prace BP/DP
-  year=2010,             %rok
-  date=\today,           %datum odevzdani
-  %Nazev prace
+  %Work
+  project=DP,           %work type BP/DP
+  year=2010,             %year
+  date=\today,           %submission date
+  %Work title
   title.cs=Hledání S-boxů pomocí evolučních algoritmů,  %nazev prace v cestine
-  title.en=Design of S-Boxes Using Genetic Algorithms, %nazev prace v anglictine
-  title.break=Hledání S-boxů pomocí evolučních algoritmů,
-  %Autor
-  author=Bedřich Hovorka,   %jmeno prijmeni autora
-  author.title.p=Bc., %titul pred jmenem (nepovinne)
-  %author.title.a=PhD, %titul za jmenem (nepovinne)
-  %Ustav
+  title.en=Design of S-Boxes Using Evolutionary Algorithms, %work title in English
+  title.break=English translation (2026) of:,
+  %Author
+  author=Bedřich Hovorka,   %author name surname
+  author.title.p=Bc., %title before name (optional)
+  %author.title.a=PhD, %title after name (optional)
+  %Department
   department=UITS,
-  %Skolitel
-  supervisor=Petr Hanáček, %jmeno prijmeni skolitele
-  supervisor.title.p=Doc. Dr. Ing.,   %titul pred jmenem (nepovinne)
-  supervisor.title.a=,   %titul za jmenem (nepovinne)
+  %Supervisor
+  supervisor=Petr Hanáček, %supervisor name surname
+  supervisor.title.p=Doc. Dr. Ing.,   %title before name (optional)
+  supervisor.title.a=,   %title after name (optional)
   %
-  %Klicova slova, abstrakty, prohlaseni a podekovani je mozne definovat
-  %bud pomoci nasledujicich parametru nebo pomoci vyhrazenych maker (viz dale)
+  %Keywords, abstracts, declaration and acknowledgment can be defined
+  %either using the following parameters or using dedicated macros (see below)
   %===========================================================================
-  %Klicova slova
-  keywords.cs={S-box, genetický algoritmus, EDA, UMDA, BMDA, VEGA, SPEA, Kartézské genetické programování,
-  Pareto optimum, lineární a diferenciální kryptoanalýza, Python, C++}, %klicova slova v ceskem jazyce
+  %Keywords
+  keywords.cs={S-box, Genetic algorithm, EDA, UMDA, BMDA, VEGA, SPEA, Cartesian genetic programming,
+  Pareto optimum, linear and differential cryptoanalysis, Python, C++}, %keywords in Czech language (translated to English)
   keywords.en={S-box, Genetic algorithm, EDA, UMDA, BMDA, VEGA, SPEA, Cartesian genetic programming,
-  Pareto optimum, linear a differential cryptoanalysis, Python, C++}, %klicova slova v anglickem jazyce
+  Pareto optimum, linear and differential cryptoanalysis, Python, C++}, %keywords in English language
   %Abstract
   abstract.cs={
   Předložená práce se zabývá částí šifrovacího algoritmu zvanou substituční box a jeho evolučním návrhem.
@@ -79,26 +79,26 @@
   a základy multikriteriální optimalizace. Těchto poznatků je využito, k návrhu a implementaci programu,
   které jsou popsány dále. Nakonec diskutuje použití studovaných kritérií. Je zde diskutováno prohledávání
   s-boxů jak při jednokriteriálním, tak především v multikriteriálním genetickém prohledávání.
-        }, % abstrakt v ceskem jazyce
-  abstract.en={This work deals with part of the encryption algorithm, called S-box and its development.
-  For its development is used evolutionary computing, such as classical genetic algorithm,
-  Estimation of Distribution Algorithm, Cartesian genetic programming and multi-criteria
-  VEGA and SPEA algorithms. This thesis aims to test the properties of substitution boxes to its evolutionary development.
-  Firstly, the work deals with cryptography and issues of s-boxes. There are explained basic
-  concepts and describes the selected criteria of safety. Next chapter explains evolutionary algorithms
-  and multi-criteria optimization. This knowledge is used to design and program implementation,
-  which are described below. Finally discusses the application of the criteria studied. Discussed here is searching
-  S-boxes in both single-criteria, and especially in multi-criteria genetic search.
+        }, % abstract in Czech language (translated to English)
+  abstract.en={This work deals with a component of encryption algorithms called the S-box (substitution box) and its evolutionary design.
+  Evolutionary computation techniques are used for its development, including the classical genetic algorithm,
+  Estimation of Distribution Algorithm, Cartesian Genetic Programming, and multi-criteria
+  algorithms VEGA and SPEA. The aim of this thesis is to explore the properties of substitution boxes for their evolutionary development.
+  The work first addresses cryptography and the issues surrounding S-boxes. Basic
+  concepts are explained and selected security criteria are described. The evolutionary algorithms used
+  and fundamentals of multi-criteria optimization are then presented. This knowledge is applied to the design and implementation of the program,
+  which are described in subsequent chapters. Finally, the application of the studied criteria is discussed, including the search for
+  S-boxes in both single-criterion and, particularly, multi-criteria genetic search.
         },
-  %Prohlaseni
+  %Declaration
   declaration={
-    Prohlašuji, že jsem tuto diplomovou práci vypracoval samostatně pod vedením doc. Petra Hanáčka.
-    Další informace mi poskytl Dipl.-Inform. Martin Grajcar.
-    Uvedl jsem všechny literární prameny a publikace, ze kterých jsem čerpal.
+    I declare that I have prepared this Master's thesis independently under the supervision of Assoc. Prof. Petr Hanáček.
+    Additional information was provided by Dipl.-Inform. Martin Grajcar.
+    I have listed all literary sources and publications from which I have drawn.
     },
-  %Podekovani (nepovinne) az v diplomce a navic moji vetu...
-  acknowledgment={Tímto bych chtěl poděkovat především svému vedoucímu doc. Petru Hanáčkovi a Martinu Grajcarovi za poskytnuté rady.
-  Dále bych chtěl poděkovat všem, kteří mě podporovali během celého studia, zejména rodičům a přátelům.}
+  %Acknowledgment (optional) in thesis and my sentence...
+  acknowledgment={I would like to thank primarily my supervisor Assoc. Prof. Petr Hanáček and Martin Grajcar for the advice provided.
+  I would also like to thank everyone who supported me throughout my studies, especially my parents and friends.}
 }
 
 %\renewcommand{\baselinestretch}{1.5} %pro kontrolou normosran
@@ -109,19 +109,19 @@
 % =================================================================
 \begin{document}
 \maketitle
-\addcontentsline{toc}{chapter}{Obsah}
+\addcontentsline{toc}{chapter}{Contents}
 \setcounter{tocdepth}{2}
 \tableofcontents
 % ----------------------------------------------------------------
 
-\nextChapter{Úvod}{uvod}
-\nextChapter{Úvod do kryptografie}{crypto}
-\nextChapter{Problematika S-boxů}{sboxes}
-\nextChapter{Evoluční algoritmy}{evo}
-\nextChapter{Návrh programu pro experimenty}{design}
-\nextChapter{Popis implementace}{development}
-\nextChapter{Provedené experimenty a zhodnocení výsledků}{experiments}
-\nextChapter{Závěr}{zaver}
+\nextChapter{Introduction}{uvod}
+\nextChapter{Introduction to Cryptography}{crypto}
+\nextChapter{S-box Issues}{sboxes}
+\nextChapter{Evolutionary Algorithms}{evo}
+\nextChapter{Program Design for Experiments}{design}
+\nextChapter{Implementation Description}{development}
+\nextChapter{Conducted Experiments and Evaluation of Results}{experiments}
+\nextChapter{Conclusion}{zaver}
 
 \bibliographystyle{czechiso}
 \begin{flushleft}
@@ -130,26 +130,26 @@
 
 \zkratky
 
-\nadepsanaStranka{Seznam příloh}
-Součástí odevzdané práce jsou tyto přílohy:
+\nadepsanaStranka{List of Appendices}
+The submitted work includes the following appendices:
 \begin{description}
-  \item[A] Chromozóm v Kartézském genetickém programování
-  \item[B] Přehled příkazů pro skriptování experimentů
-  \item[C] Podrobné tabulky a grafy
-  \item[DVD] DVD nosič
+  \item[A] Chromosome in Cartesian Genetic Programming
+  \item[B] Overview of Commands for Experiment Scripting
+  \item[C] Detailed Tables and Graphs
+  \item[DVD] DVD Media
 \end{description}
 
-DVD nosič obsahuje:
+The DVD media contains:
 \begin{itemize}
-  \item kompletní zdrojové kódy programu
-  \item kompletní zdrojové kódy tohoto textu
-  \item výstupy programu při jednotlivých experimentech
+  \item complete source code of the program
+  \item complete source code of this text
+  \item program outputs for individual experiments
 \end{itemize}
 
 \appendix
 
-\nextChapter{Chromozom v kartézském genetickém programování}{cgpfunctions}
-\nextChapter{Přehled příkazů pro skriptování experimentů}{nutshell}
-\nextChapter{Podrobné tabulky a grafy}{experimentDetails}
+\nextChapter{Chromosome in Cartesian Genetic Programming}{cgpfunctions}
+\nextChapter{Overview of Commands for Experiment Scripting}{nutshell}
+\nextChapter{Detailed Tables and Graphs}{experimentDetails}
 
 \end{document}

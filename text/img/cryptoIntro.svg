@@ -177,7 +177,7 @@
          sodipodi:role="line"
          id="tspan2822"
          x="121.28582"
-         y="174.35834">Šifrovací</tspan></text>
+         y="174.35834">Encryption</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -197,7 +197,7 @@
          sodipodi:role="line"
          id="tspan2830"
          x="117.77028"
-         y="199.84596">algoritmus</tspan></text>
+         y="199.84596">algorithm</tspan></text>
     <rect
        style="fill:#ffffff;stroke:#000000;stroke-width:1.18816602"
        id="rect2816-8"
@@ -214,7 +214,7 @@
          sodipodi:role="line"
          id="tspan2822-0"
          x="328.74832"
-         y="174.23877">Dešifrovací</tspan></text>
+         y="174.23877">Decryption</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -224,7 +224,7 @@
          sodipodi:role="line"
          id="tspan2830-6"
          x="329.6272"
-         y="199.72641">algoritmus</tspan></text>
+         y="199.72641">algorithm</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
        d="m 183.98381,184.1231 132.07048,-0.0745"
@@ -253,7 +253,7 @@
          id="tspan5766"
          x="27.245363"
          y="170.84282"
-         style="font-size:13px">Zpráva</tspan></text>
+         style="font-size:13px">Message</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -264,7 +264,7 @@
          id="tspan5766-5"
          x="415.78394"
          y="172.05286"
-         style="font-size:13px">Zpráva</tspan></text>
+         style="font-size:13px">Message</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -275,7 +275,7 @@
          id="tspan5795"
          x="209.17409"
          y="169.96394"
-         style="font-size:13px">Šifrový text</tspan></text>
+         style="font-size:13px">Ciphertext</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Lstart)"
        d="M 143.60461,154.66542 142.379,80.317894"
@@ -297,7 +297,7 @@
          id="tspan5795-4"
          x="103.90612"
          y="64.784988"
-         style="font-size:13px">Šifrovací klíč</tspan></text>
+         style="font-size:13px">Encryption key</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -308,7 +308,7 @@
          id="tspan5795-6"
          x="303.41251"
          y="62.148342"
-         style="font-size:13px">Dešifrovací klíč</tspan></text>
+         style="font-size:13px">Decryption key</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -318,7 +318,7 @@
          sodipodi:role="line"
          id="tspan6453"
          x="92.282684"
-         y="251.70003">Odesílatel</tspan></text>
+         y="251.70003">Sender</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:22px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -328,6 +328,6 @@
          sodipodi:role="line"
          id="tspan6457"
          x="309.3667"
-         y="254.33667">Příjemce</tspan></text>
+         y="254.33667">Recipient</tspan></text>
   </g>
 </svg>

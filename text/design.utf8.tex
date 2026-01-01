@@ -9,132 +9,132 @@
 %      Bedrich Hovorka
 % -----------------------------------------------------
 %
-% Popis návrhu a různé možnosti - stačí zmínit
+% Design description and various options - enough to mention
 
-\section{Shrnutí technických a funkčních požadavků}
-Cílem práce je implementace programu, který hledá S-boxy pomocí evolučních algoritmů,
-a následné provedení experimentů s tímto programem.
-Implementovaný program má v tomto případě tyto hlavní technické nároky, seřazené
-sestupně podle důležitosti:
+\section{Summary of Technical and Functional Requirements}
+The objective of this work is to implement a program that searches for S-boxes using evolutionary algorithms,
+and subsequently perform experiments with this program.
+The implemented program has the following main technical requirements, listed
+in descending order of importance:
 \begin{description}
-  \item[Snadné definování experimentů] Při popisu experimentů je nutné
-  se vyhnout rutinním krokům, např. komplikovaným deklaracím a době, kterou zdržuje kompilace kódu, nejlépe
-  pokud by je šlo zadávat a vyhodnocovat interaktivně.
-  \item[Rychlost] Běh evoluce a výpočet kritérií se musí provést co nejrychleji.
-  \item[Přenositelnost] Program by měl jít zkompilovat a spustit na nejširší možné skupině platforem používaných
-     pro vědecké výpočty na běžném osobním počítači.
+  \item[Easy experiment definition] When describing experiments, it is necessary
+  to avoid routine steps, such as complicated declarations and time-consuming code compilation, ideally
+  making it possible to specify and evaluate experiments interactively.
+  \item[Speed] The execution of evolution and calculation of criteria must be performed as quickly as possible.
+  \item[Portability] The program should be able to be compiled and run on the widest possible range of platforms used
+     for scientific computing on standard personal computers.
 \end{description}
 
-\subsection*{Požadavky na funkčnost:}
+\subsection*{Functional requirements:}
 \begin{description}
-  \item[Různé reprezentace S-boxů] Kvůli nalezení S-boxu v nejvhodnější reprezentaci (viz podkapitola \ref{secSboxTypes}).
+  \item[Various S-box representations] To find S-boxes in the most suitable representation (see subsection \ref{secSboxTypes}).
 
-  \item[Různé druhy prohledávacích algoritmů] Pro účely srovnání aplikovatelnosti EA (viz kapitola \ref{evo})
-  je dobré je porovnat s náhodným prohledáváním.
+  \item[Various types of search algorithms] For the purposes of comparing the applicability of EA (see chapter \ref{evo})
+  it is useful to compare them with random search.
 
-  \item[Prohledávací kritéria] Požadovaná prohledávací kritéria (viz. podkapitola \ref{secCriterions})
-  jsou parametrem prohledávacích algoritmů.
+  \item[Search criteria] The required search criteria (see subsection \ref{secCriterions})
+  are parameters of the search algorithms.
 
-  \item[Spuštění experimentů] Vlastní spouštění experimentů by mělo mít jednotné aplikační rozhraní.
-  Možnost nejprve nadefinovat více experimentů a poté je spustit najednou (např. paralelně).
+  \item[Experiment execution] The actual execution of experiments should have a unified application interface.
+  The ability to first define multiple experiments and then run them all at once (e.g., in parallel).
 
-  \item[Sběr statistik] Pro vyhodnocení jednotlivých běhů je nutné, aby program během evoluce zaznamenával statistiky.
-  Evoluční experimenty se často vyhodnocují pomocí tzv. \uv{krabicových grafů}, pro které je nutné spočítat
-  minimální, maximální hodnotu a kvartily, odchylku fitness při pevném počtu generací.
-  Nebo \cite{millerThomson} pomocí porovnání, jaké úsilí (např. počet generací, velikost populace, doba běhu) s jak dobrými výsledky (nejvyšší fitness)
-  bylo vynaloženo.
+  \item[Statistics collection] To evaluate individual runs, it is necessary for the program to record statistics during evolution.
+  Evolutionary experiments are often evaluated using so-called \uv{box plots}, which require calculating
+  the minimum, maximum values and quartiles, fitness deviation at a fixed number of generations.
+  Or \cite{millerThomson} by comparing what effort (e.g., number of generations, population size, runtime) with what quality of results (highest fitness)
+  was expended.
 \end{description}
 
-\section{Prototypový návrh aplikace}
-Po stanovení hlavních požadavků byl nejprve pro ujasnění, kolik toho je třeba naimplementovat,
-sestaven prototyp aplikace
-ve formě obdobné UML diagramům; obsahuje třídy s prázdnými metodami.
-Nadtřída evolučních algoritmů uchovává populaci kandidátních řešení. Obsahuje obecnou logiku pro
-průběh evoluce a sběr statistik. Obrázek \ref{evolutionClassDiagram} znázorňuje hlavní evoluční
-algoritmy.
-\insertimage{evolutionClassDiagram}{Prototypový diagram tříd evolučních algoritmů}
+\section{Prototype Application Design}
+After establishing the main requirements, an application prototype was first assembled
+to clarify how much needs to be implemented,
+in a form similar to UML diagrams; it contains classes with empty methods.
+The superclass of evolutionary algorithms maintains a population of candidate solutions. It contains the general logic for
+the evolution process and statistics collection. Figure \ref{evolutionClassDiagram} illustrates the main evolutionary
+algorithms.
+\insertimage{evolutionClassDiagram}{Prototype class diagram of evolutionary algorithms}
 
-Každý prohledávací algoritmus má v každé generaci svojí specifickou změnu populace, definovanou
-pomocí metody \sourceRef{variation()}.
-Při konstrukci objektů (před spuštěním \sourceRef{evolution()}) je předán typ reprezentace S-boxu a parametry
-evoluce. Množiny evaluátorů kritérií jsou předány též při konstrukci.
-U EDA algoritmu je důležitý atribut \sourceRef{model()}, který reprezentuje statistický model
-(poddruh EDA), jenž bude použit.
-Jednoduchost diagramu se ukázala důležitá ve fázi implementace, kdy bylo na základě něho
-vytvořeno rozhraní mezi Pythonem a C++ a byl dále zesložiťován.
+Each search algorithm has its specific population modification in each generation, defined
+by the method \sourceRef{variation()}.
+During object construction (before running \sourceRef{evolution()}), the S-box representation type and evolution
+parameters are passed. The sets of criterion evaluators are also passed during construction.
+For the EDA algorithm, the important attribute is \sourceRef{model()}, which represents the statistical model
+(subtype of EDA) that will be used.
+The simplicity of the diagram proved important in the implementation phase, when based on it,
+an interface between Python and C++ was created and further elaborated.
 
-\section{Různé typy reprezentace S-boxu}\label{secSboxTypes}
-Některé evoluční algoritmy mohou vyžadovat určitou reprezentaci substitučního boxu.
-Ně\-kte\-ré z reprezentací mohou umožňovat i optimální realizaci, pokud jsou modelem cílového systému.
-Každá z nich má svou specifickou inicializaci, mutaci a křížení.
+\section{Various Types of S-box Representation}\label{secSboxTypes}
+Some evolutionary algorithms may require a specific representation of the substitution box.
+Some of the representations may also allow optimal implementation if they are models of the target system.
+Each of them has its specific initialization, mutation, and crossover.
 
-\subsection{Seznam výstupů}
-Nejvíce se S-boxy reprezentují jako seznam výstupů (pole) o velikosti všech
-vstupních kombinací, kde vstup S-boxu je indexem a výstup je prvek
-na dané pozici. Pokud má být S-box bijektivní, pak tento seznam představuje permutaci.
-Například
+\subsection{Output List}
+Most commonly, S-boxes are represented as an output list (array) of the size of all
+input combinations, where the S-box input is the index and the output is the element
+at that position. If the S-box is to be bijective, then this list represents a permutation.
+For example
 \begin{center}
 2 0 3 1
 \end{center}
-je s-box $2 \times 2$, který je bijektivní.
-U této reprezentace je možné zvolit, jestli se má vyžadovat bijektivita.
-Podle toho jsou určeny genetické operátory. Pro bijektivní se použije mutace
-pomocí prohození genů. Křížení probíhá jako u permutačních problémů na základě pořadí.
-Pokud by se bijektivita nevyžadovala, křížilo by se jednobodově, stejně jako u následující
-reprezentace, ale s tím, že je zde jiná množina alel.
+is a $2 \times 2$ S-box that is bijective.
+With this representation, it is possible to choose whether bijectivity should be required.
+The genetic operators are determined accordingly. For bijective, mutation is performed
+by swapping genes. Crossover proceeds as in permutation problems based on order.
+If bijectivity were not required, single-point crossover would be used, as in the following
+representation, but with a different set of alleles.
 
-\subsection{Binární reprezentace}
-Binární reprezentace je složená z booleovských funkcí pro každý vstup.
-Bit booleovské funkce na $i$-té pozici představuje výstup, když je na vstupu $i$.
-S-box z předcházející reprezentace lze pomocí binární zapsat takto (sloupce stále představují tutéž hodnotu):
+\subsection{Binary Representation}
+Binary representation consists of Boolean functions for each input.
+The bit of the Boolean function at the $i$-th position represents the output when the input is $i$.
+The S-box from the previous representation can be written in binary as follows (columns still represent the same value):
 \begin{center}
 0 0 1 1\\
 1 0 1 0
 \end{center}
-A každý řádek představuje booleovskou funkci.
-Mimochodem tento S-box lze reprezentovat i jako polynomy jednotlivých funkcí,
-kde proměnné jsou vstupních bitů:
+And each row represents a Boolean function.
+Incidentally, this S-box can also be represented as polynomials of individual functions,
+where the variables are input bits:
 $$s(x)_0 = b , s(x)_1 = 1 \oplus a$$
-Pro genetické operátory je seznam booleovských funkcí brán jako jednolitý chromozom, nad
-kterým je provedeno jednobodové křížení a mutace změní bit na náhodné pozici.
+For genetic operators, the list of Boolean functions is treated as a single chromosome, on which
+single-point crossover is performed and mutation changes a bit at a random position.
 
-\subsection{Acyklický graf hradel}
-Tato reprezentace pochází z kartézského genetického programování (značení viz příloha \ref{cgpfunctions})
-a je vhodnou pro hledání optimální realizace v hardwaru.
-S-box z předchozí reprezentace lze popsat například chromozomem ve tvaru
+\subsection{Acyclic Gate Graph}
+This representation comes from Cartesian Genetic Programming (notation see appendix \ref{cgpfunctions})
+and is suitable for finding optimal hardware implementation.
+The S-box from the previous representation can be described, for example, by a chromosome in the form
 \begin{verbatim}
 {2,2,2,2,2,1,1}([2]1,0,5)([3]1,0,4)([4]1,3,3)([5]3,3,1)(1,2)
 \end{verbatim}
-který je též uveden na obrázku \ref{cgpExample}.
-První (index 0) výstupní bit je napojen na druhý vstupní. A druhý výstupní bit je negací
-prvního vstupu, což odpovídá polynomům $s(x)_0 = b , s(x)_1 = 1 \oplus a$.
-\insertimage[0.6\textwidth]{cgpExample}{Příklad acyklického grafu hradel}
-V této reprezentaci je přípustná pouze mutace splňující podmínky již zmíněné
-v podkapitole \ref{algorithmCGP}.
+which is also shown in Figure \ref{cgpExample}.
+The first (index 0) output bit is connected to the second input. And the second output bit is the negation
+of the first input, which corresponds to the polynomials $s(x)_0 = b , s(x)_1 = 1 \oplus a$.
+\insertimage[0.6\textwidth]{cgpExample}{Example of acyclic gate graph}
+In this representation, only mutation satisfying the conditions already mentioned
+in subsection \ref{algorithmCGP} is permitted.
 
-\subsection{Posloupnost trojinstrukcí platformy i686}\label{secAbouti686}
-Tato reprezentace byla inspirována implementací SubCrumb algoritmu Luffa \cite{specLuffa}.
-S tou obměnou, že je na vstupech a výstupech určena pro bity.
-Počet vstupních i výstupních bitů jsou násobky čtyř.
-Jediným parametrem struktury je počet čtveřic bitů $p$ na vstupech a výstupech (počet vstupů a výstupů se shoduje).
-Reprezentace je modelem procesorů řady i686, z důvodu hledání optimální realizace na
-těchto procesorech -- optimální v softwaru. Model je složen z pěti registrů, v každém je uloženo $p$ bitů.
-Výpočet každého S-boxu je složen z šesti cyklů. V každém cyklu jsou tři instrukce, o
-nichž se předpokládá, že je procesor provede paralelně, proto se nesmí opakovat stejný
-registr na výstupu instrukce (paralelismus CREW). Instrukcemi, které se mohou vyskytnout v každém cyklu, jsou
-XOR, AND, OR, NOT. Navíc v prvním cyklu je možné provést MOV a v posledním NOP.
+\subsection{Sequence of Triple Instructions for i686 Platform}\label{secAbouti686}
+This representation was inspired by the implementation of the SubCrumb algorithm Luffa \cite{specLuffa}.
+With the modification that it is designed for bits at inputs and outputs.
+The number of input and output bits are multiples of four.
+The only structural parameter is the number of bit quartets $p$ at inputs and outputs (the number of inputs and outputs is equal).
+The representation is a model of i686 series processors, for the purpose of finding optimal implementation on
+these processors -- optimal in software. The model consists of five registers, each storing $p$ bits.
+The computation of each S-box consists of six cycles. In each cycle there are three instructions, which
+are assumed to be executed by the processor in parallel, therefore the same
+register must not repeat at the instruction output (CREW parallelism). The instructions that can occur in each cycle are
+XOR, AND, OR, NOT. Additionally, in the first cycle it is possible to execute MOV and in the last cycle NOP.
 
-Průběh výpočtu začíná rozdělením vstupu na čtyři části $a_0$, $a_1$, $a_2$, $a_3$.
-Každá část $a_i$ má $p$ bitů a je nahrána do registru $r_i$, $r_4 = 0$.
-V simulaci jednoho cyklu se nejprve uloží hodnoty registrů do dočasných proměnných a provedením jednotlivých
-instrukcí se nastaví hodnoty nové. Výstup S-boxu je složen z $p$-bitových částí $y_i$
-takto: $y_0 = r_0$, $y_1 = r_1$, $y_2 = r_3$ a $y_3 = r_4$.
+The computation process begins by dividing the input into four parts $a_0$, $a_1$, $a_2$, $a_3$.
+Each part $a_i$ has $p$ bits and is loaded into register $r_i$, $r_4 = 0$.
+In the simulation of one cycle, the register values are first stored in temporary variables and by executing individual
+instructions, new values are set. The S-box output consists of $p$-bit parts $y_i$
+as follows: $y_0 = r_0$, $y_1 = r_1$, $y_2 = r_3$ and $y_3 = r_4$.
 
-Pro seznam výstupů
+For the output list
 \begin{center}
 2 9 13 13 2 9 13 13 2 9 13 13 13 6 6 6
 \end{center}
-je posloupnost trojinstrukcí
+the sequence of triple instructions is
 \begin{center}
 \begin{verbatim}
 {AND r2, r3 ; MOV r3, r1 ; OR r4, r0}
@@ -146,11 +146,11 @@ je posloupnost trojinstrukcí
 \end{verbatim}
 \end{center}
 
-A pro seznam výstupů
+And for the output list
 \begin{center}
 15 8 15 8 15 3 15 3 15 8 1 3 15 3 1 8
 \end{center}
-je posloupnost trojinstrukcí
+the sequence of triple instructions is
 \begin{center}
 \begin{verbatim}
 {AND r2, r2 ; AND r3, r1 ; OR r1, r2}
@@ -161,111 +161,111 @@ je posloupnost trojinstrukcí
 {NOP ; OR r3, r3 ; AND r2, r4}
 \end{verbatim}
 \end{center}
-Instrukce jsou ve tvaru \verb|INST výstup, vstup|.
-U NOT je vstup zároveň výstupem; k jeho definici se použije první operand.
-A NOP nemá žádné operandy. Takže se nepotřebné operandy ignorují.
+Instructions are in the form \verb|INST output, input|.
+For NOT, the input is also the output; the first operand is used for its definition.
+And NOP has no operands. Thus unnecessary operands are ignored.
 
-Křížení probíhá na úrovni cyklů. S cykly od rodičů se provede jednobodové křížení.
-Při mutaci se prochází všemi cykly. V každém je s pravděpodobností $pMut$ vybrána
-instrukce ke změně. Pokud je instrukce vybrána, vybere se rovnoměrným rozložením
-pravděpodobnosti jedna ze tří možných změn:
+Crossover occurs at the cycle level. Single-point crossover is performed with cycles from parents.
+During mutation, all cycles are traversed. In each cycle, with probability $pMut$ an
+instruction is selected for modification. If an instruction is selected, one of three possible changes is chosen
+with uniform probability distribution:
 \begin{enumerate}
-  \item změna typu instrukce --  s rovnoměrným rozložením pravděpodobnosti se vybere jedna z povolených
-  v aktuálním cyklu
-  \item změna druhého operandu -- s rovnoměrným rozložení je vybrán jeden z pěti možných registrů
-  \item změna prvního operandu -- obdobně, ale zde se nesmí vybrat registr, který je již v aktuálním cyklu
-  použit jako první operand v jiné instrukci
+  \item change instruction type -- one of the allowed instructions
+  in the current cycle is selected with uniform probability distribution
+  \item change second operand -- one of five possible registers is selected with uniform distribution
+  \item change first operand -- similarly, but here a register must not be selected that is already in the current cycle
+  used as the first operand in another instruction
 \end{enumerate}
 
-Tabulka \ref{tabReprezantationUsability} ukazuje, u kterého prohledávacího algoritmu je možné určitou reprezentaci použít z hlediska striktní definice
-těchto algoritmů.
-Pro acyklický graf hradel není definováno křížení, takže je nutné ho zakázat.
-Pokud EDA algoritmus pracuje s číselnými alelami, může hledat i číselný seznam, avšak
-ten statistický model bude zbytečně komplikovaný. Algoritmy VEGA a SPEA vlastně zvládnou to co GP;
-v této tabulce je zohledněna potřeba multikriteriální optimalizace.
+Table \ref{tabReprezantationUsability} shows which search algorithm can use which representation from the perspective of the strict definition
+of these algorithms.
+For acyclic gate graphs, crossover is not defined, so it must be disabled.
+If an EDA algorithm works with numeric alleles, it can also search for a numeric list, however
+that statistical model will be unnecessarily complicated. VEGA and SPEA algorithms actually handle what GP does;
+this table takes into account the need for multi-criteria optimization.
 \begin{table}[t]
   \begin{center}
      \begin{tabular}{| l | c | c | c | c |}
      \hline
-     Algoritmus & Binární & Seznam výstupů & CGP & i686 \\ \hline
-     základní GA & vhodné & vhodné & nemožné & nemožné \\ \hline
-     GP & možné & možné & možné & vhodné \\ \hline
-     EDA & vhodné & nevhodné & nemožné & nemožné \\ \hline
-     Random & možné & možné & možné & možné \\ \hline
-     ParallelRandom & možné & možné & vhodné & možné \\ \hline
-     VEGA & vhodné & vhodné & vhodné & vhodné \\ \hline
-     SPEA & vhodné & vhodné & vhodné & vhodné \\ \hline
+     Algorithm & Binary & Output list & CGP & i686 \\ \hline
+     basic GA & suitable & suitable & impossible & impossible \\ \hline
+     GP & possible & possible & possible & suitable \\ \hline
+     EDA & suitable & unsuitable & impossible & impossible \\ \hline
+     Random & possible & possible & possible & possible \\ \hline
+     ParallelRandom & possible & possible & suitable & possible \\ \hline
+     VEGA & suitable & suitable & suitable & suitable \\ \hline
+     SPEA & suitable & suitable & suitable & suitable \\ \hline
      \end{tabular}
-     \caption{Použitelnost reprezentací S-boxu v jednotlivých prohledávacích algoritmech}
+     \caption{Usability of S-box representations in individual search algorithms}
      \label{tabReprezantationUsability}
   \end{center}
 \end{table}
 
-\section{Použité jazyky a platforma}
-Ke splnění základních technických požadavků byla zvolena kombinace Python a C++.
+\section{Languages and Platform Used}
+To meet the basic technical requirements, a combination of Python and C++ was chosen.
 
 
 \subsubsection{Python}
-Výhodou Pythonu je množství knihoven, které jsou v něm napsány, a snadnost jejich spolupráce.
-Mezi ně patří například pickle pro jednoduché perzistentní uložení téměř jakéhokoliv objektu, což
-se dá využít pro průběžné ukládání částečných výsledků experimentů.
-Knihovna numpy především pro práci s velkými vektory a maticemi se spoustou matematických funkcí.
-Tyto funkce jsou napsány v jazyce C, a s tímto jazykem umí snadno pracovat.
-K tomu existuje navíc ještě knihovna ctypes, která umožňuje pracovat s datovými typy jazyka
-C, ve funkcích které jsou součástí dynamicky linkované knihovny do Pythonu.
-Pro zápis experimentů je výhodou interaktivita zadávání příkazů, tzv. \uv{ipython}
-interpret, který ve spojení s numpy a knihovnou na kreslení grafů je alternativou
-Matlabu.
-Nevýhodou je pomalé provádění kódu, což se musí řešit implementací časově kritických funkcí v C či
+The advantage of Python is the quantity of libraries written in it, and the ease of their cooperation.
+These include, for example, pickle for simple persistent storage of almost any object, which
+can be used for continuous saving of partial experiment results.
+The numpy library is primarily for working with large vectors and matrices with many mathematical functions.
+These functions are written in C, and it can easily work with this language.
+In addition, there is the ctypes library, which allows working with C data types
+in functions that are part of a dynamically linked library to Python.
+For writing experiments, the advantage is the interactivity of command entry, the so-called \uv{ipython}
+interpreter, which in combination with numpy and a graph plotting library is an alternative to
+Matlab.
+The disadvantage is slow code execution, which must be addressed by implementing time-critical functions in C or
 C++.
 
 \subsubsection{C++}
-C++ dokáže vygenerovat rychlý kód pro mnoho procesorů a platforem. Napsaný kód je
-při dodržení určitých pravidel přenositelný. Je vhodný pro implementaci výpočtů, které
-mají běžet rychle. Také pro něj existuje mnoho knihoven s vyřešenými algoritmy.
-Nevýhodou jsou komplikované deklarace a definice, které brzdí popisy experimentů. % to musi uznat i PP
+C++ can generate fast code for many processors and platforms. Written code is
+portable when following certain rules. It is suitable for implementing computations that
+need to run quickly. Many libraries with solved algorithms also exist for it.
+The disadvantage is complicated declarations and definitions, which slow down experiment descriptions. % to musi uznat i PP
 
 \pagebreak
 
 \subsubsection{Galib}
-Galib je knihovna původně pro genetické algoritmy, svým obecným návrhem však zvládne i obecnější třídu
-např. i genetické programování. Je určená pro C++. Ostatní evoluční algoritmy je nutné doimplementovat.
-Knihovna Galib nejlépe vyhovovala předchozím po\-ža\-dav\-kům. Nejdůležitější byla obecnost kvůli srovnávání.
-Tato knihovna \cite{galib} umožňuje definovat vlastní prohledávací algoritmus, vlastní operátory či
-vlastní reprezentaci genomu atd. Při programování se pracuje z dvěma hlavními třídami
-reprezentujícími genom a druhá genetický algoritmus.
-Každá instance genomu reprezentuje jedno řešení problému.
-Genetický algoritmus používá objektivní funkci (definovanou uživatelem)
-k určení kritéria přežití genomu (fitness). Běžné genetické operátory (selekce, mutace, křížení)
-jsou vestavěné. Během evoluce sbírá statistiky. Evaluátory a operátory lze měnit za běhu
-evoluce.
-Na druhou stranu její knihovní funkce fungují správně jen při sekvenčním provádění,
-pokud je třeba paralelizovat nutné upravit její kód. Mnoho metod není virtuálních
-a při použití vlastních komponent je nutné navíc
-i přetypovávat\footnote{To nabádají i v příkladech}.
+Galib is a library originally for genetic algorithms, but with its general design it can handle more general classes,
+for example genetic programming. It is designed for C++. Other evolutionary algorithms must be implemented additionally.
+The Galib library best met the previous requirements. Most important was generality for comparison purposes.
+This library \cite{galib} allows defining custom search algorithms, custom operators, or
+custom genome representation, etc. During programming, work is done with two main classes
+representing the genome and the second representing the genetic algorithm.
+Each genome instance represents one problem solution.
+The genetic algorithm uses an objective function (user-defined)
+to determine the genome survival criterion (fitness). Common genetic operators (selection, mutation, crossover)
+are built-in. During evolution, it collects statistics. Evaluators and operators can be changed during runtime
+of evolution.
+On the other hand, its library functions work correctly only during sequential execution,
+if parallelization is needed, its code must be modified. Many methods are not virtual
+and when using custom components, it is additionally necessary
+to perform type casting\footnote{They even advise this in the examples}.
 
 \subsubsection{OpenMP}
-OpenMP je specifikace pro paralelizaci algoritmů pomocí direktiv, které
-překladače přeloží podle cílové platformy a procesoru.
-OpenMP je navržená pro různé jazyky, např. v C++ se direktivy uvádí pomocí
+OpenMP is a specification for parallelizing algorithms using directives that
+compilers translate according to the target platform and processor.
+OpenMP is designed for various languages; for example, in C++ directives are specified using
 \verb|#pragma omp|.
-Překladače GCC implementují
-některé z jejích direktiv pro jazyky C/C++ pomocí POSIX threadů. Tyto direktivy jsou navržené tak, aby na jednoprocesorových
-strojích bylo možné přeložit zdrojový kód bez přepínače, zapínajícího OpenMP, tím způsobem, že
-tyto direktivy budou jednoduše ignorovány. Což je jedním ze znaků přenositelnosti,
-kterou tato specifikace má. Největší uplatnění tyto direktivy mají především
-při paralelizaci stávajícího sekvenčního kódu. OpenMP se automaticky snaží
-využít všech dostupných procesorů či jader pro paralelní provedení kódu označených
-direktivami určitým způsobem (paralelní cyklus, task), že by mohli být provedeny paralelně.
- Programátor mnohdy musí pomocí těchto direktiv označit
-sdílené a lokální proměnné. Další direktivy jako bariéra a kritická sekce, umožňují
-provádět synchronizaci mezi vlákny.
+GCC compilers implement
+some of its directives for C/C++ languages using POSIX threads. These directives are designed so that on single-processor
+machines, source code can be compiled without the switch enabling OpenMP, in such a way that
+these directives will simply be ignored. This is one of the portability features
+that this specification has. These directives find their greatest application primarily
+in parallelizing existing sequential code. OpenMP automatically attempts to
+utilize all available processors or cores for parallel execution of code marked
+with directives in a certain way (parallel loop, task), so they could be executed in parallel.
+The programmer often must use these directives to mark
+shared and local variables. Other directives such as barrier and critical section allow
+performing synchronization between threads.
 
-\subsubsection{Diskuse dalších variant návrhu programu}
-Jak bylo naznačeno výše, celý projekt by bylo možné realizovat pouze v Pythonu za použití matematického systému
-sagemath, který již obsahuje funkce pro práci s s-boxy a výpočty jejich kritérií.
-Implementace evolučních algoritmů by však nebyla efektivní z důvodů vysoké úrovně jazyka.
+\subsubsection{Discussion of Other Program Design Variants}
+As indicated above, the entire project could be implemented only in Python using the mathematical system
+sagemath, which already contains functions for working with S-boxes and calculations of their criteria.
+However, the implementation of evolutionary algorithms would not be efficient due to the high-level nature of the language.
 %Nebo celé v C++ ale to bych si odstrelil obe nohy,
 % ale furt mensi zlo nez Squeak Smalltalk, tam jsem se strelil do hlavy
-Náročné výpočty by bylo možné provádět i v GPU.
-Nejprve je však dobré mít implementaci pro CPU pro srovnání, zdali se vůbec implementace v GPU vyplatí.
+Demanding computations could also be performed on GPU.
+First, however, it is good to have a CPU implementation for comparison, whether GPU implementation would be worthwhile at all.

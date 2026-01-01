@@ -9,32 +9,32 @@
 %
 %      Bedrich Hovorka
 %
-Tato příloha vysvětluje značení v chromozomu kartézského genetického programování.
-Notace byla použita ve shodě s nástrojem CGPTools \cite{vasicek}.
-\subsubsection{Tvar chromozomu}
-Hlavička obsahuje údaje v tomto pořadí:
+This appendix explains the notation in the Cartesian genetic programming chromosome.
+The notation was used in accordance with the CGPTools tool \cite{vasicek}.
+\subsubsection{Chromosome Format}
+The header contains data in this order:
 \begin{verbatim}
-  {počet vstupů, počet výstupů, sloupce, řádky, počet vstupů do bloku, l-back,
-   počet použitých bloků}
+  {number of inputs, number of outputs, columns, rows, number of inputs to block, l-back,
+   number of blocks used}
 \end{verbatim}
-Následují popisy jednotlivých bloků (za vstupní blok se považuje i vstup celého obvodu; bloky
-se číslují od počtu vstupů):
+This is followed by descriptions of individual blocks (the input of the entire circuit is also considered an input block; blocks
+are numbered from the number of inputs):
 \begin{verbatim}
-  ([číslo bloku] vstupní blok a, vstupní blok b, funkce)
+  ([block number] input block a, input block b, function)
 \end{verbatim}
-Na závěr jsou výstupy některých bloků (uvedená čísla) prohlášeny za výstupy celého obvodu:
+Finally, the outputs of some blocks (specified numbers) are declared as outputs of the entire circuit:
 \begin{verbatim}
-  (seznam bloků)
+  (list of blocks)
 \end{verbatim}
 
 
-\subsubsection{Přiřazení funkcí}
-Pro vstupní proměnné $a$ a $b$:
+\subsubsection{Function Assignment}
+For input variables $a$ and $b$:
 
 \begin{center}
      \begin{tabular}{| c | c |}
       \hline
-      Číslo funkce & Výraz \\ \hline\hline
+      Function Number & Expression \\ \hline\hline
       0 & $a$ \\ \hline
       1 & $a$ AND $b$ \\ \hline
       2 & $a$ OR $b$ \\ \hline

@@ -1,25 +1,25 @@
-GA "Genetický algoritmus" v klasické podobì (viz str. \pageref{secGA})
-EDA "Estimation of Distribution Algorithm" druh EA zalo¾ený na pravdìpodobnostním modelu (str. \pageref{algorithmEDA})
-UMDA "Univariate Marginal Distribution Algorithm" druh EDA (str. \pageref{algorithmUMDA})
-BMDA "Bivariate Marginal Distribution Algorithm" druh EDA (str. \pageref{algorithmBMDA})
-BOA "Bayesian Optimization Algorithm" druh EDA pou¾ívající Bayesovské sítì jako pravdìpodobnostní model
-EA "Evoluèní Algoritmus"  nadtøída prohledávacích algoritmù zmínìných v této práci
-VEGA "Vector Evaluated Genetic Algorithm" jednoduchý multikriteriální GA (str. \pageref{algorithmVEGA})
-SPEA "Strength Pareto Evolutionary Algorithm" multikriteriální GA s elitou obsahující nashlukované Pareto-optimální jedince (str. \pageref{algorithmSPEA})
-SAC "Strict Avalanche Criterion" viz str. \pageref{critSAC}
-CGP "Cartesian Genetic Programing" viz str. \pageref{algorithmCGP}
-DES "Data Encryption Standard" ¹ifra s 56-bitovým klíèem vyvinutá v 70. letech, v pùvodní formì dnes ji¾ nespolehlivá
-AES "Advanced Encryption Standard" ¹ifra Rijndael schválená jako standard
-UML "Unified Modeling Language" sada zformalizovaných grafických reprezentací návrhu/modelu programu
-GaLib "Genetic Algorithm Library" knihovna pro Genetický algoritmus a genetické programování \cite{galib}
-CREW "Concurent Read Exclusive Write" jeden z mo¾ných modelù paralelizmu
-MOSAC "maximal order SAC" SAC nejvy¹¹ího mo¾ného øádu
-RC4 "Rivest Cipher 4" jedna ze symetrických proudových ¹ifer Rona Rivesta, který mj. spolupracoval na RSA
-MD5 "Message Digest 5" jeden z hashovacích algoritmù Rona Rivesta, který mj. spolupracoval na RSA
-RSA "Rivest -- Shamir -- Adleman" nejznámìj¹í asymetrická ¹ifra, zalo¾ená na faktorizaci souèinu dvou velkých prvoèísel, princip vymysleli døíve v Británii av¹ak jej tajili, nezávisle na to samé pøi¹la trojice Amerièanù
-DSA "Digital Signature Algorithm" algoritmus pro elektronický podpis zalo¾ený na diskrétních logaritmech
-SHA "Secure Hash Algorithm" standardizovaný hashovací algoritmus, v souèasnosti SHA2, SHA3 ve vývoji
-GP "Genetické programování" evoluèní algoritmus pracující rovnou se spustitenými strukturami místo èíselného chromozomu
-BF "Branching factor" faktor vìtvení (viz podkapitola \ref{secBF} na str. \pageref{secBF})
-POSIX "Portable Operating System Interface" standardizované pøenositelné rozhranní pro operaèní systémy
-GCC "Gnu Compiler Collection" sada pøekladaèù rùzných jazykù pro UNIXové systémy \url{http://gcc.gnu.org/}
+GA "Genetic Algorithm" in its classic form (see page \pageref{secGA})
+EDA "Estimation of Distribution Algorithm" a type of EA based on probabilistic models (page \pageref{algorithmEDA})
+UMDA "Univariate Marginal Distribution Algorithm" a type of EDA (page \pageref{algorithmUMDA})
+BMDA "Bivariate Marginal Distribution Algorithm" a type of EDA (page \pageref{algorithmBMDA})
+BOA "Bayesian Optimization Algorithm" a type of EDA using Bayesian networks as the probabilistic model
+EA "Evolutionary Algorithm" superclass of search algorithms mentioned in this work
+VEGA "Vector Evaluated Genetic Algorithm" a simple multi-criteria GA (page \pageref{algorithmVEGA})
+SPEA "Strength Pareto Evolutionary Algorithm" a multi-criteria GA with an elite containing clustered Pareto-optimal individuals (page \pageref{algorithmSPEA})
+SAC "Strict Avalanche Criterion" see page \pageref{critSAC}
+CGP "Cartesian Genetic Programming" see page \pageref{algorithmCGP}
+DES "Data Encryption Standard" cipher with 56-bit key developed in the 1970s, no longer secure in its original form
+AES "Advanced Encryption Standard" the Rijndael cipher approved as a standard
+UML "Unified Modeling Language" a set of formalized graphical representations for program design/modeling
+GaLib "Genetic Algorithm Library" library for genetic algorithms and genetic programming \cite{galib}
+CREW "Concurrent Read Exclusive Write" one of the possible parallelism models
+MOSAC "maximal order SAC" SAC of the highest possible order
+RC4 "Rivest Cipher 4" one of the symmetric stream ciphers by Ron Rivest, who also co-developed RSA
+MD5 "Message Digest 5" one of the hash algorithms by Ron Rivest, who also co-developed RSA
+RSA "Rivest -- Shamir -- Adleman" the most famous asymmetric cipher, based on factorization of the product of two large prime numbers, the principle was invented earlier in Britain but kept secret, independently the same was discovered by the trio of Americans
+DSA "Digital Signature Algorithm" digital signature algorithm based on discrete logarithms
+SHA "Secure Hash Algorithm" standardized hash algorithm, currently SHA2, SHA3 in development
+GP "Genetic Programming" evolutionary algorithm working directly with executable structures instead of numerical chromosomes
+BF "Branching factor" (see subsection \ref{secBF} on page \pageref{secBF})
+POSIX "Portable Operating System Interface" standardized portable interface for operating systems
+GCC "Gnu Compiler Collection" a suite of compilers for various languages for UNIX systems \url{http://gcc.gnu.org/}

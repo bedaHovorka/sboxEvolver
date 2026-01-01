@@ -8,12 +8,12 @@
 %      Bedrich Hovorka
 % -----------------------------------------------------
 %
-% sekce rutin  --------------------------------------------------------
-\newtheorem{algorithm}{Algoritmus}[chapter]
-\newtheorem{definition}{Definice}[chapter]
-\newtheorem{theorem}{Věta}[chapter]
+% routines section  --------------------------------------------------------
+\newtheorem{algorithm}{Algorithm}[chapter]
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
 
-% pro czechiso... TODO pro vsecny url
+% for czechiso... TODO for all urls
 \DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>} \urlstyle{tt}}
 \DeclareMathOperator*{\argmin}{arg\,min}
 
@@ -29,7 +29,7 @@
 \newcommand{\PAK}{\fuzzyruletext{PAK}}
 \newcommand{\je}{\fuzzyruletext{je}}
 
-% vlozi obrazek
+% insert image
 \newcommand{\insertimage}[3][\textwidth]{
   \begin{figure}[htbp]
   \begin{center}
@@ -50,15 +50,15 @@
   \end{figure}
 }
 
-% :o) pouzit jen v matematickem rezimu
+% :o) use only in math mode
 \newcommand{\dv}{\Delta v}
 
 \newcommand{\cfr}[1]{\texttt{#1}}
 
-% odkaz (formatovani) do zdrojových kódů
+% reference (formatting) to source code
 \newcommand{\sourceRef}[1]{\cfr{#1}}
 
-% dalsi krok - next state - math
+% next step - next state - math
 %\newcommand{\ns}[1][]{
 %  y^{#1}_{n + 1}
 %}
@@ -85,8 +85,8 @@
 }
 
 \newcommand{\zkratky}{
-  \nadepsanaStranka{Seznam použitých zkratek}
-  \addcontentsline{toc}{chapter}{Seznam použitých zkratek}
+  \nadepsanaStranka{List of Abbreviations}
+  \addcontentsline{toc}{chapter}{List of Abbreviations}
   \input{zkratky}
 }
 

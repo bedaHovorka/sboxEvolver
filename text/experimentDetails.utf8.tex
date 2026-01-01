@@ -9,28 +9,28 @@
 %
 %      Bedrich Hovorka
 %
-V této příloze jsou uvedeny tabulky a grafy z kapitoly \ref{experiments}, které
-jsou příliš podrobné na to, aby byly v té kapitole obsaženy.
-Kapitola \ref{experiments} se na ně dovolává pomocí křížových odkazů a tam
-je též k nim umístěn komentář.
-Hodnoty v tabulkách ve sloupci \uv{Parametry} jsou ve tvaru ($p_{Mut}$, $p_{Cross}$),
-kde $p_{Mut}$ je pravděpodobnost mutace a $p_{Cross}$ pravděpodobnost křížení.
-Krabicové grafy na obrázcích \ref{edaVsGaComparisonLP_MAX} až \ref{cgpVsLuffaSOFTWARE_IMPLComparisonPOLYNOMIAL_DEGREE}
-znázorňují rozložení stejně početných skupin hodnot.
-Horní a dolní strana modrého obdélníka znázorňuje umístění kvartilů. Prostřední červená
-vodorovná úsečka představuje medián. Nahoru a dolů od obdélníka vede tzv. vous.
-Horní resp. dolní vous znázorňuje nejvyšší resp. nejnižší hodnotu, na kterou má být brán zřetel.
-Křížky jsou označeny odlehlé hodnoty.
+This appendix contains tables and graphs from Chapter \ref{experiments} that
+are too detailed to be included in that chapter.
+Chapter \ref{experiments} references them using cross-references, and
+comments are also placed there.
+Values in tables in the \uv{Parameters} column are in the form ($p_{Mut}$, $p_{Cross}$),
+where $p_{Mut}$ is the mutation probability and $p_{Cross}$ is the crossover probability.
+Box plots in Figures \ref{edaVsGaComparisonLP_MAX} through \ref{cgpVsLuffaSOFTWARE_IMPLComparisonPOLYNOMIAL_DEGREE}
+show the distribution of equally-sized groups of values.
+The upper and lower sides of the blue rectangle indicate the location of quartiles. The middle red
+horizontal line represents the median. The so-called whisker extends up and down from the rectangle.
+The upper or lower whisker indicates the highest or lowest value to be considered.
+Crosses mark outlier values.
 \nopagebreak
 \begin{center}
 \addtolength{\tabcolsep}{-3pt}
 {\scriptsize
-%\subsubsection{Parametry genetického algoritmu}
+%\subsubsection{Genetic algorithm parameters}
 
 \begin{longtable}{| l | c | c | c | c | c |}
-\caption[ble]{Výsledky pro celý interval pro kritérium SAC při hledání parametrů GA}\label{tabSACParameters}\\
+\caption[ble]{Results for the entire interval for SAC criterion when searching for GA parameters}\label{tabSACParameters}\\
 \hline
-Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+Parameters & maximum & median & std. deviation & mean & minimum \\ \hline
 \endhead
 (0, 0) & $1$ & $0$ & $0.0809699$ & $0.0066$ & $0$ \\ \hline
 (0, 0.4) & $2$ & $1$ & $0.0509265$ & $1.0026$ & $1$ \\ \hline
@@ -70,9 +70,9 @@ Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
 \end{longtable}
 
 \begin{longtable}{| l | c | c | c | c | c |}
-\caption[ble]{Výsledky pro celý interval pro kritérium Branching Factor při hledání parametrů GA}\label{tabBFParameters}\\
+\caption[ble]{Results for the entire interval for Branching Factor criterion when searching for GA parameters}\label{tabBFParameters}\\
 \hline
-Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
+Parameters & maximum & median & std. deviation & mean & minimum \\ \hline
 \endhead
 (0, 0) & $2$ & $2$ & $0$ & $2$ & $2$ \\ \hline
 (0, 0.2) & $3$ & $2$ & $0.0528395$ & $2.0028$ & $2$ \\ \hline
@@ -114,9 +114,9 @@ Parametry & maximum & medián & std. odchylka & průměr & minimum \\ \hline
 % multicriterial
 
 \begin{longtable}{| l | p{0.1\textwidth} |  p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} |}
-\caption[ble]{Průměry kritérií, permutace, algoritmus Vega}\label{tabVegaParameters}\\
+\caption[ble]{Criterion averages, permutation, Vega algorithm}\label{tabVegaParameters}\\
 \hline
-Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\max}$ & SAC & faktor větvení & stupeň polynomu \\ \hline
+Parameters & Count above\-average  & Bent score & $LP_{\max}$ & $DP_{\max}$ & SAC & branching factor & polynomial degree \\ \hline
 \endhead
  (0, 0) & 4  & $30.552$ & $1.3164$ & $1.50276$ & $0.04155$ & $2$ & $2.86885$ \\ \hline
  (0, 0.01) & 129  & $30.0604$ & $1.62747$ & $1.60609$ & $0.06055$ & $2$ & $2.80555$ \\ \hline
@@ -265,9 +265,9 @@ Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\m
 \end{longtable}
 
 \begin{longtable}{| l | p{0.1\textwidth} |  p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} |}
-\caption{Průměry kritérií, permutace, algoritmus Spea}\label{tabSpeaParameters}\\
+\caption{Criterion averages, permutation, Spea algorithm}\label{tabSpeaParameters}\\
 \hline
-Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\max}$ & SAC & faktor větvení & stupeň polynomu \\ \hline
+Parameters & Count above\-average  & Bent score & $LP_{\max}$ & $DP_{\max}$ & SAC & branching factor & polynomial degree \\ \hline
 \endhead
  (0, 0) & 6  & $31.8152$ & $1.86648$ & $1.90963$ & $0.137763$ & $2.00162$ & $2.98379$ \\ \hline
  (0, 0.01) & 18  & $31.933$ & $1.91158$ & $1.94681$ & $0.100812$ & $2.00068$ & $2.99256$ \\ \hline
@@ -416,9 +416,9 @@ Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\m
 \end{longtable}
 
 \begin{longtable}{| l | p{0.1\textwidth} |  p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} |}
-\caption{Průměry kritérií, i686, algoritmus Vega}\label{tabVegaParametersLuffa}\\
+\caption{Criterion averages, i686, Vega algorithm}\label{tabVegaParametersLuffa}\\
 \hline
-Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\max}$ & SAC & faktor větvení & stupeň polynomu & bijektivní skóre \\ \hline
+Parameters & Count above\-average  & Bent score & $LP_{\max}$ & $DP_{\max}$ & SAC & branching factor & polynomial degree & bijective score \\ \hline
 \endhead
  (0, 0) & 419  & $12.6303$ & $0.0493762$ & $0.324886$ & $0.0036$ & $1.0078$ & $1.2864$ & $8.66591$ \\ \hline
  (0, 0.01) & 841  & $12.8836$ & $0.0737946$ & $0.374788$ & $0.0011$ & $1.0024$ & $1.38895$ & $8.65791$ \\ \hline
@@ -567,9 +567,9 @@ Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\m
 \end{longtable}
 
 \begin{longtable}{| l | p{0.1\textwidth} |  p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} |}
-\caption{Průměry kritérií, i686, algoritmus Spea}\label{tabSpeaParametersLuffa}\\
+\caption{Criterion averages, i686, Spea algorithm}\label{tabSpeaParametersLuffa}\\
 \hline
-Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\max}$ & SAC & faktor větvení & stupeň polynomu & bijektivní skóre \\ \hline
+Parameters & Count above\-average  & Bent score & $LP_{\max}$ & $DP_{\max}$ & SAC & branching factor & polynomial degree & bijective score \\ \hline
 \endhead
  (0.01, 0) & 1  & $23.1407$ & $0.459712$ & $0.887365$ & $0.430258$ & $1.53872$ & $2.3412$ & $12.4926$ \\ \hline
  (0.01, 0.01) & 2  & $23.2024$ & $0.489704$ & $0.927982$ & $0.429515$ & $1.56948$ & $2.4177$ & $12.5127$ \\ \hline
@@ -631,9 +631,9 @@ Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\m
 \end{longtable}
 
 \begin{longtable}{| l | p{0.1\textwidth} |  p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} |}
-\caption{Průměry při Vega pro reprezentaci CGP}\label{tabVegaParametersCgp}\\
+\caption{Averages for Vega with CGP representation}\label{tabVegaParametersCgp}\\
 \hline
-Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\max}$ & SAC & faktor větvení & stupeň polynomu & bijektivní skóre \\ \hline
+Parameters & Count above\-average  & Bent score & $LP_{\max}$ & $DP_{\max}$ & SAC & branching factor & polynomial degree & bijective score \\ \hline
 \endhead
  (0, 0) & 146  & $8.15495$ & $0.106639$ & $0.526983$ & $0.0016$ & $1.00335$ & $1.12175$ & $10.3927$ \\ \hline
  (0.01, 0) & 166  & $8.08845$ & $0.107557$ & $0.525988$ & $0.00245$ & $1.00355$ & $1.1267$ & $10.3955$ \\ \hline
@@ -670,30 +670,30 @@ Parametry & Počet nad\-prů\-měr\-ných  & Bent skóre & $LP_{\max}$ & $DP_{\m
 177 209 14 173 73 230 219 23 26 76 168 92 131 232 112
 44 53 239 101 42 192 152 137 110 13 179 204 54 34
 \end{minipage}
-\caption{Nejlepší nalezený s-box $8 \times 8$}
+\caption{Best found s-box $8 \times 8$}
 \label{good88Box}
 \end{figure}
 
 \twocolumn
-%\subsubsection{Porovnání EDA algorimtmů}
-\insertimage[0.5\textwidth]{edaVsGaComparisonLP_MAX}{Porovnání EDA algoritmů na binárním reprezentaci s-boxu, kritérium LP\_MAX} %LP_MAX
-\insertimage[0.5\textwidth]{edaVsGaComparisonDP_MAX}{Porovnání EDA algoritmů na binárním reprezentaci s-boxu, kritérium DP\_MAX} %DP_MAX
-\insertimage[0.5\textwidth]{edaVsGaComparisonSAC}{Porovnání EDA algoritmů na binárním reprezentaci s-boxu, kritérium SAC} %SAC
-\insertimage[0.5\textwidth]{edaVsGaComparisonBF}{Porovnání EDA algoritmů na binárním reprezentaci s-boxu, branching faktor} %BF
-\insertimage[0.5\textwidth]{edaVsGaComparisonPOLYNOMIAL_DEGREE}{Porovnání EDA algoritmů na binárním reprezentaci s-boxu, stupeň alg. polynomu } %POLYNOMIAL_DEGREE
+%\subsubsection{Comparison of EDA algorithms}
+\insertimage[0.5\textwidth]{edaVsGaComparisonLP_MAX}{Comparison of EDA algorithms on binary representation of s-box, LP\_MAX criterion} %LP_MAX
+\insertimage[0.5\textwidth]{edaVsGaComparisonDP_MAX}{Comparison of EDA algorithms on binary representation of s-box, DP\_MAX criterion} %DP_MAX
+\insertimage[0.5\textwidth]{edaVsGaComparisonSAC}{Comparison of EDA algorithms on binary representation of s-box, SAC criterion} %SAC
+\insertimage[0.5\textwidth]{edaVsGaComparisonBF}{Comparison of EDA algorithms on binary representation of s-box, branching factor} %BF
+\insertimage[0.5\textwidth]{edaVsGaComparisonPOLYNOMIAL_DEGREE}{Comparison of EDA algorithms on binary representation of s-box, degree of alg. polynomial } %POLYNOMIAL_DEGREE
 
-%\subsubsection{Parametry paralelního náhodného prohledávání}
-\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonBENT_AND_MOSAC}{Parametry paralelního náhodného prohledávání,kritérium bent skóre, reprezentace CGP} %BENT_AND_MOSAC
-\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonLP_MAX}{Parametry paralelního náhodného prohledávání, kritérium LP\_MAX, reprezentace CGP} %LP_MAX
-\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonDP_MAX}{Parametry paralelního náhodného prohledávání, kritérium DP\_MAX, reprezentace CGP} %DP_MAX
-\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonSAC}{Parametry paralelního náhodného prohledávání, kritérium SAC, reprezentace CGP} %SAC
-\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonBF}{Parametry paralelního náhodného prohledávání, faktor větvení, reprezentace CGP} %BF
-\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonPOLYNOMIAL_DEGREE}{Parametry paralelního náhodného prohledávání, stupeň polynomu, reprezentace CGP} %POLYNOMIAL_DEGREE
+%\subsubsection{Parameters of parallel random search}
+\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonBENT_AND_MOSAC}{Parameters of parallel random search, bent score criterion, CGP representation} %BENT_AND_MOSAC
+\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonLP_MAX}{Parameters of parallel random search, LP\_MAX criterion, CGP representation} %LP_MAX
+\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonDP_MAX}{Parameters of parallel random search, DP\_MAX criterion, CGP representation} %DP_MAX
+\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonSAC}{Parameters of parallel random search, SAC criterion, CGP representation} %SAC
+\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonBF}{Parameters of parallel random search, branching factor, CGP representation} %BF
+\insertimage[0.5\textwidth]{cgpVsLuffaCGPComparisonPOLYNOMIAL_DEGREE}{Parameters of parallel random search, polynomial degree, CGP representation} %POLYNOMIAL_DEGREE
 
-\insertimage[0.5\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonLP_MAX}{Parametry paralelního náhodného prohledávání,kritérium LP\_MAX, reprezentace Luffa} %LP_MAX
-\insertimage[0.5\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonSAC}{Parametry paralelního náhodného prohledávání,kritérium SAC, reprezentace Luffa} %SAC
-\insertimage[0.5\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonBF}{Parametry paralelního náhodného prohledávání, faktor větvení, reprezentace Luffa} %BF
-\insertimage[0.5\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonPOLYNOMIAL_DEGREE}{Parametry paralelního náhodného prohledávání,stupeń polynomu, reprezentace Luffa} %POLYNOMIAL_DEGREE
+\insertimage[0.5\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonLP_MAX}{Parameters of parallel random search, LP\_MAX criterion, Luffa representation} %LP_MAX
+\insertimage[0.5\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonSAC}{Parameters of parallel random search, SAC criterion, Luffa representation} %SAC
+\insertimage[0.5\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonBF}{Parameters of parallel random search, branching factor, Luffa representation} %BF
+\insertimage[0.5\textwidth]{cgpVsLuffaSOFTWARE_IMPLComparisonPOLYNOMIAL_DEGREE}{Parameters of parallel random search, polynomial degree, Luffa representation} %POLYNOMIAL_DEGREE
 
 \onecolumn
 

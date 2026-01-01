@@ -9,38 +9,38 @@
 %
 %      Bedrich Hovorka
 %
-%V této práci příliš žluťoučký kůň úpěl ďábelské ódy gg
-Rostoucí výkon počítačů a nárůst jejich použití širokou masou uživatelů v celosvětové po\-čí\-ta\-čo\-vé síti
-si žádají větší pozornost věnovanou bezpečnosti těchto uživatelů.
-Neboť součástí této sítě
-nejsou jen lidé a organizace s dobrými úmysly, ale i tací, kteří se snaží
-porušit právo na soukromí odposlechnutím důvěrných
-informací jiné osoby a využít je ve svůj prospěch či danou osobu zkompromitovat jiným způsobem, například
-se za ni vydávat. Proto je důležité těmto záškodníkům tuto činnost prakticky znemožnit převodem důvěrné informace
-do podoby, kterou budou schopny přečíst jen vybrané osoby a nebude ji schopna přečíst žádná nežádoucí osoba
--- důvěrnost.
-Dále musí být součástí tohoto převodu ověření identity původce přenášené informace -- autentizace.
-Algoritmy, které zajišťují důvěrnost a autentizaci přenášených dat, zkoumá kryptografie.
-Těmto algoritmům se též říká šifry. S čím dál tím větším používáním šifer a objevováním novějších
-druhů kryptoanalýzy jejich životnost klesá.
-Poučení z historie šifer říká, že šifra byla neprolomitelná do té doby, dokud
-někdo neobjevil její slabinu. Proto musela být vzápětí vždy vytvořena šifra nová.
-V dnešní době probíhá neustálý výzkum a vývoj nových šifer, které by měly být odolnější
-vůči stále novějším druhům útoků.
+%In this work, a very yellow horse whinnied devilish odes (Czech pangram test)
+The increasing power of computers and the growth of their use by a wide mass of users in the global computer network
+demands greater attention to the security of these users.
+For this network includes
+not only people and organizations with good intentions, but also those who attempt
+to violate the right to privacy by intercepting confidential
+information of others and using it to their advantage or to compromise that person in other ways, for example
+by impersonating them. Therefore, it is important to make this activity practically impossible for these malefactors by converting confidential information
+into a form that can only be read by selected persons and cannot be read by any undesired person
+-- confidentiality.
+Furthermore, verification of the identity of the originator of transmitted information must be part of this conversion -- authentication.
+Algorithms that ensure confidentiality and authentication of transmitted data are studied by cryptography.
+These algorithms are also called ciphers. With ever-increasing use of ciphers and the discovery of newer
+types of cryptanalysis, their lifespan is decreasing.
+Lessons from the history of ciphers show that a cipher was unbreakable until
+someone discovered its weakness. Therefore, a new cipher always had to be created immediately afterward.
+Nowadays, continuous research and development of new ciphers is ongoing, which should be more resistant
+to ever-newer types of attacks.
 
-Tato práce se zabývá částí šifrovacího algoritmu zvanou substituční box
-(zkráceně S-box) a jeho vývojem. K jeho konstrukci se využívají jak čistě
-matematické přístupy s využitím teorie Galoisových polí, tak i různé stochastické způsoby návrhu, ke
-kterým se řadí například evoluce, jež je použita v této práci.
-Evoluční výpočetní techniky jsou, jak již název napovídá, inspirovány evoluční teorií z biologie.
-Cílem práce je použít některé vlastnosti substitučních boxů
-jako objektivní funkce pro jejich evoluční vývoj.
-Pře\-sto\-že již bylo mnoho vlastností studováno, relativně málo práce bylo uskutečněno
-při hledání S-boxů především v multikriteriálním genetickém prohledávání.
+This work deals with a component of encryption algorithms called the substitution box
+(abbreviated as S-box) and its development. Both purely
+mathematical approaches using the theory of Galois fields and various stochastic design methods are used for its construction,
+including evolution, which is employed in this work.
+Evolutionary computation techniques are, as the name suggests, inspired by evolutionary theory from biology.
+The aim of the work is to use certain properties of substitution boxes
+as objective functions for their evolutionary development.
+Although many properties have already been studied, relatively little work has been carried out
+in searching for S-boxes, particularly in multi-criteria genetic search.
 
-Nejprve však bylo nutné navrhnout a naimplementovat kolekci algoritmů,
-která tyto vlastnosti umožní experimentálně zjistit.
-Tato implementace musí především umožnit rychle zadávat různé evoluční experimenty a pokud možno
-je provést co nejrychleji.
+However, it was first necessary to design and implement a collection of algorithms
+that would make it possible to experimentally determine these properties.
+This implementation must primarily enable rapid specification of various evolutionary experiments and, if possible,
+execute them as quickly as possible.
 
-Tato práce vznikla jako samostatné dílo, které nenavazuje na žádný školní projekt.
+This work was created as an independent work that does not build on any school project.

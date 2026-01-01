@@ -10,35 +10,35 @@
 %      Bedrich Hovorka
 %
 %
-Prvním výsledkem diplomové práce je implementovaný modul s knihovními funkcemi pro Python, který
-využívá algoritmy implementované v dynamicky linkované knihovně napsané v jazyce C++.
-Druhým výsledkem jsou experimentálně zjištěné hodnoty.
-Bylo navrženo jednoduché rozhraní pro popis parametrů evoluce, aby ho bylo možné
-v budoucnu použít pro další experimenty.
-Ve fázi implementace bylo nutné efektivně naprogramovat různé evoluční algoritmy.
-K tomu byly využity nástroje Valgrind, který pomáhá odhalit chyby při práci s pamětí, a OProfile, jenž hledá části kódu, které
-trvají nejdéle.
-Aby Python rozhraní umožňovalo jednoduše popsat parametry
-evoluce, bylo nutné provést úpravy na úrovni C++, což se projevilo v jednodušším popisu
-experimentů a zpracování výsledků.
-Experimenty ukázaly, které algoritmy a jejich parametry jsou vhodnější pro určitá
-kritéria na zvolených reprezentacích, a to jak
-pro jednotlivá kritéria bezpečnosti substitučních boxů, tak i pro multikriteriální
-optimalizaci.
-V práci \cite{evo} je zmíněno, že bylo provedeno jen málo srovnání
-genetických algoritmů a algoritmů EDA.
-I z tohoto důvodu bylo provedeno srovnání na tomto konkrétním problému.
-Nebylo možné otestovat všechny kombinace algoritmů, reprezentací, kritérií a parametrů.
-K experimentům byly vybrány ty, které se zdály být nejzajímavější.
+The first result of the Master's thesis is an implemented module with library functions for Python, which
+utilizes algorithms implemented in a dynamically linked library written in C++.
+The second result consists of experimentally determined values.
+A simple interface for describing evolution parameters was designed so that it could be
+used for future experiments.
+During the implementation phase, it was necessary to efficiently program various evolutionary algorithms.
+Tools such as Valgrind, which helps detect memory-related errors, and OProfile, which identifies parts of code that
+take the longest time, were utilized for this purpose.
+To enable the Python interface to simply describe evolution
+parameters, modifications at the C++ level were necessary, which resulted in simpler description
+of experiments and processing of results.
+The experiments showed which algorithms and their parameters are more suitable for certain
+criteria on selected representations, both
+for individual security criteria of substitution boxes and for multi-criteria
+optimization.
+The work \cite{evo} mentions that only a few comparisons have been made between
+genetic algorithms and EDA algorithms.
+For this reason too, a comparison was conducted on this specific problem.
+It was not possible to test all combinations of algorithms, representations, criteria, and parameters.
+Those that seemed most interesting were selected for the experiments.
 
-\subsection*{Náměty pro další rozvoj}
-Pro S-boxy složitější, než se kterými se experimentovalo v této práci, je již
-nutné zvážit hardwarovou akceleraci výpočtů jednotlivých kritérií a prohledávacích
-algoritmů.
-Dalším kritériem by mohl být řád polynomu v $GF(2^m)$.
-Vyšší řád polynomu \cite{langrangeAttack, courtois} znamená vyšší odolnost vůči útoku pomocí interpolace Lagrangeovým
-polynomem.
-Jedná se o zobecnění lineární kryptoanalýzy. Právě pomocí Lagrangeovy interpolace
-se získá polynom vyjadřující S-box. Jeho stupeň lze dále maximalizovat.
-Existuje ovšem několik variant Galoisových polí, ze kterých si útočník může vybrat, tudíž je nutná
-odolnost vůči všem.
+\subsection*{Suggestions for Further Development}
+For S-boxes more complex than those experimented with in this work, it is already
+necessary to consider hardware acceleration of calculations for individual criteria and search
+algorithms.
+Another criterion could be the order of the polynomial in $GF(2^m)$.
+A higher polynomial order \cite{langrangeAttack, courtois} means higher resistance to attacks using Lagrange polynomial
+interpolation.
+This is a generalization of linear cryptanalysis. Through Lagrange interpolation,
+a polynomial expressing the S-box is obtained. Its degree can be further maximized.
+However, there are several variants of Galois fields from which an attacker can choose, so resistance
+to all of them is necessary.
