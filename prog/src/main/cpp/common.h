@@ -55,9 +55,9 @@ inline int binaryDot(int x, int y) {
 	return is_odd(hammingWeight(x & y));
 }
 
-inline PyAPI_FUNC(PyObject *) createPythonString(const std::string & str) {
-	PyAPI_FUNC(PyObject*) pyString_Decode = PyString_FromStringAndSize(str.c_str(), str.size());
-	return pyString_Decode;
+inline PyObject* createPythonString(const std::string & str) {
+	// Python 3 uses PyUnicode for string objects (PyString removed)
+	return PyUnicode_FromStringAndSize(str.c_str(), str.size());
 }
 
 template <typename PtrType > inline void freeAndNULL(PtrType *ptr) {

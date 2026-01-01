@@ -5,9 +5,10 @@
 A research implementation of evolutionary algorithms for automated cryptographic S-box design and optimization.
 
 ![Platform](https://img.shields.io/badge/platform-Linux-blue)
-![Language](https://img.shields.io/badge/python-2.5%20%7C%202.6-yellow)
+![Language](https://img.shields.io/badge/python-3.13-yellow)
 ![C++](https://img.shields.io/badge/C++-98-green)
 ![License](https://img.shields.io/badge/license-Academic-lightgrey)
+![Package Manager](https://img.shields.io/badge/uv-package%20manager-purple)
 
 ---
 
@@ -20,10 +21,12 @@ Brno University of Technology, Faculty of Information Technology
 Author: Bedrich Hovorka
 Year: 2009/2010
 
-**Note:** This repository contains restructured source code (2025) with improved organization:
+**Recent Updates (2025):**
+- ✅ **Migrated from Python 2.7 to Python 3.13** (January 2025)
+- Modern Python syntax and uv package manager
 - Separated C++ and Python source files
 - Added Docker support for reproducible builds
-- Implemented Python unit tests
+- Implemented Python unit tests with pytest 8.3+
 - Updated documentation
 
 ---
@@ -60,18 +63,56 @@ docker-compose build text   # Thesis PDF only
 
 **What Docker does:**
 - Automatically extracts and compiles GAlib 2.4.7
-- Patches makefiles for modern compilers (g++-4.4 → g++, k8-sse3 → native, Python paths)
+- Patches makefiles for modern compilers (g++-4.4 → g++, k8-sse3 → native)
+- Configures Python 3.13 environment with pytest 8.3+
 - Installs all Czech language tools (cstocs, vlna, texlive)
 - Produces identical builds across platforms
 - Eliminates all platform-specific limitations listed in this document
 
-### Option 2: Native Build
+### Option 2: Local Development (Python 3.13 + uv)
+
+**For running experiments on your host machine:**
+
+```bash
+# 1. Build C++ library using Docker (one-time setup)
+docker-compose build prog
+
+# 2. Install Python dependencies with uv
+cd prog/
+uv sync
+
+# 3. Set library path to Docker-compiled artifact
+export SBOX_LIBRARY_PATH=/path/to/sboxEvolver/artifacts/prog
+
+# 4. Run experiments
+uv run python src/main/python/experiments.py 1
+
+# 5. Run tests
+uv run pytest src/test/python/
+```
 
 **Prerequisites:**
-- **C++ Compiler**: `g++ 4.4` or newer (C++98 support)
-- **Python**: 2.5 or 2.6 (legacy codebase)
-- **Libraries**: OpenMP, NumPy, Matplotlib (pylab)
+- Docker (for C++ library compilation)
+- Python 3.13+
+- uv package manager (`pip install uv`)
+
+**Benefits:**
+- Use your native Python environment
+- Fast iteration (no Docker rebuild needed)
+- Access to all Python debugging tools
+- Consistent C++ library from Docker
+
+### Option 3: Native Build (Advanced)
+
+**⚠️ Not recommended:** Use Docker (Option 1) or Local Development (Option 2) instead.
+
+**Prerequisites:**
+- **C++ Compiler**: `g++` with C++98 support
+- **Python**: 3.13+ with development headers
+- **Python Libraries**: Install via uv (`uv sync` in `prog/`)
+- **System Libraries**: OpenMP (`libgomp`)
 - **Build Tools**: make
+- **GAlib 2.4.7**: Must be extracted and compiled manually
 - **Optional**: LaTeX toolchain for thesis compilation (pdflatex, epstopdf, inkscape, dia)
 
 **Installation:**
@@ -102,7 +143,7 @@ docker-compose build text   # Thesis PDF only
    **⚠️ You will likely need to adjust the makefile for modern systems:**
    - Line 18: Change `CXX = g++-4.4` to `CXX = g++`
    - Line 26: Change `-march=k8-sse3` to `-march=native`
-   - Line 26: Update Python include path if using Python 2.7
+   - Python include paths: Update to your Python 3.13 installation
 
    **These adjustments are automated by Docker - use Docker build to avoid manual patching.**
 
@@ -139,10 +180,10 @@ Tests are automatically run during the Docker build process using pytest:
 docker-compose build prog
 
 # The build will fail if tests don't pass
-# Tests are executed in Stage 4 of the multi-stage Dockerfile
+# Tests are executed in Stage 5 of the multi-stage Dockerfile
 ```
 
-The Docker build uses pytest with Python 2.7 compatibility (pytest < 5):
+The Docker build uses pytest 8.3+ with Python 3.13:
 - Tests run in an isolated environment with all dependencies
 - Compiled `libsboxevolution.so` is automatically available
 - Uses non-interactive matplotlib backend (Agg)
@@ -154,18 +195,21 @@ If running tests without Docker (requires compiled library):
 ```bash
 cd prog
 
-# Run all tests with pytest (if installed)
+# Ensure library path is set
+export SBOX_LIBRARY_PATH=/path/to/sboxEvolver/artifacts/prog
+
+# Run all tests with pytest via uv
+uv run pytest src/test/python/
+
+# Or with pytest directly (if installed)
 pytest src/test/python/
 
-# Or use unittest discovery
-python -m unittest discover -s src/test/python/ -p "test_*.py"
-
 # Run specific test file
-python src/test/python/test_routines.py
+uv run pytest src/test/python/test_routines.py
+uv run pytest src/test/python/test_experiments.py
 
-# Available test modules:
-# - test_routines.py      # Core algorithm and routine tests
-# - test_experiments.py   # Experiment framework tests
+# Run with verbose output
+uv run pytest -v src/test/python/
 ```
 
 **Test Coverage:**
@@ -176,8 +220,8 @@ python src/test/python/test_routines.py
 
 **Prerequisites for native testing:**
 - Compiled `libsboxevolution.so` must be present
-- Python 2.7 with numpy and matplotlib
-- pytest < 5 (for Python 2 compatibility) or unittest (standard library)
+- Python 3.13 with numpy and matplotlib
+- pytest 8.3+ and assertpy 1.1+ (installed via `uv sync`)
 
 ---
 
@@ -484,8 +528,10 @@ The project uses a **build-only container pattern**:
 1. **prog/Dockerfile** (multi-stage):
    - Stage 1: Build GAlib 2.4.7 from tarball
    - Stage 2: Compile libsboxevolution.so with auto-patched makefile
-   - Stage 3: Runtime with Python 2.7 + NumPy + Matplotlib
-   - Copies `.so` to mounted volume and exits
+   - Stage 3: Build Python 3.13 dependencies (numpy with gcc/g++)
+   - Stage 4: Clean Python 3.13 runtime (libgomp1 only, no build tools)
+   - Stage 5: Run pytest 8.3+ tests
+   - Stage 6: Production runtime, copies `.so` to mounted volume and exits
 
 2. **text/Dockerfile** (single-stage):
    - Installs full TeX Live + Czech tools (cstocs, vlna)
@@ -502,8 +548,8 @@ sed -i 's|CXX = g++-4.4|CXX = g++|g' makefile
 # CPU architecture (AMD K8 2010 → modern CPU)
 sed -i 's/-march=k8-sse3/-march=native/g' makefile
 
-# Python headers (2.5 → 2.7)
-sed -i 's|-I/usr/local/include/python2.5|-I/usr/include/python2.7|g' makefile
+# Python 3.13 headers
+# Configured automatically based on Docker Python 3.13 installation
 ```
 
 This eliminates the need for manual makefile editing and resolves platform-specific limitations.
@@ -520,7 +566,7 @@ pdfinfo artifacts/text/diplomka.pdf
 
 ### Security Note
 
-Docker images use legacy Python 2.7 and old Debian versions with known CVEs. **Only use for local builds, not production deployment.**
+Docker images are based on older Debian versions. **Only use for local builds and research, not production deployment.**
 
 ## Testing
 
@@ -564,15 +610,16 @@ prog/src/test/python/
 ```
 
 **Docker Test Environment:**
-- pytest < 5 (Python 2.7 compatible)
-- assertpy < 1 (assertion library)
+- pytest 8.3+ (Python 3.13 compatible)
+- assertpy 1.1+ (assertion library)
 - Isolated build with all dependencies
 - Non-interactive matplotlib backend
 
 **Requirements for Native Testing:**
 - Compiled `libsboxevolution.so` must be available
 - Run from `prog/` directory to ensure library path resolution
-- Python 2.7 with numpy and matplotlib
+- Python 3.13 with numpy and matplotlib
+- pytest 8.3+ and assertpy 1.1+ (installed via `uv sync`)
 
 ### Integration Testing
 
@@ -586,20 +633,22 @@ search = Searching("Ga", genome, popSize=50, nGen=5, pMut=0.1, pCross=0.9)
 
 ## Known Limitations
 
-- **Python 2 Only**: Code written for Python 2.5/2.6 (requires porting for Python 3+)
+- **✓ Migrated to Python 3.13** (January 2025): Successfully ported from Python 2.x
+  - **Architectural Constraint**: Two C++ functions (`simpleReportSearching()`, `bestPopulationStringsSearching()`) disabled due to ctypes/Python C API incompatibility. Use `statistics().bestPopulationOutputs` instead.
 - **Legacy Dependencies**: GAlib 2.4.7 (2001), C++98 standard
-- **Platform-Specific** (Native builds only): Makefile hardcodes AMD K8 architecture flags and Python 2.5 paths
+- **Platform-Specific** (Native builds only): Makefile hardcodes AMD K8 architecture flags
   - **✓ Resolved by Docker**: Automatic patching for modern compilers and architectures
 - **Language**: Thesis and some output strings in Czech
-- **Docker images**: Contain unpatched security vulnerabilities (local use only)
-- **Unit Tests**: Written for Python 2.x (pytest < 5 in Docker, unittest framework for native)
+- **Docker images**: Based on older Debian versions - local use only, not for production
+- **Unit Tests**: Using pytest 8.3+ (Python 3.13 compatible)
 
 ---
 
 ## Future Work
 
 Potential extensions and modernization:
-- Port to Python 3.x
+- **✓ Port to Python 3.x** (Completed January 2025)
+- Convert ctypes library to proper Python extension module (would enable all C API functions)
 - Replace GAlib with modern C++17/20 framework
 - Add GPU-accelerated fitness evaluation
 - Implement additional representations (e.g., neural architecture search)

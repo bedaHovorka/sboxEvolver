@@ -51,19 +51,14 @@ RUN make
 # ============================================
 # Stage 2: Build libsboxevolution.so
 # ============================================
-FROM python:2.7-slim AS sbox-builder
-
-# Python 2.7-slim is based on Debian Buster (archived) - update sources
-RUN sed -i 's|http://deb.debian.org|http://archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i 's|http://security.debian.org|http://archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i '/buster-updates/d' /etc/apt/sources.list
+FROM python:3.13-slim AS sbox-builder
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
     g++ \
     make \
     libgomp1 \
-    python2.7-dev \
+    python3.13-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build/sboxEvolver
@@ -80,13 +75,15 @@ WORKDIR /build/sboxEvolver/prog
 # Patch Makefile for modern environment:
 # 1. Change g++-4.4 to g++ (use default compiler)
 # 2. Change -march=k8-sse3 to -march=native (optimize for build machine)
-# 3. Change Python 2.5 include path to Python 2.7
+# 3. Change Python 2.5 include path to Python 3.13
 # 4. Fix GAlib path to match Docker directory structure
+# 5. Add Python 3.13 library linkage for Python C API functions
 RUN sed -i 's|CXX = g++-4.4|CXX = g++|g' makefile && \
     sed -i 's|-march=k8-sse3|-march=native|g' makefile && \
-    sed -i 's|-I/usr/local/include/python2.5|-I/usr/include/python2.7|g' makefile && \
+    sed -i 's|-I/usr/local/include/python2.5|-I/usr/include/python3.13|g' makefile && \
     sed -i 's|-I../galib247/|-I../../galib247|g' makefile && \
-    sed -i 's|-L../galib247/ga|-L../../galib247/ga|g' makefile
+    sed -i 's|-L../galib247/ga|-L../../galib247/ga|g' makefile && \
+    sed -i 's|CXX_LIBS=-lga -lm|CXX_LIBS=-lga -lm -lpython3.13|g' makefile
 
 # Patch project's template code for modern C++ (same issue as GAlib)
 RUN sed -i 's/\tinitializer(/\tthis->initializer(/g' src/main/cpp/boxes.h && \
@@ -98,69 +95,100 @@ RUN sed -i 's/\tinitializer(/\tthis->initializer(/g' src/main/cpp/boxes.h && \
 RUN make
 
 # ============================================
-# Stage 3: Common Python environment
+# Stage 3: Build Python dependencies (with numpy compilation)
 # ============================================
-FROM python:2.7-slim AS python-base
+FROM python:3.13-slim AS deps-builder
 
-# Python 2.7-slim is based on Debian Buster (archived) - update sources
-RUN sed -i 's|http://deb.debian.org|http://archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i 's|http://security.debian.org|http://archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i '/buster-updates/d' /etc/apt/sources.list
+# Install build dependencies temporarily for numpy compilation
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install runtime dependencies
+# Install uv package manager
+RUN pip install --no-cache-dir uv
+
+# Set working directory for Python dependencies
+WORKDIR /build/sboxEvolver/prog
+
+# Copy pyproject.toml and build dependencies with numpy wheels
+COPY prog/pyproject.toml .
+RUN uv sync --no-dev
+
+# ============================================
+# Stage 4: Common Python runtime (without build tools)
+# ============================================
+FROM python:3.13-slim AS python-base
+
+# Install ONLY runtime dependencies (no gcc/g++)
 RUN apt-get update && apt-get install -y \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python packages for experiments
-RUN pip install --no-cache-dir \
-    numpy==1.16.6 \
-    matplotlib==2.2.5
+# Install uv package manager
+RUN pip install --no-cache-dir uv
+
+# Set working directory
+WORKDIR /build/sboxEvolver/prog
+
+# Copy built virtual environment from deps-builder
+COPY --from=deps-builder /build/sboxEvolver/prog/.venv /build/sboxEvolver/prog/.venv
+COPY --from=deps-builder /build/sboxEvolver/prog/pyproject.toml /build/sboxEvolver/prog/pyproject.toml
 
 # Set matplotlib to use non-interactive backend (no GUI required)
 ENV MPLBACKEND=Agg
 
 # ============================================
-# Stage 4: Run tests
+# Stage 5: Run tests
 # ============================================
 FROM python-base AS tester
 
-# Install testing libraries (pytest < 5 and assertpy < 1 for Python 2.7 support)
-RUN pip install --no-cache-dir "pytest<5" "assertpy<1"
+WORKDIR /build/sboxEvolver/prog
 
-WORKDIR /build/sboxEvolver
+# Copy pyproject.toml and install dev dependencies (includes pytest and assertpy)
+COPY prog/pyproject.toml .
+RUN uv sync  # Includes dev dependencies
 
-# Copy compiled library from builder stage to the Python directory
-COPY --from=sbox-builder /build/sboxEvolver/prog/libsboxevolution.so /build/sboxEvolver/prog/src/test/python/
+# Copy compiled library from builder stage
+COPY --from=sbox-builder /build/sboxEvolver/prog/libsboxevolution.so ./
 
-# Copy test files
-COPY prog/src/test/python/ /build/sboxEvolver/prog/src/test/python/
-COPY prog/src/main/python/ /build/sboxEvolver/prog/src/test/python/
+# Copy source files (main and test)
+COPY prog/src/ ./src/
 
-# Run tests with pytest
-RUN python -m pytest prog/src/test/python
+# Set PYTHONPATH so tests can import from src/main/python
+ENV PYTHONPATH=/build/sboxEvolver/prog/src/main/python
+
+# Run tests with pytest via uv
+RUN uv run pytest src/test/python
 
 # ============================================
-# Stage 5: Runtime with artifacts
+# Stage 6: Runtime with artifacts
 # ============================================
 FROM python-base AS runtime
 
 WORKDIR /app
 
 # Copy compiled library from tester stage (ensures tests ran successfully)
-COPY --from=tester /build/sboxEvolver/prog/src/test/python/libsboxevolution.so /app/
+COPY --from=tester /build/sboxEvolver/prog/libsboxevolution.so /app/
 
 # Copy compiled library to artifacts directory for extraction
-COPY --from=tester /build/sboxEvolver/prog/src/test/python/libsboxevolution.so /artifacts/
+COPY --from=tester /build/sboxEvolver/prog/libsboxevolution.so /artifacts/
 
 # Copy Python wrapper and experiments
 COPY prog/src/main/python/ /app/
+
+# Copy the virtual environment from python-base to /app
+COPY --from=python-base /build/sboxEvolver/prog/.venv /app/.venv
 
 # Create output directory
 RUN mkdir -p /app/outputs
 
 # Environment variable for experiment number (default: 1)
 ENV EXPERIMENT_NUM=1
+
+# Set VIRTUAL_ENV and PATH to use the venv
+ENV VIRTUAL_ENV=/app/.venv
+ENV PATH="/app/.venv/bin:$PATH"
 
 # Run experiments.py with the experiment number argument
 CMD python experiments.py ${EXPERIMENT_NUM}

@@ -281,7 +281,7 @@ inline void simpleReportAboutGenome(std::ostream & out, GAGenome & individual) t
 	out << endl << "Chromozome:\t" << individual << endl << endl;
 }
 
-const PyAPI_FUNC(PyObject *) simpleReportSearching(TSearching searching) {
+PyObject* simpleReportSearching(TSearching searching) {
 	SboxSearchAlgorithmBase *ga = searching.algorithm;
 	GAPopulation population = ga->bestResults();
 	std::ostringstream out;
@@ -353,7 +353,7 @@ TStatistics getStatisticsSearching(TSearching searching, float *bestPopulationSc
 	return result;
 }
 
-const PyAPI_FUNC(PyObject *) bestPopulationStringsSearching(TSearching searching) {
+PyObject* bestPopulationStringsSearching(TSearching searching) {
 	const GAPopulation &population = searching.algorithm->bestResults();
 	PyObject* list = PyList_New(population.size());
 	for (int i = 0; i < population.size(); i++) {

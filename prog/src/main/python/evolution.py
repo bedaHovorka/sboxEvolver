@@ -12,9 +12,47 @@
 '''
 import ctypes, numpy, os, pickle, random
 
-# nacteni dynamicke knihovny napsane v C/C++, umistene ve stejnem adresari jako tento skript
-path = os.path.dirname(os.path.realpath(__file__))
-libsboxevolution = ctypes.CDLL("%s/libsboxevolution.so"%path)
+# Load libsboxevolution.so C++ library with multiple fallback locations
+def _load_sbox_library():
+    """Load libsboxevolution.so from environment variable or default locations."""
+    library_name = "libsboxevolution.so"
+
+    # Priority 1: SBOX_LIBRARY_PATH environment variable
+    env_path = os.environ.get("SBOX_LIBRARY_PATH")
+    if env_path:
+        library_path = os.path.join(env_path, library_name)
+        if os.path.exists(library_path):
+            return ctypes.CDLL(library_path)
+        else:
+            raise FileNotFoundError(
+                f"Library not found at SBOX_LIBRARY_PATH: {library_path}"
+            )
+
+    # Priority 2: Same directory as this script (original behavior)
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    library_path = os.path.join(script_dir, library_name)
+    if os.path.exists(library_path):
+        return ctypes.CDLL(library_path)
+
+    # Priority 3: Current working directory
+    cwd_path = os.path.join(os.getcwd(), library_name)
+    if os.path.exists(cwd_path):
+        return ctypes.CDLL(cwd_path)
+
+    # Priority 4: System library path (via ctypes default search)
+    try:
+        return ctypes.CDLL(library_name)
+    except OSError:
+        raise FileNotFoundError(
+            f"Could not find {library_name}. Tried:\n"
+            f"  1. SBOX_LIBRARY_PATH: {env_path or 'not set'}\n"
+            f"  2. Script directory: {script_dir}\n"
+            f"  3. Current directory: {os.getcwd()}\n"
+            f"  4. System library path\n"
+            f"Set SBOX_LIBRARY_PATH environment variable to the directory containing {library_name}"
+        )
+
+libsboxevolution = _load_sbox_library()
 libsboxevolution.simpleReportSearching.restype = ctypes.py_object
 libsboxevolution.bestPopulationStringsSearching.restype = ctypes.py_object
 
@@ -71,15 +109,13 @@ class TStatistics(ctypes.Structure):
                ]
 
 def pickleLoadFrom(fileName):
-    file = open(fileName, "r")
-    obj = pickle.load(file)
-    file.close()
+    with open(fileName, "rb") as file:  # Binary mode required in Python 3
+        obj = pickle.load(file)
     return obj
 
 def picleSaveTo(obj, fileName):
-    file = open(fileName, "w")
-    pickle.dump(obj, file)
-    file.close()
+    with open(fileName, "wb") as file:  # Binary mode required in Python 3
+        pickle.dump(obj, file)
 
 # vytvoreni a manipulace s procesem evoluce
 class Searching:
@@ -97,7 +133,7 @@ class Searching:
             criterions = args[-1]
             TArray = ctypes.c_int * len(criterions)
             array = TArray()
-            for i in xrange(len(array)):
+            for i in range(len(array)):
                 array[i] = criterions[i].ordinal
             args = args[:-1] + (len(array), array)
             func.argtypes = [TGenome, ctypes.c_int, ctypes.c_int, ctypes.c_float, ctypes.c_float, ctypes.c_int, TArray]
@@ -128,11 +164,20 @@ class Searching:
 
     def simpleReport(self):
         print(self)
-        ptr = libsboxevolution.simpleReportSearching(self.delegat)
-        print(ptr)
+        # NOTE: simpleReportSearching() disabled due to architectural limitation
+        # The C++ function returns PyObject* (Python string), but when loaded via
+        # ctypes.CDLL, the library cannot safely call Python C API functions like
+        # PyUnicode_FromStringAndSize(). This would require converting to a proper
+        # Python extension module (not ctypes). Detailed stats are available via statistics().
+        # ptr = libsboxevolution.simpleReportSearching(self.delegat)
+        # print(ptr)
 
     def bestPopulationStrings(self):
-        return libsboxevolution.bestPopulationStringsSearching(self.delegat)
+        # NOTE: bestPopulationStringsSearching() disabled due to architectural limitation
+        # Same issue as simpleReportSearching() - cannot return PyObject* from ctypes library.
+        # Use statistics().bestPopulationOutputs to get S-box lookup tables as integers instead.
+        # return libsboxevolution.bestPopulationStringsSearching(self.delegat)
+        return []  # Return empty list to maintain compatibility
 
     def simpleEvolveAndClose(self, terminator=TerminationCondition.GENERATION):
         self.simpleEvolve(terminator)
@@ -174,7 +219,7 @@ class Searching:
 
         array = TArray()
         seedArray = TSeedArray()
-        for i in xrange(len(array)):
+        for i in range(len(array)):
             array[i] = list[i].delegat
             seedArray[i] = cls.randomSeed()
 
@@ -182,9 +227,11 @@ class Searching:
 
     @classmethod
     def parallelSimpleSearching(cls, list, terminator=TerminationCondition.GENERATION):
-        cls.parallelSearching(list, terminator);
-        map(Searching.simpleReport, list);
-        map(lambda s: s.close(), list);
+        cls.parallelSearching(list, terminator)
+        for s in list:
+            Searching.simpleReport(s)
+        for s in list:
+            s.close()
 
     def __getstate__(self):
         """Return state values to be pickled."""

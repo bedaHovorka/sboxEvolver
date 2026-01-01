@@ -76,8 +76,8 @@ extern "C" { // je treba ceckova deklarace...
 
 	void processSearching(TSearching, TerminatorCondition, uint seed);
 	void closeSearching(TSearching);
-	const PyAPI_FUNC(PyObject *) simpleReportSearching(TSearching searching);
-	const PyAPI_FUNC(PyObject *) bestPopulationStringsSearching(TSearching);
+	PyObject* simpleReportSearching(TSearching searching);
+	PyObject* bestPopulationStringsSearching(TSearching);
 	void setMiniMaxiSearching(TSearching, bool minimize);
 	TStatistics getStatisticsSearching(TSearching searching, float *bestPopulationScores, float *bestPopulationCriterionsValues, int *bestPopulationOutputs);
 
