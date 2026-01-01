@@ -98,9 +98,9 @@ RUN sed -i 's/\tinitializer(/\tthis->initializer(/g' src/main/cpp/boxes.h && \
 RUN make
 
 # ============================================
-# Stage 3: Runtime with artifacts
+# Stage 3: Common Python environment
 # ============================================
-FROM python:2.7-slim AS runtime
+FROM python:2.7-slim AS python-base
 
 # Python 2.7-slim is based on Debian Buster (archived) - update sources
 RUN sed -i 's|http://deb.debian.org|http://archive.debian.org|g' /etc/apt/sources.list && \
@@ -117,19 +117,47 @@ RUN pip install --no-cache-dir \
     numpy==1.16.6 \
     matplotlib==2.2.5
 
+# Set matplotlib to use non-interactive backend (no GUI required)
+ENV MPLBACKEND=Agg
+
+# ============================================
+# Stage 4: Run tests
+# ============================================
+FROM python-base AS tester
+
+# Install testing libraries (pytest < 5 and assertpy < 1 for Python 2.7 support)
+RUN pip install --no-cache-dir "pytest<5" "assertpy<1"
+
+WORKDIR /build/sboxEvolver
+
+# Copy compiled library from builder stage to the Python directory
+COPY --from=sbox-builder /build/sboxEvolver/prog/libsboxevolution.so /build/sboxEvolver/prog/src/test/python/
+
+# Copy test files
+COPY prog/src/test/python/ /build/sboxEvolver/prog/src/test/python/
+COPY prog/src/main/python/ /build/sboxEvolver/prog/src/test/python/
+
+# Run tests with pytest
+RUN python -m pytest prog/src/test/python
+
+# ============================================
+# Stage 5: Runtime with artifacts
+# ============================================
+FROM python-base AS runtime
+
 WORKDIR /app
 
-# Copy compiled library from builder stage
-COPY --from=sbox-builder /build/sboxEvolver/prog/libsboxevolution.so /app/
+# Copy compiled library from tester stage (ensures tests ran successfully)
+COPY --from=tester /build/sboxEvolver/prog/src/test/python/libsboxevolution.so /app/
+
+# Copy compiled library to artifacts directory for extraction
+COPY --from=tester /build/sboxEvolver/prog/src/test/python/libsboxevolution.so /artifacts/
 
 # Copy Python wrapper and experiments
 COPY prog/src/main/python/ /app/
 
 # Create output directory
 RUN mkdir -p /app/outputs
-
-# Set matplotlib to use non-interactive backend (no GUI required)
-ENV MPLBACKEND=Agg
 
 # Environment variable for experiment number (default: 1)
 ENV EXPERIMENT_NUM=1

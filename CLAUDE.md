@@ -8,6 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Master's thesis project from Brno University of Technology, Faculty of Information Technology (2009/2010), authored by Bedrich Hovorka. The project explores using genetic algorithms and other evolutionary computation methods to search for optimal S-boxes based on multiple cryptographic criteria.
 
+**Recent Updates (2025)**: The repository has been restructured with improved organization, Docker support, unit tests, and enhanced documentation while preserving the original research implementation.
+
 ## Project Structure
 
 ```
@@ -15,21 +17,26 @@ sboxEvolver/
 ├── prog/                           # Source code (Python + C++)
 │   ├── Dockerfile                  # Multi-stage build container
 │   ├── makefile                    # Build configuration
-│   └── src/main/                   # Source files (reorganized)
-│       ├── cpp/                    # C++ implementation
-│       │   ├── main.cpp            # C++ core implementation (GAlib integration)
-│       │   ├── main.h              # Main header
-│       │   ├── common.h            # Common definitions
-│       │   ├── cgp.cpp/h           # Cartesian Genetic Programming representation
-│       │   ├── softwareSbox.cpp/h  # Software implementation of S-boxes
-│       │   ├── eda.cpp/h           # Estimation of Distribution Algorithms
-│       │   ├── criterions.cpp/h    # Cryptographic fitness functions
-│       │   ├── multicriterial.cpp/h # VEGA and SPEA algorithms
-│       │   ├── boxes.h             # S-box lookup tables
-│       │   └── combination.h       # Combinatorial utilities
-│       └── python/                 # Python interface
-│           ├── evolution.py        # Python wrapper for evolutionary algorithms
-│           └── experiments.py      # Experimental framework with 6 experiments
+│   └── src/
+│       ├── main/                   # Source files (reorganized 2025)
+│       │   ├── cpp/                # C++ implementation
+│       │   │   ├── main.cpp        # C++ core implementation (GAlib integration)
+│       │   │   ├── main.h          # Main header
+│       │   │   ├── common.h        # Common definitions
+│       │   │   ├── cgp.cpp/h       # Cartesian Genetic Programming representation
+│       │   │   ├── softwareSbox.cpp/h  # Software implementation of S-boxes
+│       │   │   ├── eda.cpp/h       # Estimation of Distribution Algorithms
+│       │   │   ├── criterions.cpp/h    # Cryptographic fitness functions
+│       │   │   ├── multicriterial.cpp/h # VEGA and SPEA algorithms
+│       │   │   ├── boxes.h         # S-box lookup tables
+│       │   │   └── combination.h   # Combinatorial utilities
+│       │   └── python/             # Python interface
+│       │       ├── evolution.py    # Python wrapper for evolutionary algorithms
+│       │       └── experiments.py  # Experimental framework with 6 experiments
+│       └── test/                   # Unit tests (added 2025)
+│           ├── ut_boxes.py         # S-box operation tests
+│           ├── ut_criterions.py    # Cryptographic criterion tests
+│           └── ut_evolution.py     # Evolution algorithm tests
 ├── text/                           # LaTeX thesis document
 │   ├── Dockerfile                  # LaTeX build container
 │   ├── *.utf8.tex                  # Thesis chapters
@@ -195,6 +202,60 @@ python src/main/python/experiments.py 6  # Symbolic regression
 - Creates timestamped directory: `./results<YYYYMMDDHHMMSS>/` (in `prog/` directory)
 - Generates EPS plots and LaTeX tables
 - Saves serialized results (`.picle` files)
+
+### Running Unit Tests
+
+Python unit tests validate core functionality (added in 2025 restructuring).
+
+**Docker (Recommended):**
+
+Tests are automatically run during the Docker build process using pytest:
+
+```bash
+# Tests run automatically as part of the build
+docker-compose build prog
+
+# The build will fail if tests don't pass
+# Tests are executed in Stage 4 of the multi-stage Dockerfile using:
+# python -m pytest prog/src/test/python
+```
+
+The Docker build uses:
+- pytest < 5 (Python 2.7 compatible)
+- assertpy < 1 (assertion library)
+- Isolated environment with all dependencies
+- Non-interactive matplotlib backend (Agg)
+
+**Native (Manual):**
+
+If running tests without Docker (requires compiled library):
+
+```bash
+cd prog/
+
+# Run all tests with pytest (if installed)
+pytest src/test/python/
+
+# Or use unittest discovery
+python -m unittest discover -s src/test/python/ -p "test_*.py" -v
+
+# Run specific test module
+python -m unittest src.test.python.test_routines
+python -m unittest src.test.python.test_experiments
+
+# Run individual test file directly
+python src/test/python/test_routines.py
+```
+
+**Test Coverage:**
+- `test_routines.py` - Core algorithm and routine tests (S-box operations, fitness functions, genome handling)
+- `test_experiments.py` - Experiment framework tests (parameter tuning, multi-objective optimization)
+
+**Prerequisites:**
+- Compiled `libsboxevolution.so` must be present
+- Must run from `prog/` directory for correct library path resolution
+- Python 2.7 with numpy and matplotlib
+- pytest < 5 (for Python 2 compatibility) or unittest (standard library)
 
 ### Thesis Compilation
 
@@ -469,10 +530,25 @@ stats.bestPopulationOutputs          # S-box lookup tables [popSize, 2^inputs]
 - **Segmentation fault**: Check genome parameter validity (e.g., input/output sizes)
 - **Memory errors**: Large populations may exhaust RAM (reduce `popSize`)
 
+### Unit Test Errors
+- **Docker builds failing at test stage**: Check test output in build logs (Stage 4: tester)
+- **ImportError: No module named evolution** (native): Must run tests from `prog/` directory
+- **OSError: libsboxevolution.so: cannot open shared object file** (native): Compile C++ library first
+- **Test failures after code changes**:
+  - Docker: Rebuild with `docker-compose build --no-cache prog`
+  - Native: Rebuild C++ library: `cd prog && make clean && make`
+- **Python 3 incompatibility**: Tests written for Python 2.x (pytest < 5 in Docker, unittest for native)
+- **pytest not found** (native): Install with `pip install "pytest<5"` or use unittest instead
+
 ### Experiment Issues
 - **No output directory**: Script creates `./results<timestamp>/` automatically
 - **Missing plots**: Requires `matplotlib` (pylab) and display backend
 - **LaTeX errors**: Tables use Czech characters, ensure UTF-8 encoding
+
+### Docker Issues
+- **Build failures**: Ensure Docker has sufficient memory (4GB+ recommended)
+- **Permission errors**: Check that `artifacts/` directory is writable
+- **Image size warnings**: Expected - TeX Live and build tools are large
 
 ## Research Context
 
@@ -498,8 +574,29 @@ This work explores the automated design of **cryptographic S-boxes** using evolu
 
 ## Version Information
 
-- **Created**: January 2010
-- **Last Modified**: May 23, 2010
+- **Original Implementation**: January - May 2010
 - **Author**: Bedrich Hovorka
 - **Institution**: Brno University of Technology, Faculty of Information Technology
 - **Degree**: Master's Thesis (2009/2010)
+- **Repository Restructuring**: 2025
+  - Source code reorganization (src/main/ and src/test/)
+  - Docker containerization
+  - Unit test implementation
+  - Documentation updates
+
+## Code Quality Notes
+
+**For Claude Code:**
+- This is a legacy research codebase (2010) with modern enhancements (2025)
+- Python 2.x code style with old conventions (print statements, xrange)
+- C++98 standard with GAlib 2.4.7 integration
+- Unit tests validate core functionality but coverage is not exhaustive
+- **Testing uses pytest via Docker** (Stage 4 of multi-stage build)
+- Prefer Docker builds for consistency and reproducibility
+- When modifying code:
+  - Maintain Python 2 compatibility
+  - Rebuild C++ library after any `.cpp` changes
+  - Run unit tests to verify changes:
+    - Docker: `docker-compose build prog` (pytest runs automatically)
+    - Native: `pytest src/test/python/` or `python -m unittest discover -s src/test/python/`
+  - Update documentation if adding new features

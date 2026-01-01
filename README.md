@@ -4,6 +4,11 @@
 
 A research implementation of evolutionary algorithms for automated cryptographic S-box design and optimization.
 
+![Platform](https://img.shields.io/badge/platform-Linux-blue)
+![Language](https://img.shields.io/badge/python-2.5%20%7C%202.6-yellow)
+![C++](https://img.shields.io/badge/C++-98-green)
+![License](https://img.shields.io/badge/license-Academic-lightgrey)
+
 ---
 
 ## Overview
@@ -14,6 +19,12 @@ This project implements multiple evolutionary computation methods to search for 
 Brno University of Technology, Faculty of Information Technology
 Author: Bedrich Hovorka
 Year: 2009/2010
+
+**Note:** This repository contains restructured source code (2025) with improved organization:
+- Separated C++ and Python source files
+- Added Docker support for reproducible builds
+- Implemented Python unit tests
+- Updated documentation
 
 ---
 
@@ -114,6 +125,59 @@ python src/main/python/experiments.py 1
 - Statistical tables (LaTeX format)
 - Box plot visualizations (EPS format)
 - Serialized result data (pickle files)
+
+### Running Unit Tests
+
+The project includes Python unit tests for core functionality.
+
+**Docker (Recommended):**
+
+Tests are automatically run during the Docker build process using pytest:
+
+```bash
+# Tests run automatically as part of the build
+docker-compose build prog
+
+# The build will fail if tests don't pass
+# Tests are executed in Stage 4 of the multi-stage Dockerfile
+```
+
+The Docker build uses pytest with Python 2.7 compatibility (pytest < 5):
+- Tests run in an isolated environment with all dependencies
+- Compiled `libsboxevolution.so` is automatically available
+- Uses non-interactive matplotlib backend (Agg)
+
+**Native (Manual):**
+
+If running tests without Docker (requires compiled library):
+
+```bash
+cd prog
+
+# Run all tests with pytest (if installed)
+pytest src/test/python/
+
+# Or use unittest discovery
+python -m unittest discover -s src/test/python/ -p "test_*.py"
+
+# Run specific test file
+python src/test/python/test_routines.py
+
+# Available test modules:
+# - test_routines.py      # Core algorithm and routine tests
+# - test_experiments.py   # Experiment framework tests
+```
+
+**Test Coverage:**
+- S-box lookup table operations
+- Cryptographic criterion calculations
+- Genome creation and manipulation
+- Basic evolution workflows
+
+**Prerequisites for native testing:**
+- Compiled `libsboxevolution.so` must be present
+- Python 2.7 with numpy and matplotlib
+- pytest < 5 (for Python 2 compatibility) or unittest (standard library)
 
 ---
 
@@ -458,6 +522,68 @@ pdfinfo artifacts/text/diplomka.pdf
 
 Docker images use legacy Python 2.7 and old Debian versions with known CVEs. **Only use for local builds, not production deployment.**
 
+## Testing
+
+### Unit Tests
+
+Python unit tests validate core functionality using pytest (in Docker) or unittest (native).
+
+**Docker Testing (Recommended):**
+
+Tests run automatically during Docker build:
+
+```bash
+# Tests run as part of Stage 4 in multi-stage build
+docker-compose build prog
+
+# Build fails if tests don't pass
+# Uses: python -m pytest prog/src/test/python
+```
+
+**Native Testing (Manual):**
+
+```bash
+cd prog
+
+# With pytest (if installed)
+pytest src/test/python/
+
+# Or with unittest
+python -m unittest discover -s src/test/python/ -p "test_*.py" -v
+
+# Run specific test suite
+python -m unittest src.test.python.test_routines
+python -m unittest src.test.python.test_experiments
+```
+
+**Test Organization:**
+```
+prog/src/test/python/
+├── test_routines.py      # Core algorithm tests
+└── test_experiments.py   # Experiment framework tests
+```
+
+**Docker Test Environment:**
+- pytest < 5 (Python 2.7 compatible)
+- assertpy < 1 (assertion library)
+- Isolated build with all dependencies
+- Non-interactive matplotlib backend
+
+**Requirements for Native Testing:**
+- Compiled `libsboxevolution.so` must be available
+- Run from `prog/` directory to ensure library path resolution
+- Python 2.7 with numpy and matplotlib
+
+### Integration Testing
+
+Run experiments with reduced parameters for quick validation:
+
+```python
+# Modify experiments.py temporarily
+genome = Genome(ChromozomeType.PERMUTATION, CriterionFunction.LP_MAX, True, 4, 4)
+search = Searching("Ga", genome, popSize=50, nGen=5, pMut=0.1, pCross=0.9)
+```
+
 ## Known Limitations
 
 - **Python 2 Only**: Code written for Python 2.5/2.6 (requires porting for Python 3+)
@@ -466,6 +592,7 @@ Docker images use legacy Python 2.7 and old Debian versions with known CVEs. **O
   - **✓ Resolved by Docker**: Automatic patching for modern compilers and architectures
 - **Language**: Thesis and some output strings in Czech
 - **Docker images**: Contain unpatched security vulnerabilities (local use only)
+- **Unit Tests**: Written for Python 2.x (pytest < 5 in Docker, unittest framework for native)
 
 ---
 
@@ -495,10 +622,26 @@ This is academic research software from 2010. Check with the original author (Be
 
 ---
 
+## Recent Changes (2025)
+
+This repository has been updated from the original 2010 version:
+
+- **Source Restructuring**: Organized into `src/main/cpp/` and `src/main/python/`
+- **Docker Support**: Added multi-stage builds for reproducible compilation
+- **Unit Testing**: Implemented Python unit tests for core components
+- **Documentation**: Enhanced README and added CLAUDE.md for AI assistant guidance
+- **Build Artifacts**: Separated generated files into `artifacts/` directory
+
+Original thesis and results remain unchanged. See git history for restructuring details.
+
 ## Contact
 
-For questions about this historical codebase, refer to the thesis document (`DIPxhovor07final.pdf`) or contact Brno University of Technology's Faculty of Information Technology.
+**Original Author**: Bedrich Hovorka
+**Institution**: Brno University of Technology, Faculty of Information Technology
+**Thesis Document**: `DIPxhovor07final.pdf` (Czech language)
+
+For questions about this historical codebase, refer to the thesis document or contact the Faculty of Information Technology.
 
 ---
 
-**Note**: This is a legacy research project from 2010. While historically interesting, consider modern alternatives (e.g., CMA-ES, NSGA-III, neural architecture search) for contemporary S-box design research.
+**Note**: This is a legacy research project from 2010, restructured in 2025. While historically interesting, consider modern alternatives (e.g., CMA-ES, NSGA-III, neural architecture search) for contemporary S-box design research.

@@ -19,20 +19,21 @@ libsboxevolution.simpleReportSearching.restype = ctypes.py_object
 libsboxevolution.bestPopulationStringsSearching.restype = ctypes.py_object
 
 # python/ceckove enumy
-class Enumerate(object):
-    class Enum(object):
-        def __init__(self, enumerate, name, ordinal):
-            self.enumerate = enumerate
-            self.name = name
-            self.ordinal = ordinal
+class Enum(object):
+    def __init__(self, enumerate, name, ordinal):
+        self.enumerate = enumerate
+        self.name = name
+        self.ordinal = ordinal
 
-        def __repr__(self):
-            return self.name
+    def __repr__(self):
+        return self.name
+
+class Enumerate(object):
 
     def __init__(self, names):
         self.values = []
         for ordinal, name in enumerate(names.split()):
-            newEnum = self.Enum(self, name, ordinal)
+            newEnum = Enum(self, name, ordinal)
             setattr(self, name, newEnum)
             self.values.append(newEnum)
 
@@ -116,7 +117,13 @@ class Searching:
         self.delegat = func(genome.delegat, *args)
         self.repr = '%s searching with population size: %d and generation count: %d\ngenome: %s\n%s' % (algorithm, self.popSize, nGen, genome, specificRepr)
 
+        self.algorithm = algorithm
+        self.genome = genome
+        self.args = args
+
     def __getattr__(self, name):
+        if name in ["__getstate__", "__setstate__", "__getinitargs__"]:
+            raise AttributeError
         return lambda *args: libsboxevolution.__getattr__(name+"Searching")(self.delegat, *args)
 
     def simpleReport(self):
@@ -179,6 +186,15 @@ class Searching:
         map(Searching.simpleReport, list);
         map(lambda s: s.close(), list);
 
+    def __getstate__(self):
+        """Return state values to be pickled."""
+        return (self.algorithm, self.genome, self.args)
+
+    def __setstate__(self, state):
+        """Restore state from the unpickled state values."""
+        algorithm, genome, args = state
+        self.__init__(algorithm, genome, *args)
+
 # tato trida pomaha urcit, jaky typ reprezentace a jakou hodnotici funkci (pri jednokriterialnim) reprezentace se pouzije
 class Genome:
     def __init__(self, type, criterionFunction, *args):
@@ -194,6 +210,10 @@ class Genome:
         if criterionFunction is not CriterionFunction.NONE_FITNESS:
             self.repr += ' criterion: %s' % criterionFunction
 
+        self.type = type
+        self.criterionFunction = criterionFunction
+        self.args = args
+
     def __str__(self):
         return self.repr
 
@@ -208,6 +228,15 @@ class Genome:
             self.inputsCount = args[0]
             self.outputsCount = args[1]
 
+    def __getstate__(self):
+        """Return state values to be pickled."""
+        return (self.type, self.criterionFunction, self.args)
+
+    def __setstate__(self, state):
+        """Restore state from the unpickled state values."""
+        type, criterionFunction, args = state
+        self.__init__(type, criterionFunction, *args)
+
 class SymbolicalRegresionGenome(Genome):
     def __init__(self, type, expectedOutputs, *args):
         self.setInputsAndOutputs(type, *args)
@@ -219,6 +248,19 @@ class SymbolicalRegresionGenome(Genome):
 
         self.repr = '%s %s' % (type, args)
         self.repr += ' symbolical regresion '
+
+        self.type = type
+        self.expectedOutputs = expectedOutputs
+        self.args = args
+
+    def __getstate__(self):
+        """Return state values to be pickled."""
+        return (self.type, self.expectedOutputs, self.args)
+
+    def __setstate__(self, state):
+        """Restore state from the unpickled state values."""
+        type, expectedOutputs, args = state
+        self.__init__(type, expectedOutputs, *args)
 
 def errorHandling():
     libsboxevolution.initialization()
