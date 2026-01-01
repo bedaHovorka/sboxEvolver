@@ -10,36 +10,35 @@
 %      Bedrich Hovorka
 %
 %
-Prvním výsledkem diplomové práce je naimplementovaný modul s knihovními funkcemi pro Python, který
-využívá algoritmy implementované v dynamicky linkované knihovně, jež byla napsána v C++.
+Prvním výsledkem diplomové práce je implementovaný modul s knihovními funkcemi pro Python, který
+využívá algoritmy implementované v dynamicky linkované knihovně napsané v jazyce C++.
 Druhým výsledkem jsou experimentálně zjištěné hodnoty.
-Bylo navrženo jednoduché rozhraní pro popis parametrů evoluce, aby jej bylo možné
+Bylo navrženo jednoduché rozhraní pro popis parametrů evoluce, aby ho bylo možné
 v budoucnu použít pro další experimenty.
-Ve fázi implementace muselo být naprogramováno efektivní provedení
-různých evolučních algoritmů. K tomu bylo využito nástrojů
-valgrind, který pomáhá odhalit chyby práce s pamětí, a oprofile, jenž hledá části kódu, které
+Ve fázi implementace bylo nutné efektivně naprogramovat různé evoluční algoritmy.
+K tomu byly využity nástroje Valgrind, který pomáhá odhalit chyby při práci s pamětí, a OProfile, jenž hledá části kódu, které
 trvají nejdéle.
-Kvůli tomu, aby Python rozhraní mělo možnost jednoduše popsat parametry
-evoluce, musela být provedena práce na úrovni C++, která se navrátila jednodušším popisem
-experimentů a zpracováním výsledků.
-Experimenty ukázaly, které algoritmy a jaké jejich použité parametry jsou lepší při určitých
-kritériích na zvolených reprezentacích, a to jak
+Aby Python rozhraní umožňovalo jednoduše popsat parametry
+evoluce, bylo nutné provést úpravy na úrovni C++, což se projevilo v jednodušším popisu
+experimentů a zpracování výsledků.
+Experimenty ukázaly, které algoritmy a jejich parametry jsou vhodnější pro určitá
+kritéria na zvolených reprezentacích, a to jak
 pro jednotlivá kritéria bezpečnosti substitučních boxů, tak i pro multikriteriální
 optimalizaci.
-V \cite{evo} je zmíněno, že bylo provedeno málo porovnání
+V práci \cite{evo} je zmíněno, že bylo provedeno jen málo srovnání
 genetických algoritmů a algoritmů EDA.
-I z toho důvodu bylo provedeno srovnání na tomto konkrétním problému.
-Nebylo možné provést všechny možné kombinace algoritmů, reprezentací, kritérií a parametrů.
-K experimentům byly vybrány ty, které se zdály být zajímavé.
+I z tohoto důvodu bylo provedeno srovnání na tomto konkrétním problému.
+Nebylo možné otestovat všechny kombinace algoritmů, reprezentací, kritérií a parametrů.
+K experimentům byly vybrány ty, které se zdály být nejzajímavější.
 
 \subsection*{Náměty pro další rozvoj}
-Pro s-boxy složitější, než se kterými byly provedeny experimenty v této práci, je už
+Pro S-boxy složitější, než se kterými se experimentovalo v této práci, je již
 nutné zvážit hardwarovou akceleraci výpočtů jednotlivých kritérií a prohledávacích
 algoritmů.
 Dalším kritériem by mohl být řád polynomu v $GF(2^m)$.
-Vyšší řád \cite{langrangeAttack, courtois} polynomu znamená vyšší odolnost vůči útoku pomocí interpolace Lagrangeovým
+Vyšší řád polynomu \cite{langrangeAttack, courtois} znamená vyšší odolnost vůči útoku pomocí interpolace Lagrangeovým
 polynomem.
 Jedná se o zobecnění lineární kryptoanalýzy. Právě pomocí Lagrangeovy interpolace
-se získá polynom vyjadřující s-box. Jeho stupeň je dále použitelný k maximalizaci.
+se získá polynom vyjadřující S-box. Jeho stupeň lze dále maximalizovat.
 Existuje ovšem několik variant Galoisových polí, ze kterých si útočník může vybrat, tudíž je nutná
 odolnost vůči všem.

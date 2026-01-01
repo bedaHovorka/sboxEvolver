@@ -10,30 +10,30 @@
 %      Bedrich Hovorka
 %
 Kryptografie \cite{yokohama, bethany} se zabývá
-především utajováním informace a ověřováním jejího původu
+především utajováním informací a ověřováním jejich původu,
 tj. převodem dat do podoby, která
-je nepoužitelná nežádoucím osobám, které budou dále
+je nepoužitelná pro nežádoucí osoby, které budou dále
  v textu pro zjednodušení souhrnně nazvány slovem \uv{útočník}, přestože nemusí útočit přímo
- a může jich být více. Žádoucí osoby mají na rozdíl od těch nežádoucích speciální znalost.
- Tou znalostí byl v minulosti i postup zašifrování, od toho se v dnešní době upouští a
- tou znalostí je pouze klíč. Předpokládá se, že algoritmus zná i útočník. Dále může i k neutajované
+ a může jich být více. Žádoucí osoby mají na rozdíl od nežádoucích speciální znalost.
+ Tou znalostí byl v minulosti i postup zašifrování, od čehož se v dnešní době upouští a
+ znalostí je pouze klíč. Předpokládá se, že algoritmus zná i útočník. Dále může i k neutajované
  informaci přidat dodatečnou informaci o jejím původu,
  tzv. elektronický podpis či časové razítko, a to takovým způsobem, že
- je prakticky nemožné ověřit tímto podpisem jinou informaci než v tu, která identicky odpovídá té při podpisu.
-Takový převod by měl řešit hlavní problémy v bezpečnosti:
+ je prakticky nemožné ověřit tímto podpisem jinou informaci než tu, která identicky odpovídá té při podpisu.
+Takový převod by měl řešit hlavní problémy bezpečnosti:
 \begin{description}
   \item[důvěrnost] útočník nesmí získat žádnou užitečnou informaci ze zašifrovaného
-  komunikační\-ho kanálu
-  \item[autentizaci] ověření identity odesílatele zprávy
-  \item[integritu] útočník nemůže podvrhnout data či jejich část a vydávat je příjemci za taková, jako by pocházela
+  komunikačního kanálu
+  \item[autentizace] ověření identity odesílatele zprávy
+  \item[integrita] útočník nemůže podvrhnout data či jejich část a vydávat je příjemci za taková, jako by pocházela
     od určitého odesílatele -- tj. i změnit či upravit data pocházející od pravého odesílatele
-  \item[nepopiratelnost] odesílatel nemůže popřít u jím vytvořené a podepsané zprávy, že ji odeslal on
+  \item[nepopiratelnost] odesílatel nemůže popřít, že u jím vytvořené a podepsané zprávy, že ji odeslal on
 \end{description}
 
 Tato transformace se dá zjednodušit do matematického výrazu $C = F(K_1,P)$, kde $P$
 je prostý text (angl. \uv{plaintext}), $C$ je šifrový text (angl. \uv{ciphertext})
 a $K$ je klíč, který představuje možnost nastavit, jakým způsobem šifra převede text.
-K opačnému procesu zvanému dešifrování $P = F^{-1}(K_2,C)$ nemusí být stejný klíč.
+K opačnému procesu zvanému dešifrování $P = F^{-1}(K_2,C)$ nemusí být použit stejný klíč.
 Proces je též znázorněn na obrázku \ref{cryptoIntro}.
 Čím delší klíč, tím je složitější provést útok hrubou silou k jeho získání.
 Funkce $F$ se dále v textu nazývá šifra či také kryptosystém.
@@ -44,16 +44,16 @@ Moderní kryptografie se dělí na dvě hlavní kategorie (dle počtu klíčů):
 \begin{description}
   \item[symetrická] Za symetrický kryptosystém je označován takový,
     když lze dešifrovací klíč snadno odvodit z klíče šifrovacího.
-    Většinou existuje jen jeden klíč tzv. \uv{tajný klíč},
+    Většinou existuje jen jeden klíč, tzv. \uv{tajný klíč},
     který se používá jak pro šifrování, tak pro dešifrování. Problémem při používání
     tohoto systému je distribuce klíče.
   \item[asymetrická] Za asymetrický systém je považován takový, kdy dešifrovací
   klíč není možné prakticky odvodit z klíče šifrovacího.
-  Většinou existuje pár klíčů, jenž vygeneruje příjemce, jeden klíčů v páru je
+  Většinou existuje pár klíčů, jenž vygeneruje příjemce, jeden z klíčů v páru je
   \uv{veřejný} a v procesu utajování informace jej odesílatel použije k zašifrování.
   Druhý klíč je \uv{soukromý} (kromě příjemce jej nikdo nesmí znát),
-  kterým příjemce přijatou zprávu dešifruje. Veřejný klíč může díky tomu, že
-  z něho nelze snadno odvodit soukromý, být kdekoliv vystaven.
+  kterým příjemce přijatou zprávu dešifruje. Veřejný klíč může být díky tomu, že
+  z něho nelze snadno odvodit soukromý, kdekoliv vystaven.
   Distribuce klíče je vyřešena za cenu
   výpočetní náročnosti šifrování.
 \end{description}
@@ -67,25 +67,25 @@ Nakonec příjemci odešle data ve tvaru $C_1, C_2$ (zjednodušeně vyjádřeno)
 Blokem je dále myšlena jakákoliv posloupnost po sobě jdoucích bitů.
 Šifrujícím blokem \uv{krabička}, která převede blok prostého textu na blok šifrového.
 Jednotlivé bloky budou dále znázorněny jako signály, které
-vyznačují propojení mezi jednotlivými částmi algoritmu a tok informace.
+vyznačují propojení mezi jednotlivými částmi algoritmu a tok informací.
 
 V předešlých odstavcích byl ilustrován postup při utajování informace.
-Pro elektronický podpis, se používá asymetrická šifra s opačnými klíči
+Pro elektronický podpis se používá asymetrická šifra s opačnými klíči
 odesílatele.
 Při podpisu odesílatel použije svůj soukromý klíč a příjemce jej dešifruje
-pomocí veřejného klíče odesílatele a tím u zprávy ověří původ.
+pomocí veřejného klíče odesílatele, a tím u zprávy ověří původ.
 Odesílatel musí mít dva různé páry klíčů, jeden pár pro šifrování
 a druhý pár pro podpis, aby mu útočník nemohl podstrčit k podpisu jinou informaci,
 která je určená pro odesílatele a kterou by tím pádem dešifroval.
 A navíc, protože je asymetrické šifrování výpočetně náročná operace,
-je při podpisu zprávy nejprve vypočítán otisk (tzv. \uv{hash}), a ten
+je při podpisu zprávy nejprve vypočítán otisk (tzv. \uv{hash}) a ten
 je poté asymetricky zašifrován soukromým klíčem odesílatele a připojen ke zprávě.
-Příjemce zprávu ověří tak, že nejprve spočítá \uv{hash} přijaté vlastní zprávy
-a zároveň pomocí veřejného klíče odesílatele dešifruje \uv{hash} přijatý,
+Příjemce zprávu ověří tak, že nejprve spočítá \uv{hash} přijaté zprávy
+a zároveň pomocí veřejného klíče odesílatele dešifruje přijatý \uv{hash},
 poté oba \uv{hashe} porovná.
 Hashovací algoritmy jsou další skupinou kryptografických algoritmů.
 Hashovací algoritmus tedy provádí transformaci libovolně dlouhé zprávy do pevně
-zvolené délky tzv. \uv{hashe}.
+zvolené délky, tzv. \uv{hashe}.
 Tento \uv{hash} by měl být k dané zprávě unikátní. Dvě různé zprávy, byť by se lišily
 v jednom bitu, nesmí mít stejný \uv{hash}.
 
@@ -109,18 +109,18 @@ v jednom bitu, nesmí mít stejný \uv{hash}.
 \end{center}
 \end{table}
 V tabulce \ref{cipherExamples} je uvedeno několik nejpoužívanějších kryptografických algoritmů a jejich
-nejpoužívanějších délek klíčů. U asymetrických algoritmů se délka klíče během let zvyšuje
-mnohem více než symetrických a hashovacích. Vyvinout novou symetrickou šifru je mnohem jednodušší než
+nejpoužívanější délky klíčů. U asymetrických algoritmů se délka klíče během let zvyšuje
+mnohem více než u symetrických a hashovacích. Vyvinout novou symetrickou šifru je mnohem jednodušší než
 vyvinout asymetrickou. U asymetrické je nutné nejprve najít matematický princip, proto se jejich bezpečnost
 více odráží ve velikosti klíče. Symetrické šifry s klíčem menším než 80 bitů jsou považovány za slabé.
-U asymetrických je ta hranice již na 1024 bitech. Hashovací algoritmy MD5 a SHA1 jsou též považovány
+U asymetrických je tato hranice již na 1024 bitech. Hashovací algoritmy MD5 a SHA1 jsou též považovány
 za slabé.
 168-bitový klíč u DESu se nazývá TripleDES,
 tento klíč se rozdělí na tři 56-bitové a při šifrování se projde třemi fázemi DESu
 $C = F(K_3,(F^{-1}(K_2(F(K_1, P)))$, prostřední je dešifrování. Z hashovacích jsou uvedeny pouze bezklíčové.
 NIST\footnote{Národní institut pro standardizaci a technologie USA} vypsal soutěž na nový standard SHA3,
 která se nyní nachází ve 2. kole, mezi postupujícími kandidáty jsou například šifry
-CubeHash či Luffa(\cite{specLuffa}).
+CubeHash či Luffa (\cite{specLuffa}).
 
 \section{Symetrická kryptografie}
 Symetrické šifry se dělí na blokové a proudové.
@@ -128,8 +128,8 @@ Proudové šifry berou zprávu po bajtech, případně bitech či znacích. Blok
 bere zprávu po větších blocích (64 až 256 bitů). Větší velikost bloku zabraňuje statistickým
 a slovníkovým útokům. Pro $n$-bitový blok je $2^n$ možných vstupních i výstupních kombinací a
 existuje $2^{n}!$ možných zobrazení.
-Příkladem blokové šifry je například DES který šifruje po 64 bitových blocích. Příkladem proudové šifry
-je RC4. Proudovou šifrou se může být i bloková, pokud je zapojena v určitém režimu (viz dále).
+Příkladem blokové šifry je například DES, který šifruje po 64bitových blocích. Příkladem proudové šifry
+je RC4. Proudovou šifrou se může stát i bloková, pokud je zapojena v určitém režimu (viz dále).
 
 \subsubsection{Režimy blokových šifer}
 Rozdělené bloky zprávy mohou být jakoukoliv blokovou symetrickou šifrou zpracovány
@@ -168,17 +168,17 @@ Zašifrování jednoho bloku se rozděluje na různé fáze podle druhu algoritm
 Mnoho moderních šifer je založeno na Feistelově substituční/permutační síti,
 tj. jsou kombinací těchto transformací, probíhajících v několika kolech za sebou:
 \begin{description}
-  \item[substituce] Určitý blok kódu je nahrazen jiným z množiny možných kombinací
-  \item[transpozice/permutace] Pracuje s několika bloky, těm je změněno pořadí
-  \item[míchaní se subklíčem] z klíče jsou vygenerovány subklíče pro jednotlivá kola,
-  ty jsou pak \uv{přimíchány}, nejčastěji XORem
+  \item[substituce] Určitý blok kódu je nahrazen jiným z množiny možných kombinací.
+  \item[transpozice/permutace] Pracuje s několika bloky, kterým je změněno pořadí.
+  \item[míchání se subklíčem] Z klíče jsou vygenerovány subklíče pro jednotlivá kola,
+  ty jsou pak \uv{přimíchány}, nejčastěji XORem.
 \end{description}
 \insertimage[0.7\textwidth]{spn}{Jednoduchá substituční/permutační síť znázorňující šifrovací algoritmus \cite{tutorialLADA}}
 Obrázek \ref{spn} znázorňuje jednoduchou vícekolovou
 šifru.
 Substituce je většinou abstrahována pomocí tzv. \uv{substitučních boxů}, zkráceně s-boxů
 (prvků $S_{kn}$ z obrázku \ref{spn}). S-boxy jsou znázorněny jako
-jako \uv{krabičky} $S_{kn}$, do kterých vstupují,
+\uv{krabičky} $S_{kn}$, do kterých vstupují
 a ze kterých vystupují signály.
 Permutace je znázorněna pomocí signálů.
 V každém kole
@@ -187,28 +187,28 @@ Na uvedeném obrázku se jedná o s-boxy typu $4 \times 4$.
 V této práci nás bude zajímat jejich vnitřek a výstupy.
 Principy s-boxů jsou nejlépe popisovány na symetrických šifrách, ač se nevylučuje jejich použití
 i v jiných druzích algoritmů.
-Jejich problematika lze ukázat nejlépe právě na symetrických šifrách, protože
-sami mají charakter symetrické blokové šifry, i když v menší podobě.
+Jejich problematiku lze ukázat nejlépe právě na symetrických šifrách, protože
+samy mají charakter symetrické blokové šifry, i když v menší podobě.
 
-Tato jednoduchá síť sama o sobě však nezaručuje možnost jak šifrování tak dešifrování pomocí
-té samé struktury. Aby proces mohl být reverzibilní, či-li aby bylo možné šifrovat/de\-šif\-ro\-vat
+Tato jednoduchá síť sama o sobě však nezaručuje možnost jak šifrování, tak dešifrování pomocí
+té samé struktury. Aby proces mohl být reverzibilní, čili aby bylo možné šifrovat/de\-šif\-ro\-vat
 ve více kolech pomocí té samé struktury,
 navrhl Feistel \cite{wikiFeistel} strukturu na obrázku \ref{Feistel}.
 
 \insertimage[0.35\textwidth]{Feistel}{Struktura jednoho kola Feistelovy šifry \cite{wikiFeistel}}
 
 Vstupní text se rozdělí na dvě poloviny. V každém kole je pravá polovina vstupem jak šifrující
-funkce $F$, tak levou polovinou výstupu kola. Levá polovina vstupu je xornuta s výstupem šifrující
+funkce $F$, tak levou polovinou výstupu kola. Levá polovina vstupu je xorována s výstupem šifrující
 funkce a výsledek je pravou polovinou výstupu. Šifrující funkce je nastavena příslušným
 subklíčem. Pro dešifrování se použijí subklíče v opačném pořadí.
 Na funkci $F$ se přenáší odpovědnost za bezpečnost, o reverzibilitu
-se postará Feistel struktura.
+se postará Feistelova struktura.
 Když pro šifrování v každém kole platí (výpočet kola následujícího):
 \begin{eqnarray}
 L_{i+1} & = & R_i \\
 R_{i+1} & = & L_i \oplus F(K_i, R_i)
 \end{eqnarray}
-pro dešifrování v tom případě platí v každém kole :
+pro dešifrování v tom případě platí v každém kole:
 \begin{eqnarray}
 R_i & = & L_{i+1} \\
 L_i & = & R_{i+1} \oplus F(K_{i+1}, R_{i+1})
@@ -217,13 +217,13 @@ $L_i$ resp. $R_i$ resp. $K_i$ je levý vstup resp. pravý vstup resp. subklíč 
 Ve funkci $F$ se může provádět substituce, permutace a transpozice. V ní může být obsaženo několik s-boxů.
 Tuto strukturu přejalo mnoho šifer, např. DES či Twofish. Liší se především ve funkci $F$,
 generování subklíčů a velikosti zpracovávaného bloku. Na obrázku \ref{DESboxes} je znázorněna
-funkce v šifře DES. $E$ je expanze z 32 bitů na 48 bitů. Pak následuje míchaní se 48 bitovým subklíčem.
+funkce v šifře DES. $E$ je expanze z 32 bitů na 48 bitů. Pak následuje míchání se 48bitovým subklíčem.
 Výsledek je rozdělen mezi 8 s-boxů typu $6 \times 4$. Jejich hlavním úkolem je
 nelineární zobrazení jejich vstupu na výstup (vysvětleno dále). Výstupy s-boxů jsou sloučeny do 32 bitů a
 permutovány funkcí $P$.
 
 \insertimage[0.7\textwidth]{DESboxes}{Struktura Feistelovy funkce v DESu \cite{yokohama}}
-V podkapitole \ref{secSboxUsing} (po vysvětlení následující pojmů) jsou některé s-boxy
+V podkapitole \ref{secSboxUsing} (po vysvětlení následujících pojmů) jsou některé s-boxy
 popsány podrobněji.
 
 \section{Dosahovaní bezpečnosti}
@@ -245,12 +245,12 @@ Jakákoliv množina výstupních bitů by neměla záviset na jakékoliv vlastn�
 množiny všech vstupních bitů pro pevný klíč.
 Jakákoliv množina výstupních bitů by neměla záviset na jakékoliv vlastní podmnožině
 množiny všech bitů klíče pro pevný vstupní text. Z použitelných statistických testů
-lze uvést např. $\chi^2$-test či Kolmogrov-Smirnovův test. Avšak není prakticky
+lze uvést např. $\chi^2$-test či Kolmogorov-Smirnovův test. Avšak není prakticky
 možné projít všechny možné klíče, natož všechny možné texty. Proto se vygeneruje
 několik náhodných klíčů a náhodných textů. Výstup by měl mít charakteristiky
 náhodné posloupnosti. K ověření se využívá např. \uv{frekvenční analýza},
 jež ověřuje výskyty hodnot na různých pozicích a jejich závislosti.
-Je jasné že ideálně náhodný výstup nelze prakticky vytvořit.
+Je jasné, že ideálně náhodný výstup nelze prakticky vytvořit.
 
 Bezpečným vlastnostem musí nejprve odpovídat jednotlivé prvky šifry. Různé prvky jsou
 odpovědné za různé vlastnosti celé šifry.
@@ -258,8 +258,8 @@ Při konstrukci jednotlivých prvků může být díky malému množství vstup�
 nenáročné prověřit všechny tyto vlastnosti pro všechny možné kombinace.
 Možnostmi jak ověřit odolnost prvku je i provedení známého útoku, který
 těží ze slabin způsobených špatnými charakteristikami prvku šifry.
-Dva nej\-dů\-le\-ži\-těj\-ší útoky na šifrovací algoritmy, jež se používají mj. i k ověření
-náhodnosti výstupu s-boxů byly vytvořeny k útoku na algoritmus DES.
+Dva nejdůležitější útoky na šifrovací algoritmy, jež se používají mj. i k ověření
+náhodnosti výstupu s-boxů, byly vytvořeny k útoku na algoritmus DES.
 
 \section{Lineární kryptoanalýza}
 Lineární kryptoanalýza \cite{tutorialLADA} zkouší těžit z vychýlené pravděpodobnosti výskytu lineárních výrazů
@@ -269,8 +269,8 @@ Jedná se o tzv. \uv{known plaintext attack}: to znamená, že se předpokládá
 útočník má k dispozici sadu prostých textů a k nim příslušných šifrových.
 Přesto nemá útočník možnost vybrat, který prostý text (a
 příslušný šifrový) je dostupný. V mnoha aplikacích a scénářích se považuje za dostatečné, že
-ta sada textů je náhodná.
-Jinými slovy shrnuto se lineární kryptoanalýza snaží z náhodné sady prostých textů a příslušných šifrových textů
+je tato sada textů náhodná.
+Jinými slovy, lineární kryptoanalýza se snaží z náhodné sady prostých textů a příslušných šifrových textů
 aproximovat šifrovací algoritmus různými
 lineárními výrazy a nej(ne)pravděpodobnější z nich použít k postupnému získání klíče.
 
@@ -298,7 +298,7 @@ náhodně vygenerovaného.
 Mějme náhodně vygenerované bity $u + v$ a pokud je použijeme v rovnici \ref{eqLinearAprox},
 pravděpodobnost $p_L$ by měla být přesně $\frac{1}{2}$. Odchylku od pravděpodobnosti
 $p_L = \frac{1}{2}$ nazýváme \uv{bias} značeno $\epsilon_i$, kde $i$ se vztahuje k výrazu.
-Čím je vyšší velikost této odchylky, $|\epsilon_i = p_L - \frac{1}{2}|$, tím snazší je šifru rozlousknout.
+Čím je vyšší velikost této odchylky, $|\epsilon_i = p_L - \frac{1}{2}|$, tím snazší je šifru rozluštit.
 
 Poznamenejme, že $p_L = 1$ znamená, že lineární výraz \ref{eqLinearAprox} je přesnou reprezentací
 šifry a tím pádem je šifra katastrofálně slabá. Pokud $p_L = 0$, potom výraz reprezentuje

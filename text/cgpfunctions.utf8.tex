@@ -9,18 +9,18 @@
 %
 %      Bedrich Hovorka
 %
-Tato příloha vysvětluje značení v chromozómu kartézského genetického programování.
+Tato příloha vysvětluje značení v chromozomu kartézského genetického programování.
 Notace byla použita ve shodě s nástrojem CGPTools \cite{vasicek}.
-\subsubsection{Tvar chromozómu}
+\subsubsection{Tvar chromozomu}
 Hlavička obsahuje údaje v tomto pořadí:
 \begin{verbatim}
-  {počet_vstupů, počet_výstupů, sloupce, řádky, vstupů_do_bloku, l_back,
-   počet_použitých_bloků}
+  {počet vstupů, počet výstupů, sloupce, řádky, počet vstupů do bloku, l-back,
+   počet použitých bloků}
 \end{verbatim}
 Následují popisy jednotlivých bloků (za vstupní blok se považuje i vstup celého obvodu; bloky
 se číslují od počtu vstupů):
 \begin{verbatim}
-  ([číslo bloku] vstupní_blok_a, vstupní_blok_b, funkce)
+  ([číslo bloku] vstupní blok a, vstupní blok b, funkce)
 \end{verbatim}
 Na závěr jsou výstupy některých bloků (uvedená čísla) prohlášeny za výstupy celého obvodu:
 \begin{verbatim}
@@ -34,7 +34,7 @@ Pro vstupní proměnné $a$ a $b$:
 \begin{center}
      \begin{tabular}{| c | c |}
       \hline
-      číslo funkce & výraz \\ \hline\hline
+      Číslo funkce & Výraz \\ \hline\hline
       0 & $a$ \\ \hline
       1 & $a$ AND $b$ \\ \hline
       2 & $a$ OR $b$ \\ \hline

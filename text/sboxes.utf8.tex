@@ -11,44 +11,44 @@
 %
 %
 %
-\section{Definice s-boxů}
-Substituční box (s-box) je část šifry taková, že jejím výstupem, jak již sám název napovídá,
-je substituovaný vstup. Právě na s-boxy bývá přenesena většina odpovědnosti za nelineárnost
-a náhodnost výstupu celé šifry. Bezpečnost většiny blokových šifer (především těch na Feistelově síti)
-závisí na vlastnostech s-boxů použitých v jednotlivých kolech. Ty budou popsány níže.
-Většinou se s-box znázorňuje jako \uv{krabička} s jednotlivými vstupy a výstupy, kde
+\section{Definice S-boxů}
+Substituční box (S-box) je část šifry, jejímž výstupem, jak již sám název napovídá,
+je substituovaný vstup. Právě na S-boxy bývá přenesena většina odpovědnosti za nelinearitu
+a náhodnost výstupu celé šifry. Bezpečnost většiny blokových šifer (především těch založených na Feistelově síti)
+závisí na vlastnostech S-boxů použitých v jednotlivých kolech. Ty budou popsány níže.
+Většinou se S-box znázorňuje jako \uv{krabička} s jednotlivými vstupy a výstupy, kde
 jsou většinou znázorněny jednotlivé bity v pořadí a číslování, jak je vidět na obr. \ref{sboxSchema}.
 
-\insertimage[0.25\textwidth]{sboxSchema}{Schéma s-boxu}
+\insertimage[0.25\textwidth]{sboxSchema}{Schéma S-boxu}
 
-Formálně se s-box dá definovat takto:
+Formálně lze S-box definovat takto:
 \begin{definition}\cite{practicalSboxDesign}
-$n \times m$ s-box $S$ je zobrazení $S: \{0,1\}^n \rightarrow \{0,1\}^m$.
-$S$ může být reprezentován jako $2^n$ $m$-bitová čísla, označená $r_0, \dots, r_{2^n-1}$,
-v tom případě $S(x) = r_x$ , $0 \leq x < 2^n$ a $r_i$ jsou řádky
-s-boxu. Alternativně, $S(x) = \left[ c_{m−1}(x) \, c_{m−2}(x) \dots c_{0}(x) \right] $
-kde $c_i$ je pevná Booleovská funkce $c_i : \{0,1\}^n \rightarrow \{0,1\} \, \forall i$;
-to jsou sloupce s-boxu.
+$n \times m$ S-box $S$ je zobrazení $S: \{0,1\}^n \rightarrow \{0,1\}^m$.
+$S$ může být reprezentován jako $2^n$ $m$-bitových čísel, označených $r_0, \dots, r_{2^n-1}$,
+v takovém případě $S(x) = r_x$ , $0 \leq x < 2^n$ a $r_i$ jsou řádky
+S-boxu. Alternativně, $S(x) = \left[ c_{m−1}(x) \, c_{m−2}(x) \dots c_{0}(x) \right] $
+kde $c_i$ je pevná booleovská funkce $c_i : \{0,1\}^n \rightarrow \{0,1\} \, \forall i$;
+to jsou sloupce S-boxu.
 \label{defSbox}
 \end{definition}
 Velikost s-boxů se často zapisuje jako $n \times m$.
 Velké s-boxy \cite{bigSboxes} jsou obecně pokládány za bezpečnější
 než malé, ale za cenu větší složitosti realizace a validace.
 S-boxy s malým vstupem a velkým výstupem mají velmi dobrou lineární aproximaci.
-U s-boxů s dostatečně větším výstupem než vstupem je garantována nejméně jedna
+U S-boxů s dostatečně větším výstupem než vstupem je garantována nejméně jedna
 perfektní lineární aproximace.
 
-\section{Kritéria bezpečnosti s-boxů}\label{secCriterions}
+\section{Kritéria bezpečnosti S-boxů}\label{secCriterions}
 Kritéria, jež se dají použít jako\footnote{nebo podle nichž se dají sestavit}
 heuristické či hodnotící funkce, mohou být použita k prohledávání stavového prostoru.
-Téměř všechny vycházejí (či mají nějaký vztah)
+Téměř všechna vycházejí (či mají nějaký vztah)
 z lineární a diferenciální kryptoanalýzy.
 Vycházejí z možných útoků na šifru, mohou být různě matematicky dokázány odolnosti vůči
 těmto útokům, jiným se spíše věří, že fungují.
 
 \subsection{SAC}\label{critSAC}
 Strict Avalanche Criterion \cite{yokohama} je založen na tzv. \uv{lavinovém efektu}.
-U s-boxů se zkoumá, kolik bitů výstupu se změní při změně jednoho bitu vstupu. Při vyzkoušení
+U S-boxů se zkoumá, kolik bitů výstupu se změní při změně jednoho bitu vstupu. Při vyzkoušení
 změny jednoho bitu u všech možných vstupů, by průměr změn na výstupu měl být polovina počtu výstupních
 bitů.
 
@@ -68,7 +68,7 @@ pro $\forall i: 1 \leq i \leq n$ platí tyto rovnice:
   \begin{equation}
     \sum\limits_{x \in \{0,1\}^n} f(x) \oplus f(x \oplus c^{(n)}_i) = (2^{n-1}, 2^{n-1}, \dots, 2^{n-1})
   \end{equation}
-  Každá funkce $f$ splňující SAC je nazývána \uv{silný s-box}
+  Každá funkce $f$ splňující SAC je nazývána \uv{silný S-box}
 \end{definition}
 
 Pokud funkce splňuje SAC, každý její výstupní bit by se měl změnit s poloviční prav\-dě\-po\-dob\-no\-stí,
@@ -122,7 +122,7 @@ kombinace vstupů. Jak je patrné, výstupy jsou u každé funkce u třech bitů
 liší.
 
 \begin{theorem}
-Silný s-box není lineární ani afinní.
+Silný S-box není lineární ani afinní.
 \end{theorem}
 \begin{proof}
 Důkaz je uveden v \cite{yokohama} na str. 25
@@ -130,7 +130,7 @@ Důkaz je uveden v \cite{yokohama} na str. 25
 
 \subsection{Bent funkce}
 V \cite{wikiBentFunction} kombinatorice je \uv{bent funkce} zvláštní typ booleovské funkce.
-\uv{Bent\footnote{česky: křivé} funkce} jsou tak pojmenovány protože jsou odlišné
+\uv{Bent\footnote{česky: křivé} funkce} jsou tak pojmenovány, protože jsou odlišné
 od lineárních a afinních funkcí.
 Proto byly obsáhle studovány především pro jejich uplatnění v kryptografii,
 ačkoliv jejich spektrum aplikací je široké i v teorii kódování a návrhu kombinačních obvodů.
@@ -168,7 +168,7 @@ vyjádřit jako
 Důkaz je uveden v \cite{yokohama} na str. 31
 \end{proof}
 Toho lze využít k zúžení prohledávacího prostoru, při hledání funkcí splňujících SAC.
-Pro s-boxy s více výstupy lze z definice \ref{defSbox} předpokládat, že každý výstup je
+Pro S-boxy s více výstupy lze z definice \ref{defSbox} předpokládat, že každý výstup je
 booleovská funkce a podle toho sestavit hodnotící funkci. Pro představu jsou v tabulce
 \ref{bentSetTable} uvedeny velikostí některých množin.
 
@@ -187,8 +187,8 @@ booleovská funkce a podle toho sestavit hodnotící funkci. Pro představu jsou
 \end{center}
 \end{table}
 
-\subsection{Největší odchylka z lineárních výrazů}
-K výpočtu nelinearity boolovské funkce $f$ můžeme použít vzorec z \cite{yokohama},
+\subsection{Největší odchylka od lineárních výrazů}
+K výpočtu nelinearity booleovské funkce $f$ můžeme použít vzorec z \cite{yokohama},
 založený na Hammingově vzdálenosti od množiny afinních funkcí a na Walshově transformaci
 $\hat{F}$ funkce $\hat{f}: \{0,1\}^n \rightarrow \{1, -1\}$, obdobně jak u SAC:
 \begin{eqnarray}
@@ -197,7 +197,7 @@ $\hat{F}$ funkce $\hat{f}: \{0,1\}^n \rightarrow \{1, -1\}$, obdobně jak u SAC:
   \delta(f) & = & 2^{n-1} - \frac{1}{2} \max_{w \in \{0,1\}}|\hat{F}(w)|
 \end{eqnarray}
 
-Ale pro více výstupů bude jednodušší spočítat největší výchylku s-boxu $q$
+Ale pro více výstupů bude jednodušší spočítat největší výchylku S-boxu $q$
 podle vzorce z \cite{twofish} :
 \begin{equation}
 LP_{\max}(q) = \max_{a, b \neq 0} \left( 2 Pr_X[X \cdot a = q(X) \cdot b] - 1 \right)^2

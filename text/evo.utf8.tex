@@ -15,10 +15,10 @@ Evoluční algoritmy jsou informované metody prohledávání stavového prostor
 které \cite{evo} jsou založeny na metafoře evoluce v přírodě. Řešení nějaké úlohy je
 převedeno na proces evoluce populace náhodně vygenerovaných řešení. Každé
 řešení je zakódováno do řetězce symbolů (parametrů) a ohodnoceno tzv. fitness
-funkcí, která vyjadřuje kvalitu řešení -- čím je hodnota větší tím je dané řešení
-perspektivnější a častěji vstupuje do reprodukčního procesu během něhož jsou
+funkcí, která vyjadřuje kvalitu řešení -- čím je hodnota větší, tím je dané řešení
+perspektivnější a častěji vstupuje do reprodukčního procesu, během něhož jsou
 generována nová řešení. Populace řešení se běžně nazývá populací individuí
-nebo chromozómů. Reprodukční proces je založen na dvou hnacích silách:
+nebo chromozomů. Reprodukční proces je založen na dvou hnacích silách:
 
 \begin{itemize}
 \item variační operátory křížení a mutace, které přinášejí rozmanitost
@@ -27,7 +27,7 @@ populace/diverzitu
 \end{itemize}
 
 Kombinace variace a selekce přispívá obecně ke zlepšení fitness funkce jedinců
-v nově se tvořící populaci. V procesu křížení jedinců, tak jako v živé přírodě
+v nově se tvořící populaci. V procesu křížení jedinců, tak jako v živé přírodě,
 jsou nová individua/potomci získávána křížením většinou dvojic rodičovských
 individuí. Všechny komponenty evolučního procesu jsou stochastické – častěji
 např. vstupují do reprodukčního procesu páry s lepší fitness funkcí, ale i slabší
@@ -38,7 +38,7 @@ algoritmů jsou uvedeny již jen odlišnosti.
 
 \section{Genetický algoritmus}\label{secGA}
 
-Chromozóm (jedinec/individuum) kódující řešení je reprezentován binárním vektorem
+Chromozom (jedinec/individuum) kódující řešení je reprezentován binárním vektorem
 (ře\-těz\-cem) konstantní délky $n$:
 \begin{description}
   \item $\vec{X} = (X_0, X_1, \dots, X_{n-1})$, kde $X_i$ je $i$ - tou proměnnou řetězce
@@ -83,10 +83,10 @@ získáme novou populaci $D(t+1)$. Ukončení evolučního procesu je buď dáno
 maximálním počtem generací nebo detekcí stagnace vývojového procesu.
 Genetický algoritmus může mít několik typů křížení a mutace. Některé operátory bývají navrženy
 podle typu řešené úlohy. Mutace je většinou provedena inverzí bitu/ů na náhodných pozicích.
-Křížení může být například jednobodové či dvoubodové. Po vybrání dvou rodičů se nejprve se zvolí
-bod(y), ve kterém se chromozóm obou rodičů rozdělí na dvě části. Vznikají dva potomci.
+Křížení může být například jednobodové či dvoubodové. Po vybrání dvou rodičů se nejprve zvolí
+bod(y), ve kterém se chromozom obou rodičů rozdělí na dvě části. Vznikají dva potomci.
 První z nich je složen z první části prvního rodiče a z druhé části druhého rodiče.
-A chromozóm druhého potomka je poskládán ze zbývajících částí. Selekce může probíhat:
+A chromozom druhého potomka je poskládán ze zbývajících částí. Selekce může probíhat:
 \begin{itemize}
   \item turnajem mezi $N$ náhodně vybranými jedinci,
   \item proporcionálně (podíl fitness jedince na součtu fitness všech jedinců) neboli tzv. ruleta
@@ -101,7 +101,7 @@ A chromozóm druhého potomka je poskládán ze zbývajících částí. Selekce
 Nej\-čas\-tě\-ji se
 jedná o programy, které jsou reprezentovány stromy a grafy. Tyto struktury mají
 (ale nemusí vždy mít) proměnnou délku. Na rozdíl od klasického GA se zde pracuje přímo
-se spustitelnou strukturou, která představuje jak genotyp tak fenotyp kandidátního řešení.
+se spustitelnou strukturou, která představuje jak genotyp, tak fenotyp kandidátního řešení.
 
 \item[Genetické operátory] pracují nad spustitelnými strukturami. Kromě běžných
 operátorů (jako jsou křížení a mutace) existuje řada pokročilých operátorů
@@ -143,14 +143,14 @@ splňující SAC:
 \begin{verbatim}
     {2,1,2,2,2,1,3}([2]1,1,8)([3]0,0,7)([4]1,3,0)([5]3,2,8)(5)
 \end{verbatim}
-Tvar chromozómu je vysvětlen v příloze \ref{cgpfunctions}.
-Na obrázku \ref{simpleBent} je tento chromozóm znázorněn v grafové podobě.
+Tvar chromozomu je vysvětlen v příloze \ref{cgpfunctions}.
+Na obrázku \ref{simpleBent} je tento chromozom znázorněn v grafové podobě.
 
-\insertimage[260px]{simpleBent}{Příklad jednoduché Booleovské funkce splňující SAC nalezené
+\insertimage[260px]{simpleBent}{Příklad jednoduché booleovské funkce splňující SAC nalezené
 kartézským genetickým programováním}
 \subsubsection{Programová implementace}
 Během \cite{millerThomson} generování nových jedinců nebo při mutaci musí být splněno několik podmínek, aby
-chromozóm reprezentoval správný program.
+chromozom reprezentoval správný program.
 Nechť ${c^n}_{kj}$ reprezentuje gen $k$-tého vstupu ve
 sloupci $j$ (nejlevější sloupec má $j = 0$), potom musí splňovat tato omezení:
 \begin{eqnarray}
@@ -171,8 +171,8 @@ Nechť ${c^f}_k$ reprezentuje gen funkce $k$-tého uzlu, pak:
   {c^f}_k \in F
 \end{equation}
 Z těchto podmínek je patrná i skutečnost, že realizace křížení,
-při, kterém by bylo nutné dodržet tyto podmínky,
-by byla komplikovanější a i proto se raději nepoužívá.
+při kterém by bylo nutné dodržet tyto podmínky,
+by byla komplikovanější, a i proto se raději nepoužívá.
 
 
 \section{EDA}\label{algorithmEDA}
@@ -180,11 +180,11 @@ by byla komplikovanější a i proto se raději nepoužívá.
 Tato skutečnost je častou příčinou špatné konvergence optimalizačního procesu.
 Proto byly navrženy algoritmy, které se tento problém snaží vyřešit pomocí globálního pohledu
 na celou populaci. V celé populaci jsou spočteny statistiky výskytů a závislostí alel na
-jednotlivých pozicích. Podle těchto statistik jsou následně generováni jedinci noví.
+jednotlivých pozicích. Podle těchto statistik jsou následně generováni noví jedinci.
 Tyto algoritmy jsou souhrnně nazývány EDA -- Estimation of Distribution Algorithm.
 
 \subsection{Činnost EDA algoritmu}
-Na rozdíl do GA se v každém kroku vybere $M < N$ \uv{slibných} jedinců, ze
+Na rozdíl od GA se v každém kroku vybere $M < N$ \uv{slibných} jedinců, ze
 kterých se provede odhad pravděpodobnostního rozložení vybraných jedinců $p(X | Ds(t))$.
 Poté se vygeneruje množina potomků $O(t)$ s mohutností $M < N$ (vzorkováním získaného rozložení).
 Nová populace $D(t+1)$ je vytvořena nahrazením části populace $D(t)$ jedinci z $O(t)$.

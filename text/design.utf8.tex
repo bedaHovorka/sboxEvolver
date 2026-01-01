@@ -12,7 +12,7 @@
 % Popis návrhu a různé možnosti - stačí zmínit
 
 \section{Shrnutí technických a funkčních požadavků}
-Cílem práce je implementace programu, který hledá s-boxy pomocí evolučních algoritmů,
+Cílem práce je implementace programu, který hledá S-boxy pomocí evolučních algoritmů,
 a následné provedení experimentů s tímto programem.
 Implementovaný program má v tomto případě tyto hlavní technické nároky, seřazené
 sestupně podle důležitosti:
@@ -27,7 +27,7 @@ sestupně podle důležitosti:
 
 \subsection*{Požadavky na funkčnost:}
 \begin{description}
-  \item[Různé reprezentace s-boxů] Kvůli nalezení s-boxu v nejvhodnější reprezentaci (viz podkapitola \ref{secSboxTypes}).
+  \item[Různé reprezentace S-boxů] Kvůli nalezení S-boxu v nejvhodnější reprezentaci (viz podkapitola \ref{secSboxTypes}).
 
   \item[Různé druhy prohledávacích algoritmů] Pro účely srovnání aplikovatelnosti EA (viz kapitola \ref{evo})
   je dobré je porovnat s náhodným prohledáváním.
@@ -41,7 +41,7 @@ sestupně podle důležitosti:
   \item[Sběr statistik] Pro vyhodnocení jednotlivých běhů je nutné, aby program během evoluce zaznamenával statistiky.
   Evoluční experimenty se často vyhodnocují pomocí tzv. \uv{krabicových grafů}, pro které je nutné spočítat
   minimální, maximální hodnotu a kvartily, odchylku fitness při pevném počtu generací.
-  Nebo \cite{millerThomson} pomocí porovnání jaké úsilí (např. počet generací, velikost populace, doba běhu) s jak dobrými výsledky (nejvyšší fitness)
+  Nebo \cite{millerThomson} pomocí porovnání, jaké úsilí (např. počet generací, velikost populace, doba běhu) s jak dobrými výsledky (nejvyšší fitness)
   bylo vynaloženo.
 \end{description}
 
@@ -56,22 +56,22 @@ algoritmy.
 
 Každý prohledávací algoritmus má v každé generaci svojí specifickou změnu populace, definovanou
 pomocí metody \sourceRef{variation()}.
-Při konstrukci objektů (před spuštěním \sourceRef{evolution()}) je předán typ reprezentace s-boxu a parametry
+Při konstrukci objektů (před spuštěním \sourceRef{evolution()}) je předán typ reprezentace S-boxu a parametry
 evoluce. Množiny evaluátorů kritérií jsou předány též při konstrukci.
 U EDA algoritmu je důležitý atribut \sourceRef{model()}, který reprezentuje statistický model
 (poddruh EDA), jenž bude použit.
 Jednoduchost diagramu se ukázala důležitá ve fázi implementace, kdy bylo na základě něho
 vytvořeno rozhraní mezi Pythonem a C++ a byl dále zesložiťován.
 
-\section{Různé typy reprezentace s-boxu}\label{secSboxTypes}
+\section{Různé typy reprezentace S-boxu}\label{secSboxTypes}
 Některé evoluční algoritmy mohou vyžadovat určitou reprezentaci substitučního boxu.
 Ně\-kte\-ré z reprezentací mohou umožňovat i optimální realizaci, pokud jsou modelem cílového systému.
 Každá z nich má svou specifickou inicializaci, mutaci a křížení.
 
 \subsection{Seznam výstupů}
-Nejvíce se s-boxy reprezentují jako seznam výstupů (pole) o velikosti všech
-vstupních kombinací, kde vstup s-boxu je indexem a výstup je prvek
-na dané pozici. Pokud má být s-box bijektivní, pak tento seznam představuje permutaci.
+Nejvíce se S-boxy reprezentují jako seznam výstupů (pole) o velikosti všech
+vstupních kombinací, kde vstup S-boxu je indexem a výstup je prvek
+na dané pozici. Pokud má být S-box bijektivní, pak tento seznam představuje permutaci.
 Například
 \begin{center}
 2 0 3 1
@@ -92,16 +92,16 @@ S-box z předcházející reprezentace lze pomocí binární zapsat takto (sloup
 1 0 1 0
 \end{center}
 A každý řádek představuje booleovskou funkci.
-Mimochodem tento s-box lze reprezentovat i jako polynomy jednotlivých funkcí,
+Mimochodem tento S-box lze reprezentovat i jako polynomy jednotlivých funkcí,
 kde proměnné jsou vstupních bitů:
 $$s(x)_0 = b , s(x)_1 = 1 \oplus a$$
-Pro genetické operátory je seznam booleovských funkcí brán jako jednolitý chromozóm, nad
+Pro genetické operátory je seznam booleovských funkcí brán jako jednolitý chromozom, nad
 kterým je provedeno jednobodové křížení a mutace změní bit na náhodné pozici.
 
 \subsection{Acyklický graf hradel}
 Tato reprezentace pochází z kartézského genetického programování (značení viz příloha \ref{cgpfunctions})
 a je vhodnou pro hledání optimální realizace v hardwaru.
-S-box z předchozí reprezentace lze popsat například chromozómem ve tvaru
+S-box z předchozí reprezentace lze popsat například chromozomem ve tvaru
 \begin{verbatim}
 {2,2,2,2,2,1,1}([2]1,0,5)([3]1,0,4)([4]1,3,3)([5]3,3,1)(1,2)
 \end{verbatim}
@@ -119,7 +119,7 @@ Počet vstupních i výstupních bitů jsou násobky čtyř.
 Jediným parametrem struktury je počet čtveřic bitů $p$ na vstupech a výstupech (počet vstupů a výstupů se shoduje).
 Reprezentace je modelem procesorů řady i686, z důvodu hledání optimální realizace na
 těchto procesorech -- optimální v softwaru. Model je složen z pěti registrů, v každém je uloženo $p$ bitů.
-Výpočet každého s-boxu je složen z šesti cyklů. V každém cyklu jsou tři instrukce o
+Výpočet každého S-boxu je složen z šesti cyklů. V každém cyklu jsou tři instrukce, o
 nichž se předpokládá, že je procesor provede paralelně, proto se nesmí opakovat stejný
 registr na výstupu instrukce (paralelismus CREW). Instrukcemi, které se mohou vyskytnout v každém cyklu, jsou
 XOR, AND, OR, NOT. Navíc v prvním cyklu je možné provést MOV a v posledním NOP.
@@ -127,7 +127,7 @@ XOR, AND, OR, NOT. Navíc v prvním cyklu je možné provést MOV a v posledním
 Průběh výpočtu začíná rozdělením vstupu na čtyři části $a_0$, $a_1$, $a_2$, $a_3$.
 Každá část $a_i$ má $p$ bitů a je nahrána do registru $r_i$, $r_4 = 0$.
 V simulaci jednoho cyklu se nejprve uloží hodnoty registrů do dočasných proměnných a provedením jednotlivých
-instrukcí se nastaví hodnoty nové. Výstup s-boxu je složen z $p$-bitových částí $y_i$
+instrukcí se nastaví hodnoty nové. Výstup S-boxu je složen z $p$-bitových částí $y_i$
 takto: $y_0 = r_0$, $y_1 = r_1$, $y_2 = r_3$ a $y_3 = r_4$.
 
 Pro seznam výstupů
@@ -174,7 +174,7 @@ pravděpodobnosti jedna ze tří možných změn:
   v aktuálním cyklu
   \item změna druhého operandu -- s rovnoměrným rozložení je vybrán jeden z pěti možných registrů
   \item změna prvního operandu -- obdobně, ale zde se nesmí vybrat registr, který je již v aktuálním cyklu
-  použit jako první operand v jiné instrukcí
+  použit jako první operand v jiné instrukci
 \end{enumerate}
 
 Tabulka \ref{tabReprezantationUsability} ukazuje, u kterého prohledávacího algoritmu je možné určitou reprezentaci použít z hlediska striktní definice
@@ -196,7 +196,7 @@ v této tabulce je zohledněna potřeba multikriteriální optimalizace.
      VEGA & vhodné & vhodné & vhodné & vhodné \\ \hline
      SPEA & vhodné & vhodné & vhodné & vhodné \\ \hline
      \end{tabular}
-     \caption{Použitelnost reprezentací s-boxu v jednotlivých prohledávacích algoritmech}
+     \caption{Použitelnost reprezentací S-boxu v jednotlivých prohledávacích algoritmech}
      \label{tabReprezantationUsability}
   \end{center}
 \end{table}
