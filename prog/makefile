@@ -16,6 +16,7 @@
 #LIB_DIRS= -L$(GA_LIB_DIR)
 
 CXX = g++-4.4
+VPATH = src/main/cpp
 
 EXS=libsboxevolution.so
 OBJS= eda.o cgp.o softwareSbox.o criterions.o multicriterial.o main.o

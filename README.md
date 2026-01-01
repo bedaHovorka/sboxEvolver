@@ -99,7 +99,7 @@ docker-compose build text   # Thesis PDF only
 
 ```bash
 cd prog
-python experiments.py 1
+python src/main/python/experiments.py 1
 ```
 
 **Available experiments:**
@@ -110,7 +110,7 @@ python experiments.py 1
 - `5` - Evolution of larger S-boxes (6x6, 8x8)
 - `6` - Symbolic regression with CGP
 
-**Output:** Creates `./results<YYYYMMDDHHMMSS>/` directory with:
+**Output:** Creates `./results<YYYYMMDDHHMMSS>/` directory (in `prog/`) with:
 - Statistical tables (LaTeX format)
 - Box plot visualizations (EPS format)
 - Serialized result data (pickle files)
@@ -210,32 +210,38 @@ The Makefile orchestrates a multi-step build:
 
 ```
 sboxEvolver/
-├── prog/                          # Source code
-│   ├── Dockerfile                # Multi-stage C++ build
-│   ├── evolution.py              # Python wrapper (ctypes interface)
-│   ├── experiments.py            # 6 experimental scenarios
-│   ├── main.cpp                  # C++ core and algorithm implementations
-│   ├── cgp.cpp/h                 # Cartesian Genetic Programming
-│   ├── softwareSbox.cpp/h        # Optimized software S-box implementation
-│   ├── eda.cpp/h                 # Estimation of Distribution Algorithms
-│   ├── criterions.cpp/h          # Cryptographic fitness functions
-│   ├── multicriterial.cpp/h      # VEGA and SPEA implementations
-│   ├── boxes.h                   # S-box lookup tables
-│   └── makefile                  # Build configuration
-├── text/                          # LaTeX thesis document
-│   ├── Dockerfile                # LaTeX build with Czech tools
-│   ├── diplomka.utf8.tex         # Main thesis file
-│   ├── *.utf8.tex                # Thesis chapters
-│   └── img/                      # Figures and diagrams
-├── artifacts/                     # Docker build outputs (gitignored)
+├── prog/                               # Source code
+│   ├── Dockerfile                      # Multi-stage C++ build
+│   ├── makefile                        # Build configuration
+│   └── src/main/                       # Source files (reorganized)
+│       ├── cpp/                        # C++ implementation
+│       │   ├── main.cpp                # C++ core and algorithm implementations
+│       │   ├── main.h                  # Main header
+│       │   ├── common.h                # Common definitions
+│       │   ├── cgp.cpp/h               # Cartesian Genetic Programming
+│       │   ├── softwareSbox.cpp/h      # Optimized software S-box implementation
+│       │   ├── eda.cpp/h               # Estimation of Distribution Algorithms
+│       │   ├── criterions.cpp/h        # Cryptographic fitness functions
+│       │   ├── multicriterial.cpp/h    # VEGA and SPEA implementations
+│       │   ├── boxes.h                 # S-box lookup tables
+│       │   └── combination.h           # Combinatorial utilities
+│       └── python/                     # Python interface
+│           ├── evolution.py            # Python wrapper (ctypes interface)
+│           └── experiments.py          # 6 experimental scenarios
+├── text/                               # LaTeX thesis document
+│   ├── Dockerfile                      # LaTeX build with Czech tools
+│   ├── diplomka.utf8.tex               # Main thesis file
+│   ├── *.utf8.tex                      # Thesis chapters
+│   └── img/                            # Figures and diagrams
+├── artifacts/                          # Docker build outputs (gitignored)
 │   ├── prog/
-│   │   └── libsboxevolution.so  # Generated C++ shared library
+│   │   └── libsboxevolution.so        # Generated C++ shared library
 │   └── text/
-│       └── diplomka.pdf         # Generated thesis PDF
-├── outputs/                       # Historical experiment results
-├── docker-compose.yml             # Build orchestration
-├── galib247bh100329.tar.bz2      # GAlib 2.4.7 library
-└── DIPxhovor07final.pdf          # Final thesis PDF (Czech)
+│       └── diplomka.pdf               # Generated thesis PDF
+├── outputs/                            # Historical experiment results
+├── docker-compose.yml                  # Build orchestration
+├── galib247bh100329.tar.bz2           # GAlib 2.4.7 library
+└── DIPxhovor07final.pdf               # Final thesis PDF (Czech)
 ```
 
 ---

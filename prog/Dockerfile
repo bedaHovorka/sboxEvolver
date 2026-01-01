@@ -72,7 +72,8 @@ WORKDIR /build/sboxEvolver
 COPY --from=galib-builder /build/galib247 /build/galib247
 
 # Copy source files from prog directory
-COPY prog/*.cpp prog/*.h prog/makefile /build/sboxEvolver/prog/
+COPY prog/src/main/cpp/ /build/sboxEvolver/prog/src/main/cpp/
+COPY prog/makefile /build/sboxEvolver/prog/
 
 WORKDIR /build/sboxEvolver/prog
 
@@ -88,10 +89,10 @@ RUN sed -i 's|CXX = g++-4.4|CXX = g++|g' makefile && \
     sed -i 's|-L../galib247/ga|-L../../galib247/ga|g' makefile
 
 # Patch project's template code for modern C++ (same issue as GAlib)
-RUN sed -i 's/\tinitializer(/\tthis->initializer(/g' boxes.h && \
-    sed -i 's/\tmutator(/\tthis->mutator(/g' boxes.h && \
-    sed -i 's/\tcomparator(/\tthis->comparator(/g' boxes.h && \
-    sed -i 's/\tcrossover(/\tthis->crossover(/g' boxes.h
+RUN sed -i 's/\tinitializer(/\tthis->initializer(/g' src/main/cpp/boxes.h && \
+    sed -i 's/\tmutator(/\tthis->mutator(/g' src/main/cpp/boxes.h && \
+    sed -i 's/\tcomparator(/\tthis->comparator(/g' src/main/cpp/boxes.h && \
+    sed -i 's/\tcrossover(/\tthis->crossover(/g' src/main/cpp/boxes.h
 
 # Build the shared library
 RUN make
@@ -122,7 +123,7 @@ WORKDIR /app
 COPY --from=sbox-builder /build/sboxEvolver/prog/libsboxevolution.so /app/
 
 # Copy Python wrapper and experiments
-COPY prog/evolution.py prog/experiments.py /app/
+COPY prog/src/main/python/ /app/
 
 # Create output directory
 RUN mkdir -p /app/outputs

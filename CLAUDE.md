@@ -12,35 +12,40 @@ This is a Master's thesis project from Brno University of Technology, Faculty of
 
 ```
 sboxEvolver/
-├── prog/                      # Source code (Python + C++)
-│   ├── Dockerfile            # Multi-stage build container
-│   ├── evolution.py          # Python wrapper for evolutionary algorithms
-│   ├── experiments.py        # Experimental framework with 6 experiments
-│   ├── main.cpp              # C++ core implementation (GAlib integration)
-│   ├── cgp.cpp/h             # Cartesian Genetic Programming representation
-│   ├── softwareSbox.cpp/h    # Software implementation of S-boxes
-│   ├── eda.cpp/h             # Estimation of Distribution Algorithms
-│   ├── criterions.cpp/h      # Cryptographic fitness functions
-│   ├── multicriterial.cpp/h  # VEGA and SPEA algorithms
-│   ├── boxes.h               # S-box lookup tables
-│   ├── combination.h         # Combinatorial utilities
-│   └── makefile              # Build configuration
-├── text/                      # LaTeX thesis document
-│   ├── Dockerfile            # LaTeX build container
-│   ├── *.utf8.tex            # Thesis chapters
-│   ├── diplomka.bib          # Bibliography
-│   ├── img/                  # Figures and diagrams
-│   └── Makefile              # LaTeX build
-├── artifacts/                 # Build outputs (gitignored)
+├── prog/                           # Source code (Python + C++)
+│   ├── Dockerfile                  # Multi-stage build container
+│   ├── makefile                    # Build configuration
+│   └── src/main/                   # Source files (reorganized)
+│       ├── cpp/                    # C++ implementation
+│       │   ├── main.cpp            # C++ core implementation (GAlib integration)
+│       │   ├── main.h              # Main header
+│       │   ├── common.h            # Common definitions
+│       │   ├── cgp.cpp/h           # Cartesian Genetic Programming representation
+│       │   ├── softwareSbox.cpp/h  # Software implementation of S-boxes
+│       │   ├── eda.cpp/h           # Estimation of Distribution Algorithms
+│       │   ├── criterions.cpp/h    # Cryptographic fitness functions
+│       │   ├── multicriterial.cpp/h # VEGA and SPEA algorithms
+│       │   ├── boxes.h             # S-box lookup tables
+│       │   └── combination.h       # Combinatorial utilities
+│       └── python/                 # Python interface
+│           ├── evolution.py        # Python wrapper for evolutionary algorithms
+│           └── experiments.py      # Experimental framework with 6 experiments
+├── text/                           # LaTeX thesis document
+│   ├── Dockerfile                  # LaTeX build container
+│   ├── *.utf8.tex                  # Thesis chapters
+│   ├── diplomka.bib                # Bibliography
+│   ├── img/                        # Figures and diagrams
+│   └── Makefile                    # LaTeX build
+├── artifacts/                      # Build outputs (gitignored)
 │   ├── prog/
-│   │   └── libsboxevolution.so  # Generated C++ shared library
+│   │   └── libsboxevolution.so    # Generated C++ shared library
 │   └── text/
-│       └── diplomka.pdf         # Generated thesis PDF
-├── outputs/                   # Experiment results and logs
-├── docker-compose.yml         # Docker orchestration
-├── galib247bh100329.tar.bz2  # GAlib library (genetic algorithm framework)
-├── DIPxhovor07final.pdf      # Final thesis PDF
-└── README.md                 # This file
+│       └── diplomka.pdf           # Generated thesis PDF
+├── outputs/                        # Experiment results and logs
+├── docker-compose.yml              # Docker orchestration
+├── galib247bh100329.tar.bz2       # GAlib library (genetic algorithm framework)
+├── DIPxhovor07final.pdf           # Final thesis PDF
+└── README.md                      # Project documentation
 
 ```
 
@@ -50,8 +55,8 @@ sboxEvolver/
 
 The project uses a **two-tier architecture**:
 
-1. **C++ Core** (`prog/*.cpp/h`): High-performance evolutionary algorithms using GAlib
-2. **Python Interface** (`prog/evolution.py`): Wraps C++ via ctypes for easy experimentation
+1. **C++ Core** (`prog/src/main/cpp/*.cpp/h`): High-performance evolutionary algorithms using GAlib
+2. **Python Interface** (`prog/src/main/python/evolution.py`): Wraps C++ via ctypes for easy experimentation
 
 ### Key Components
 
@@ -175,19 +180,19 @@ The `experiments.py` file contains 6 numbered experiments from the thesis:
 cd prog/
 
 # Run specific experiment (1-6)
-python experiments.py <experiment_number>
+python src/main/python/experiments.py <experiment_number>
 
 # Examples:
-python experiments.py 1  # Mutation/crossover parameter tuning
-python experiments.py 2  # GA vs. EDA comparison
-python experiments.py 3  # ParallelRandom parameter search
-python experiments.py 4  # VEGA/SPEA parameter tuning
-python experiments.py 5  # Larger S-boxes (6x6, 8x8)
-python experiments.py 6  # Symbolic regression
+python src/main/python/experiments.py 1  # Mutation/crossover parameter tuning
+python src/main/python/experiments.py 2  # GA vs. EDA comparison
+python src/main/python/experiments.py 3  # ParallelRandom parameter search
+python src/main/python/experiments.py 4  # VEGA/SPEA parameter tuning
+python src/main/python/experiments.py 5  # Larger S-boxes (6x6, 8x8)
+python src/main/python/experiments.py 6  # Symbolic regression
 ```
 
 **Output:**
-- Creates timestamped directory: `./results<YYYYMMDDHHMMSS>/`
+- Creates timestamped directory: `./results<YYYYMMDDHHMMSS>/` (in `prog/` directory)
 - Generates EPS plots and LaTeX tables
 - Saves serialized results (`.picle` files)
 
@@ -408,17 +413,17 @@ stats.bestPopulationOutputs          # S-box lookup tables [popSize, 2^inputs]
 
 ### Modifying Fitness Functions
 
-1. Edit `prog/criterions.cpp` to add/modify criterion logic
-2. Add enum to `CriterionFunction` in `evolution.py`
+1. Edit `prog/src/main/cpp/criterions.cpp` to add/modify criterion logic
+2. Add enum to `CriterionFunction` in `prog/src/main/python/evolution.py`
 3. Update `CRITERIONS_COUNT` constant
-4. Rebuild C++ library: `make clean && make`
+4. Rebuild C++ library: `cd prog && make clean && make`
 
 ### Adding New Genome Representation
 
 1. Implement new genome class inheriting from `GAGenome` in C++
-2. Add factory function in `main.cpp`
+2. Add factory function in `prog/src/main/cpp/main.cpp`
 3. Expose via `createGenome()` C interface
-4. Add enum to `ChromozomeType` in `evolution.py`
+4. Add enum to `ChromozomeType` in `prog/src/main/python/evolution.py`
 
 ## Important Notes
 
