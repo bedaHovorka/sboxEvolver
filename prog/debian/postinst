@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+
+# Update shared library cache after installation
+if [ "$1" = "configure" ]; then
+    ldconfig
+fi
+
+exit 0

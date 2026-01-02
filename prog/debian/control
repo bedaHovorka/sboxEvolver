@@ -1,0 +1,15 @@
+Package: libsboxevolution
+Version: 2.0.0
+Section: libs
+Priority: optional
+Architecture: amd64
+Depends: libgomp1, libc6 (>= 2.28)
+Maintainer: Bedrich Hovorka <bedrich.hovorka@gmail.com>
+Description: S-box evolution library for cryptographic research
+ Shared library providing evolutionary algorithm implementations for
+ designing and optimizing cryptographic S-boxes (substitution boxes).
+ .
+ This library is part of the sboxEvolver research project from Brno
+ University of Technology, implementing genetic algorithms, EDA, VEGA,
+ SPEA, and CGP for multi-objective S-box optimization.
+Homepage: https://github.com/bedrech/sboxEvolver

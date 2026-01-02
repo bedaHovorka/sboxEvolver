@@ -15,6 +15,7 @@ This is a Master's thesis project from Brno University of Technology, Faculty of
   - Updated dependencies (numpy 1.26.4, matplotlib 3.9+, pytest 8.3+)
   - Environment-based library loading via SBOX_LIBRARY_PATH
   - Optimized Docker multi-stage build (removed build tools from runtime)
+  - **Debian Package Distribution**: Docker build now creates `libsboxevolution_2.0.0_amd64.deb` package that installs library to `/usr/lib/` following FHS standards
   - All unit tests pass successfully with pytest 8.3+
   - **Known Limitation**: Two Python C API functions (`simpleReportSearching()` and `bestPopulationStringsSearching()`) are disabled due to architectural constraints with ctypes-loaded libraries. Use `statistics().bestPopulationOutputs` for S-box data instead.
 - Restructured with improved organization, Docker support, unit tests, and enhanced documentation while preserving the original research implementation
@@ -54,7 +55,8 @@ sboxEvolver/
 │   └── Makefile                    # LaTeX build
 ├── artifacts/                      # Build outputs (gitignored)
 │   ├── prog/
-│   │   └── libsboxevolution.so    # Generated C++ shared library
+│   │   ├── libsboxevolution.so           # Generated C++ shared library (for native builds)
+│   │   └── libsboxevolution_2.0.0_amd64.deb  # Debian package (for system installation)
 │   └── text/
 │       └── diplomka.pdf           # Generated thesis PDF
 ├── outputs/                        # Experiment results and logs
@@ -137,16 +139,17 @@ docker-compose build prog   # Builds libsboxevolution.so
 docker-compose build text   # Builds diplomka.pdf
 
 # Artifacts appear in ./artifacts/
-# - artifacts/prog/libsboxevolution.so
+# - artifacts/prog/libsboxevolution.so           (raw library for native builds)
+# - artifacts/prog/libsboxevolution_2.0.0_amd64.deb (Debian package for system installation)
 # - artifacts/text/diplomka.pdf
 ```
 
 **Docker Architecture:**
 - **prog service**: Multi-stage optimized build
   - Stage 1: Build GAlib 2.4.7
-  - Stage 2: Build libsboxevolution.so (C++ library)
+  - Stage 2: Build libsboxevolution.so (C++ library) and create Debian package
   - Stage 3: Build Python 3.13 dependencies (numpy compilation with gcc/g++)
-  - Stage 4: Clean Python 3.13 runtime base (libgomp1 only, no build tools)
+  - Stage 4: Clean Python 3.13 runtime base (installs Debian package to /usr/lib/, no build tools)
   - Stage 5: Run pytest 8.3+ tests
   - Stage 6: Production runtime (copies tested artifacts)
 - **text service**: Single-stage LaTeX compilation with Czech language tools
@@ -160,6 +163,36 @@ docker-compose build text   # Builds diplomka.pdf
 - Python 3.13 support with modern pytest 8.3+
 - Build tools (gcc/g++) only in build stages, not in runtime (reduces image size ~200MB)
 - Resolves all platform-specific limitations mentioned in this document
+
+**Debian Package:**
+
+The Docker build creates a proper Debian package (`libsboxevolution_2.0.0_amd64.deb`) that can be installed on Debian-based systems:
+
+```bash
+# After Docker build, the package is available in artifacts/
+ls artifacts/prog/libsboxevolution_2.0.0_amd64.deb
+
+# Install on Debian/Ubuntu system
+sudo dpkg -i artifacts/prog/libsboxevolution_2.0.0_amd64.deb
+
+# Or install dependencies automatically
+sudo apt-get install -y libgomp1
+sudo apt-get install ./artifacts/prog/libsboxevolution_2.0.0_amd64.deb
+
+# Verify installation
+dpkg -l | grep libsboxevolution
+ldconfig -p | grep libsboxevolution  # Should show /usr/lib/libsboxevolution.so
+
+# Uninstall
+sudo dpkg -r libsboxevolution
+```
+
+**Package Details:**
+- **Location**: Library installs to `/usr/lib/libsboxevolution.so` (standard FHS path)
+- **Dependencies**: libgomp1 (OpenMP), libc6 (>= 2.28)
+- **Architecture**: amd64 (x86_64) only
+- **Debug symbols**: Included (useful for debugging with gdb)
+- **Library loading**: Python wrapper (`evolution.py`) will automatically find the library via system paths
 
 ### Native Build (Manual)
 

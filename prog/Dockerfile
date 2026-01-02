@@ -95,6 +95,36 @@ RUN sed -i 's/\tinitializer(/\tthis->initializer(/g' src/main/cpp/boxes.h && \
 RUN make
 
 # ============================================
+# Create Debian package for libsboxevolution.so
+# ============================================
+
+# Create package directory structure
+RUN mkdir -p /build/sboxEvolver/prog/debian-package/DEBIAN && \
+    mkdir -p /build/sboxEvolver/prog/debian-package/usr/lib
+
+# Copy compiled library to package directory
+RUN cp /build/sboxEvolver/prog/libsboxevolution.so \
+       /build/sboxEvolver/prog/debian-package/usr/lib/
+
+# Copy Debian package metadata files
+COPY prog/debian/control /build/sboxEvolver/prog/debian-package/DEBIAN/control
+COPY prog/debian/postinst /build/sboxEvolver/prog/debian-package/DEBIAN/postinst
+
+# Make postinst executable
+RUN chmod 755 /build/sboxEvolver/prog/debian-package/DEBIAN/postinst
+
+# Build Debian package
+RUN dpkg-deb --build /build/sboxEvolver/prog/debian-package \
+              /build/libsboxevolution_2.0.0_amd64.deb
+
+# Verify package was created and show its info
+RUN ls -lh /build/libsboxevolution_2.0.0_amd64.deb && \
+    echo "=== Package Info ===" && \
+    dpkg-deb --info /build/libsboxevolution_2.0.0_amd64.deb && \
+    echo "=== Package Contents ===" && \
+    dpkg-deb --contents /build/libsboxevolution_2.0.0_amd64.deb
+
+# ============================================
 # Stage 3: Build Python dependencies (with numpy compilation)
 # ============================================
 FROM python:3.13-slim AS deps-builder
@@ -120,10 +150,21 @@ RUN uv sync --no-dev
 # ============================================
 FROM python:3.13-slim AS python-base
 
-# Install ONLY runtime dependencies (no gcc/g++)
+# Copy .deb package from sbox-builder stage
+COPY --from=sbox-builder /build/libsboxevolution_2.0.0_amd64.deb /tmp/
+
+# Install runtime dependencies AND the library package
+# The .deb package will install libsboxevolution.so to /usr/lib/
 RUN apt-get update && apt-get install -y \
     libgomp1 \
-    && rm -rf /var/lib/apt/lists/*
+    /tmp/libsboxevolution_2.0.0_amd64.deb \
+    && rm -rf /var/lib/apt/lists/* /tmp/libsboxevolution_2.0.0_amd64.deb
+
+# Verify library is installed in system path
+RUN echo "=== Verifying library installation ===" && \
+    ls -l /usr/lib/libsboxevolution.so && \
+    ldconfig -p | grep libsboxevolution && \
+    echo "✓ Library successfully installed to /usr/lib/"
 
 # Install uv package manager
 RUN pip install --no-cache-dir uv
@@ -168,11 +209,19 @@ FROM python-base AS runtime
 
 WORKDIR /app
 
-# Copy compiled library from tester stage (ensures tests ran successfully)
-COPY --from=tester /build/sboxEvolver/prog/libsboxevolution.so /app/
+# Copy Debian package from sbox-builder for host extraction
+COPY --from=sbox-builder /build/libsboxevolution_2.0.0_amd64.deb /artifacts/
 
-# Copy compiled library to artifacts directory for extraction
+# Copy compiled library from tester stage for host extraction
+# (Ensures tests passed before extraction - runtime depends on tester)
 COPY --from=tester /build/sboxEvolver/prog/libsboxevolution.so /artifacts/
+
+# Note: Library is already installed in /usr/lib/ via the .deb package in python-base
+# Verify library is accessible via system path
+RUN echo "=== Verifying runtime library access ===" && \
+    ldconfig -p | grep libsboxevolution && \
+    ls -l /usr/lib/libsboxevolution.so && \
+    echo "✓ Library accessible at /usr/lib/libsboxevolution.so"
 
 # Copy Python wrapper and experiments
 COPY prog/src/main/python/ /app/
