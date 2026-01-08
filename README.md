@@ -679,6 +679,7 @@ This repository has been updated from the original 2010 version:
 - **Docker Support**: Added multi-stage builds for reproducible compilation
 - **Unit Testing**: Implemented Python unit tests for core components
 - **Documentation**: Enhanced README and added CLAUDE.md for AI assistant guidance
+- **GitHub Copilot Instructions**: Added `.github/copilot-instructions.md` for AI-assisted development
 - **Build Artifacts**: Separated generated files into `artifacts/` directory
 
 Original thesis and results remain unchanged. See git history for restructuring details.
