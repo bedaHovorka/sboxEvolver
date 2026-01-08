@@ -209,7 +209,7 @@ from evolution import *
 genome = Genome(ChromozomeType.PERMUTATION, CriterionFunction.DP_MAX, True, 4, 4)
 
 # Create search
-search = Searching("Ga", genome, popSize=1000, nGen=50, pMut=0.1, pCross=0.9)
+search = Searching("Ga", genome, 1000, 50, 0.1, 0.9, False)
 
 # Run evolution
 search.simpleEvolve(TerminationCondition.GENERATION)
@@ -226,7 +226,7 @@ search.close()
 
 ```python
 # Create multiple independent runs
-searches = [Searching("Ga", genome, 1000, 50, 0.1, 0.9) for _ in range(40)]
+searches = [Searching("Ga", genome, 1000, 50, 0.1, 0.9, False) for _ in range(40)]
 
 # Execute in parallel (uses OpenMP in C++)
 Searching.parallelSearching(searches, TerminationCondition.GENERATION)
