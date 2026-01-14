@@ -85,7 +85,6 @@ def test_genome_automatic_cleanup():
     """Test automatic cleanup of Genome via __del__."""
     genome = Genome(ChromozomeType.PERMUTATION, CriterionFunction.LP_MAX, True, 4, 4)
     assert_that(genome.delegat.ptr).is_not_none()
-    ptr_value = genome.delegat.ptr
     
     # Delete the genome - should trigger __del__ which calls close()
     del genome
@@ -113,4 +112,22 @@ def test_genome_multiple_creation_loop():
     
     # If we get here without crash or excessive memory use, the fix works
     assert True
+
+
+def test_genome_use_after_close():
+    """Test that using a genome after close() is handled safely."""
+    genome = Genome(ChromozomeType.PERMUTATION, CriterionFunction.LP_MAX, True, 4, 4)
+    assert_that(genome.delegat.ptr).is_not_none()
+    
+    # Close the genome
+    genome.close()
+    
+    # After close, the pointer should be None
+    assert_that(genome.delegat.ptr).is_none()
+    assert_that(genome._closed).is_true()
+    
+    # Double close should be safe (idempotent)
+    genome.close()
+    assert_that(genome._closed).is_true()
+
 
