@@ -7,6 +7,7 @@
 #      Design of S-Boxes Using Genetic Algorithms
 #
 #      Dockerization: 2025
+#      Updated: January 2025 - Debian Bookworm base for GitHub Actions compatibility
 #
 #      Multi-stage build for libsboxevolution.so
 #
@@ -14,12 +15,7 @@
 # ============================================
 # Stage 1: Build GAlib 2.4.7
 # ============================================
-FROM debian:buster-slim AS galib-builder
-
-# Debian Buster is archived - update sources to use archive.debian.org
-RUN sed -i 's|http://deb.debian.org|http://archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i 's|http://security.debian.org|http://archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i '/buster-updates/d' /etc/apt/sources.list
+FROM debian:bookworm-slim AS galib-builder
 
 # Install build dependencies for GAlib
 RUN apt-get update && apt-get install -y \
