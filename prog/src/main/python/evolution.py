@@ -260,6 +260,17 @@ class Genome:
         self.type = type
         self.criterionFunction = criterionFunction
         self.args = args
+        self._closed = False
+
+    def close(self):
+        """Explicitly free the genome memory allocated in C++."""
+        if not self._closed and self.delegat.ptr:
+            libsboxevolution.closeGenome(self.delegat)
+            self._closed = True
+
+    def __del__(self):
+        """Automatically cleanup genome on garbage collection."""
+        self.close()
 
     def __str__(self):
         return self.repr
@@ -299,6 +310,17 @@ class SymbolicalRegresionGenome(Genome):
         self.type = type
         self.expectedOutputs = expectedOutputs
         self.args = args
+        self._closed = False
+
+    def close(self):
+        """Explicitly free the genome memory allocated in C++."""
+        if not self._closed and self.delegat.ptr:
+            libsboxevolution.closeGenome(self.delegat)
+            self._closed = True
+
+    def __del__(self):
+        """Automatically cleanup genome on garbage collection."""
+        self.close()
 
     def __getstate__(self):
         """Return state values to be pickled."""

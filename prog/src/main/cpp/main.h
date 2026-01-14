@@ -76,6 +76,7 @@ extern "C" { // je treba ceckova deklarace...
 
 	void processSearching(TSearching, TerminatorCondition, uint seed);
 	void closeSearching(TSearching);
+	void closeGenome(TGenome);
 	PyObject* simpleReportSearching(TSearching searching);
 	PyObject* bestPopulationStringsSearching(TSearching);
 	void setMiniMaxiSearching(TSearching, bool minimize);

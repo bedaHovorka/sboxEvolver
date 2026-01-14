@@ -307,6 +307,10 @@ void closeSearching(TSearching searching) {
 	freeAndNULL(searching.algorithm);
 }
 
+void closeGenome(TGenome genome) {
+	freeAndNULL(genome.ptr);
+}
+
 void setMiniMaxiSearching(TSearching searching, bool minimize) {
 	searching.algorithm->minimaxi(minimize ? GAGeneticAlgorithm::MINIMIZE : GAGeneticAlgorithm::MAXIMIZE);
 }
