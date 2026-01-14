@@ -90,6 +90,10 @@ class TSearching(ctypes.Structure):
 class TGenome(ctypes.Structure):
     _fields_ = [("ptr", ctypes.c_void_p)]
 
+# Configure closeGenome function signature for type safety
+libsboxevolution.closeGenome.argtypes = [TGenome]
+libsboxevolution.closeGenome.restype = None
+
 # zastupuje Ceckovu strukturu, pomoci ktere se predavaji statistiky behu
 class TStatistics(ctypes.Structure):
     _fields_ = [
@@ -260,6 +264,19 @@ class Genome:
         self.type = type
         self.criterionFunction = criterionFunction
         self.args = args
+        self._closed = False
+
+    def close(self):
+        """Explicitly free the genome memory allocated in C++."""
+        if not self._closed and self.delegat.ptr:
+            libsboxevolution.closeGenome(self.delegat)
+            self.delegat.ptr = None  # Prevent use-after-free by nullifying the pointer
+            self._closed = True
+
+    def __del__(self):
+        """Automatically cleanup genome on garbage collection."""
+        if hasattr(self, 'delegat'):
+            self.close()
 
     def __str__(self):
         return self.repr
@@ -299,6 +316,19 @@ class SymbolicalRegresionGenome(Genome):
         self.type = type
         self.expectedOutputs = expectedOutputs
         self.args = args
+        self._closed = False
+
+    def close(self):
+        """Explicitly free the genome memory allocated in C++."""
+        if not self._closed and self.delegat.ptr:
+            libsboxevolution.closeGenome(self.delegat)
+            self.delegat.ptr = None  # Prevent use-after-free by nullifying the pointer
+            self._closed = True
+
+    def __del__(self):
+        """Automatically cleanup genome on garbage collection."""
+        if hasattr(self, 'delegat'):
+            self.close()
 
     def __getstate__(self):
         """Return state values to be pickled."""
