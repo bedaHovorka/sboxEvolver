@@ -61,6 +61,9 @@ outputs/
 results*/
 prog/results*/
 
+# Claude Code worktrees
+.claude/worktrees/
+
 # IDE and editor files
 .idea/
 .vscode/
