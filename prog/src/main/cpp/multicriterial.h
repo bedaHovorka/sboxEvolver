@@ -18,6 +18,7 @@
 #include "common.h"
 #include "criterions.h"
 #include "boxes.h"
+#include <cassert>
 
 class MulticriterialGeneticAlgorithm : public SboxSearchAlgorithmBase {
 private:
@@ -35,7 +36,7 @@ protected:
 	}
 
 	virtual const GAPopulation& population(const GAPopulation&) {
-		assert(false);
+		throw std::runtime_error("MulticriterialGeneticAlgorithm::population not implemented");
 	}
 
 	inline uint getBestGenomes() {

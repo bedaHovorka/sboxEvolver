@@ -213,13 +213,13 @@ int CgpGenome::outputsCount() const {
 }
 
 float CgpGenome::Evaluate(GAGenome & g){
-	assert(false);
+	throw std::runtime_error("CgpGenome::Evaluate should not be called directly");
 	CgpGenome & genome = (CgpGenome &) g;
 	return genome.param_rows*genome.param_columns + genome.param_outputs - genome.blocksUsed();
 }
 
 int CgpGenome::Cross(const GAGenome &, const GAGenome&, GAGenome*, GAGenome*){
-	assert(false);
+	throw std::runtime_error("Crossover not supported for CgpGenome");
 	return 0;
 }
 
@@ -250,7 +250,7 @@ SboxSearchAlgorithmBase::SboxSearchAlgorithmBase(const GAGenome &g) : GASimpleGA
 			for (int k=minidx; k < maxidx; k++) //vlozeni indexu moznych vstupu ze sousednich bloku vlevo
 				columnValues.push_back(k);
 
-			assert(columnValues.size() == count);
+			check(columnValues.size() == count, "Column values count mismatch in CGP initialization");
 			c_val.push_back(columnValues);
 		}
 	}

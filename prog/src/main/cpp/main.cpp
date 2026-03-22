@@ -16,10 +16,6 @@
  */
 #include "main.h"
 
-inline void stopOnError(std::string message) {
-	throw std::runtime_error(message);
-}
-
 void setParameters(SboxSearchAlgorithmBase & ga, const int popsize, const int ngen, const float pmut, const float pcross,
 		const int bestGenomes)
 {
@@ -130,7 +126,7 @@ TSearching newHeuristicSearching(TGenome g, uint maxStates, uint ngen) {
 inline const CriterionsSet createCriterionsSet(const int criterionsCount, const CriterionsFitness *criterions) {
 	CriterionsSet criterionsSet;
 	criterionsSet.insert(criterions, criterions+criterionsCount);
-	assert (criterionsSet.size() <= uint(criterionsCount) && criterionsCount > 1);
+	check(criterionsSet.size() == uint(criterionsCount) && criterionsCount > 1, "Invalid criterions set size");
 	return criterionsSet;
 }
 

@@ -47,14 +47,13 @@ RUN make
 # ============================================
 # Stage 2: Build libsboxevolution.so
 # ============================================
-FROM python:3.13-slim AS sbox-builder
+FROM python:3.14-slim AS sbox-builder
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
     g++ \
     make \
     libgomp1 \
-    python3.13-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build/sboxEvolver
@@ -71,16 +70,14 @@ WORKDIR /build/sboxEvolver/prog
 # Patch Makefile for modern environment:
 # 1. Change g++-4.4 to g++ (use default compiler)
 # 2. Change -march=k8-sse3 to -march=native (optimize for build machine)
-# 3. Change Python 2.5 include path to Python 3.13
-# 4. Fix GAlib path to match Docker directory structure
-# 5. Add Python 3.13 library linkage for Python C API functions
+# 3. Fix GAlib path to match Docker directory structure
+# 4. Add Python 3.14 library linkage for Python C API functions
 RUN sed -i 's|CXX = g++-4.4|CXX = g++|g' makefile && \
     sed -i 's|-std=gnu++98|-std=gnu++11|g' makefile && \
     sed -i 's|-march=k8-sse3|-march=native|g' makefile && \
-    sed -i 's|-I/usr/local/include/python2.5|-I/usr/include/python3.13|g' makefile && \
     sed -i 's|-I../galib247/|-I../../galib247|g' makefile && \
     sed -i 's|-L../galib247/ga|-L../../galib247/ga|g' makefile && \
-    sed -i 's|CXX_LIBS=-lga -lm|CXX_LIBS=-lga -lm -lpython3.13|g' makefile
+    sed -i 's|CXX_LIBS=-lga -lm|CXX_LIBS=-lga -lm -lpython3.14|g' makefile
 
 # Patch project's template code for modern C++ (same issue as GAlib)
 RUN sed -i 's/\tinitializer(/\tthis->initializer(/g' src/main/cpp/boxes.h && \
@@ -124,7 +121,7 @@ RUN ls -lh /build/libsboxevolution_2.0.0_amd64.deb && \
 # ============================================
 # Stage 3: Build Python dependencies (with numpy compilation)
 # ============================================
-FROM python:3.13-slim AS deps-builder
+FROM python:3.14-slim AS deps-builder
 
 # Install build dependencies temporarily for numpy compilation
 RUN apt-get update && apt-get install -y \
@@ -145,7 +142,7 @@ RUN uv sync --no-dev
 # ============================================
 # Stage 4: Common Python runtime (without build tools)
 # ============================================
-FROM python:3.13-slim AS python-base
+FROM python:3.14-slim AS python-base
 
 # Copy .deb package from sbox-builder stage
 COPY --from=sbox-builder /build/libsboxevolution_2.0.0_amd64.deb /tmp/

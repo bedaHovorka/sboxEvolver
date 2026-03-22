@@ -18,7 +18,8 @@
 #define SBOXEVOLUTION_COMMON
 
 #include <ga/garandom.h>
-#include <cassert>
+#include <stdexcept>
+#include <string>
 
 extern "C" {
 	#include <Python.h>
@@ -58,6 +59,16 @@ inline int binaryDot(int x, int y) {
 inline PyObject* createPythonString(const std::string & str) {
 	// Python 3 uses PyUnicode for string objects (PyString removed)
 	return PyUnicode_FromStringAndSize(str.c_str(), str.size());
+}
+
+inline void stopOnError(const std::string &message) {
+	throw std::runtime_error(message);
+}
+
+inline void check(bool x, const std::string &message) {
+	if (!x) {
+		stopOnError(message);
+	}
 }
 
 template <typename PtrType > inline void freeAndNULL(PtrType *ptr) {

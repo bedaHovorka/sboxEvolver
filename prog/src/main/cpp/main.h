@@ -136,12 +136,5 @@ public:
 	virtual void evolve(unsigned int seed=0);
 };
 
-inline void stopOnError(std::string message);
-
-inline void check(bool x, std::string message) {
-	if (!x) {
-		stopOnError(message);
-	}
-};
 
 #endif /* MAIN_H_ */

@@ -88,8 +88,7 @@ GAGenome::Evaluator criterionsEnumToFunction(CriterionsFitness fitness) {
 		case NONE_CRITERION:
 			return noneCriterionObjective;
 		default:
-			assert(false);
-			break;
+			throw std::runtime_error("Unknown criterion fitness value");
 	}
 	return NULL;
 }

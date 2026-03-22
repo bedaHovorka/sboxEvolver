@@ -97,10 +97,10 @@ inline bool MulticriterialGeneticAlgorithm::is1dominatingOver2(GAGenome &g1, GAG
 	Sbox &box2 = dynamic_cast<Sbox&>(g2);
 	const MultievaluationValues &values1 = box1.multievaluate(criterions);
 	const MultievaluationValues &values2 = box2.multievaluate(criterions);
-	assert(values1.size() == values2.size());
+	check(values1.size() == values2.size(), "Multievaluation value sizes mismatch");
 	bool isOneGreater = false;
 	for (MultievaluationValues::const_iterator i1 = values1.begin() , i2 = values2.begin(); i1 != values1.end() && i2 != values2.end(); i1++, i2++) {
-		assert(i1->first == i2->first);
+		check(i1->first == i2->first, "Multievaluation keys mismatch");
 		double cmp = i1->second - i2->second;
 		if (cmp < 0) return false;
 		if (cmp > 0) isOneGreater = true;
@@ -109,7 +109,7 @@ inline bool MulticriterialGeneticAlgorithm::is1dominatingOver2(GAGenome &g1, GAG
 }
 
 inline void MulticriterialGeneticAlgorithm::computeNondominancePopulation(const GAPopulation &pop, GAPopulation &nondominance) {
-	assert(pop.size() > 0);
+	check(pop.size() > 0, "Population must not be empty for nondominance computation");
 	for (int i = 0; i < pop.size(); i++) {
 		GAGenome &g1 = pop.individual(i);
 		for (int j = 0; j <= nondominance.size(); j++) {
@@ -134,7 +134,7 @@ inline void MulticriterialGeneticAlgorithm::computeNondominancePopulation(const 
 inline double SpeaAlgorithm::distance(const MultievaluationValues &values1, const MultievaluationValues &values2) {
 	double sum = 0.0;
 	for (MultievaluationValues::const_iterator i1 = values1.begin() , i2 = values2.begin(); i1 != values1.end() && i2 != values2.end(); i1++, i2++) {
-		assert(i1->first == i2->first);
+		check(i1->first == i2->first, "Distance calculation key mismatch");
 		double diff = i1->second - i2->second;
 		sum += diff*diff;
 	}
@@ -208,7 +208,7 @@ inline void SpeaAlgorithm::clustering(GAPopulation* &elite, const uint limit) {
 	GAPopulation *tmp = new GAPopulation;
 	for (PairsForCluster::iterator i = pairsForCluster.begin(); i != pairsForCluster.end(); i++) {
 		Cluster *cluster = i->first;
-		assert(cluster->size() > 0);
+		check(cluster->size() > 0, "Cluster must not be empty");
 		Sbox *nearest = (*(i->first))[0];
 		if (cluster->size() > 1) {
 			MultievaluationValues center;

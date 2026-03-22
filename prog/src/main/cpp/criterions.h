@@ -17,6 +17,7 @@
 #ifndef CRITERIONS_H_
 #define CRITERIONS_H_
 
+#include <cassert>
 #include <climits>
 #include <set>
 #include <map>
@@ -85,7 +86,7 @@ inline bool sac(const int order, const int inputsCount, const int outputsCount, 
 		for (int i = 0; i < 1<<inputsCount; i++) helper.push_back(i);
 		return privateSac(inputsVector, helper, outputsCount, function);
 	}
-	assert(order > 0);
+	check(order > 0, "SAC order must be positive");
 
 	// pripravit (inputsCount-order)-tice a nad nimy spustit privateSac
 	intVector currentCombination(inputsVector.begin(), inputsVector.end()-order);
@@ -151,7 +152,9 @@ inline float bentScore(const int inputsCount, const int outputsCount, const intV
 		}
 	}
 	// bent boolean funkce by mela splnovat rad 0 SACu
+#ifndef NDEBUG
 	if (outputsCount == 1) assert(score < inputsCombinations || sac(0, inputsCount, outputsCount, function));
+#endif
 	return score;
 }
 
@@ -451,7 +454,7 @@ inline intVector polynomialDegrees(const intVector & polynomial) {
 //};
 
 inline int lagrangePolynomialDegree(const intVector & function, const int outputsCount) {
-	assert(false);
+	throw std::runtime_error("lagrangePolynomialDegree not implemented");
 //	const uint size = function.size(); assert(size == 1<<outputsCount);
 //	if (*std::max_element(function.begin(), function.end()) != size-1) {
 //		return 0;

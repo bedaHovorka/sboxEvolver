@@ -45,12 +45,12 @@ public:
 	virtual ~ContingentTable() {};
 
 	ContingentTable& operator=(const ContingentTable& orig){
-		assert(false);
+		throw std::runtime_error("ContingentTable assignment not supported");
 		return *this;
 	}
 
 	bool operator>(const ContingentTable<N> &other) const {
-		assert(tested && other.tested);
+		check(tested && other.tested, "Contingent tables must be tested before comparison");
 		return testResult > other.testResult;
 	};
 

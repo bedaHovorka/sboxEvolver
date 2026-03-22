@@ -80,7 +80,7 @@ public:
 	}
 
 	CgpGenome& operator=(const GAGenome& orig){
-		assert(false);
+		throw std::runtime_error("CgpGenome::operator= not implemented");
 		if(&orig != this) copy(orig);
 		return *this;
 	}
@@ -132,7 +132,7 @@ public:
 
 	inline int mutation();
 
-	virtual const SboxPtrVector neigboursInStateSpace() const {assert(false);}//cgp je special, zde netreba
+	virtual const SboxPtrVector neigboursInStateSpace() const { throw std::runtime_error("neigboursInStateSpace not implemented for CgpGenome"); }//cgp je special, zde netreba
 
 protected:
 	inline SboxSearchAlgorithmBase * algorithm() const {
