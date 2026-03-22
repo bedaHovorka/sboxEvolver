@@ -56,6 +56,18 @@ libsboxevolution = _load_sbox_library()
 libsboxevolution.simpleReportSearching.restype = ctypes.py_object
 libsboxevolution.bestPopulationStringsSearching.restype = ctypes.py_object
 
+# Configure error checking functions
+libsboxevolution.hasError.restype = ctypes.c_bool
+libsboxevolution.hasError.argtypes = []
+libsboxevolution.getLastError.restype = ctypes.c_char_p
+libsboxevolution.getLastError.argtypes = []
+
+def _check_sbox_error():
+    """Check for C++ errors after library calls and raise Python exception."""
+    if libsboxevolution.hasError():
+        msg = libsboxevolution.getLastError()
+        raise RuntimeError(f"sboxevolution error: {msg.decode('utf-8')}")
+
 # python/ceckove enumy
 class Enum(object):
     def __init__(self, enumerate, name, ordinal):
@@ -155,6 +167,7 @@ class Searching:
         #print hex(genome.delegat.ptr)
         func.restype = TSearching
         self.delegat = func(genome.delegat, *args)
+        _check_sbox_error()
         self.repr = '%s searching with population size: %d and generation count: %d\ngenome: %s\n%s' % (algorithm, self.popSize, nGen, genome, specificRepr)
 
         self.algorithm = algorithm
@@ -164,7 +177,11 @@ class Searching:
     def __getattr__(self, name):
         if name in ["__getstate__", "__setstate__", "__getinitargs__"]:
             raise AttributeError
-        return lambda *args: libsboxevolution.__getattr__(name+"Searching")(self.delegat, *args)
+        def wrapper(*args):
+            result = libsboxevolution.__getattr__(name+"Searching")(self.delegat, *args)
+            _check_sbox_error()
+            return result
+        return wrapper
 
     def simpleReport(self):
         print(self)
@@ -203,6 +220,7 @@ class Searching:
         bestPopulationOutputs = numpy.empty([self.popSize, 2**self.inputsCount], dtype=ctypes.c_int)
 
         stats = libsboxevolution.getStatisticsSearching(self.delegat, bestScores, bestPopulationCriterionsValues, bestPopulationOutputs)
+        _check_sbox_error()
         stats.bestPopulationScores = bestScores[0:stats.nBestGenomes]
         stats.bestPopulationCriterionsValues = bestPopulationCriterionsValues[0:stats.nBestGenomes]
         stats.bestPopulationOutputs = bestPopulationOutputs[0:stats.nBestGenomes]
@@ -228,6 +246,7 @@ class Searching:
             seedArray[i] = cls.randomSeed()
 
         libsboxevolution.parallelProcessSearching(len(list), array, terminator.ordinal, seedArray)
+        _check_sbox_error()
 
     @classmethod
     def parallelSimpleSearching(cls, list, terminator=TerminationCondition.GENERATION):
@@ -253,6 +272,7 @@ class Genome:
         libsboxevolution.createGenome.argtypes = [ctypes.c_uint, ctypes.c_uint, ctypes.c_int] + [ctypes.c_int]*l
         libsboxevolution.createGenome.restype = TGenome
         self.delegat = libsboxevolution.createGenome(type.ordinal, criterionFunction.ordinal, l, *args)
+        _check_sbox_error()
 
         #print "init", hex(self.delegat.ptr)
         self.setInputsAndOutputs(type, *args)
@@ -309,6 +329,7 @@ class SymbolicalRegresionGenome(Genome):
         libsboxevolution.createSymbolicalRegresionGenome.argtypes = [ctypes.c_uint, numpy.ctypeslib.ndpointer(dtype = ctypes.c_int), ctypes.c_int] + [ctypes.c_int]*l
         libsboxevolution.createSymbolicalRegresionGenome.restype = TGenome
         self.delegat = libsboxevolution.createSymbolicalRegresionGenome(type.ordinal, numpy.asarray(expectedOutputs, dtype=ctypes.c_int), l, *args)
+        _check_sbox_error()
 
         self.repr = '%s %s' % (type, args)
         self.repr += ' symbolical regresion '

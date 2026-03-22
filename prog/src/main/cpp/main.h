@@ -99,6 +99,9 @@ extern "C" { // je treba ceckova deklarace...
 
 	void testSoftwareBox();
 	void initialization();
+
+	bool hasError();
+	const char* getLastError();
 }
 
 class RandomSearchAlgorithm : public SboxSearchAlgorithmBase {
