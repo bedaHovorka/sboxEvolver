@@ -289,6 +289,15 @@ void parallelProcessSearching(const int taskCount, const TSearching tasks[], Ter
 					anyError = true;
 				}
 			}
+		} catch (...) {
+			#pragma omp critical
+			{
+				if (!anyError) {
+					strncpy(firstError, "Unknown C++ exception", 255);
+					firstError[255] = '\0';
+					anyError = true;
+				}
+			}
 		}
 	}
 	if (anyError) {

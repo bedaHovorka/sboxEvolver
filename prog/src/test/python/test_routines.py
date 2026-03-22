@@ -139,16 +139,27 @@ def test_error_propagation_invalid_genome_type():
     """Test that C++ errors are properly propagated to Python as RuntimeError."""
     import ctypes
 
-    # Use an invalid genome type ordinal to trigger an error
-    libsboxevolution.createGenome.argtypes = [ctypes.c_uint, ctypes.c_uint, ctypes.c_int, ctypes.c_int, ctypes.c_int]
-    libsboxevolution.createGenome.restype = TGenome
+    prev_argtypes = getattr(libsboxevolution.createGenome, "argtypes", None)
+    prev_restype = getattr(libsboxevolution.createGenome, "restype", None)
 
-    # Type 99 doesn't exist - should trigger "Wrong type of genome specified" error
-    result = libsboxevolution.createGenome(99, 0, 2, 4, 4)
+    try:
+        # Use an invalid genome type ordinal to trigger an error
+        libsboxevolution.createGenome.argtypes = [ctypes.c_uint, ctypes.c_uint, ctypes.c_int, ctypes.c_int, ctypes.c_int]
+        libsboxevolution.createGenome.restype = TGenome
 
-    # Check that error was set
-    assert_that(libsboxevolution.hasError()).is_true()
-    error_msg = libsboxevolution.getLastError().decode('utf-8')
-    assert_that(error_msg).contains("Wrong type of genome")
+        # Type 99 doesn't exist - should trigger "Wrong type of genome specified" error
+        result = libsboxevolution.createGenome(99, 0, 2, 4, 4)
+
+        # Check that error was set at the C API level
+        assert_that(libsboxevolution.hasError()).is_true()
+        error_msg = libsboxevolution.getLastError().decode('utf-8')
+        assert_that(error_msg).contains("Wrong type of genome")
+
+        # Verify Python-side propagation raises RuntimeError
+        with pytest.raises(RuntimeError, match="Wrong type of genome"):
+            _check_sbox_error()
+    finally:
+        libsboxevolution.createGenome.argtypes = prev_argtypes
+        libsboxevolution.createGenome.restype = prev_restype
 
 
