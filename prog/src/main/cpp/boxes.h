@@ -85,7 +85,9 @@ public:
 		outputs.reserve(inputsCombinations);
 		for(int x = 0;x < inputsCombinations;x++){
 			const int y = output(x);
+#ifndef NDEBUG
 			assert( (y < 1<<outputsCount()) && (y >= 0));
+#endif
 			outputs.push_back(y);
 		}
 		return outputs;
@@ -135,12 +137,9 @@ public:
 			case LAGRANGE:
 				return lagrangePolynomialDegree(outputs, outputsCount());
 			case NONE_CRITERION:
-				assert(false);
-				report << "calling none fittness objective" << endl;
-				return 0.0;
+				throw std::runtime_error("calling NONE_CRITERION fitness objective");
 			default:
-				assert(false);
-				break;
+				throw std::runtime_error("Unknown criterion fitness value in computeCriterionsFunction");
 		}
 		return 0.0;
 	}
@@ -185,9 +184,9 @@ public:
 	}
 
 	inline int computeSymbolicalRegresionError() {
-		assert(expectedValues);
+		check(expectedValues != NULL, "expectedValues must be set before computing symbolical regression error");
 		const intVector &outputs = computeOutputs();
-		assert(expectedValues->size() == outputs.size());
+		check(expectedValues->size() == outputs.size(), "expectedValues size must match outputs size");
 		int sum = 0;
 		for (intVector::const_iterator o = outputs.begin(), e = expectedValues->begin(); o != outputs.end(); o++, e++) {
 			const int diff = *o - *e;
@@ -275,11 +274,11 @@ public:
 	GADefineIdentity("PermutationSboxGenome", 284);
 	PermutationSboxGenomeTemplate(bool bij, T i, T o, GAGenome::Evaluator e) : Sbox(), GA1DArrayGenome<T>(1<<i, e, 0), bijective(bij), inputs(i), outputs(o) {
 		// 2^inputs musi byt nasobkem 2^outputs <=> i >= o
-		assert(i>=o);
+		check(i>=o, "PermutationSboxGenome requires inputs >= outputs");
 		initializer(Init);
 		mutator(Mutate);
 		if (bijective) {
-			assert(i == o);
+			check(i == o, "Bijective PermutationSboxGenome requires inputs == outputs");
 			crossover(Cross);
 		} else {
 			crossover(GA1DArrayGenome<T>::OnePointCrossover);
@@ -299,9 +298,9 @@ public:
 		PermutationSboxGenomeTemplate &orig = (PermutationSboxGenomeTemplate &) arg;
 		GA1DArrayGenome<T>::copy(orig);
 		Sbox::copy(orig);
-		assert(bijective == orig.bijective);
-		assert(inputs == orig.inputs);
-		assert(outputs == orig.outputs);
+		check(bijective == orig.bijective, "Cannot copy genomes with different bijective flags");
+		check(inputs == orig.inputs, "Cannot copy genomes with different input counts");
+		check(outputs == orig.outputs, "Cannot copy genomes with different output counts");
 	}
 
 	virtual GAGenome* clone(GAGenome::CloneMethod) const {return new PermutationSboxGenomeTemplate<T>(*this);}
@@ -364,7 +363,7 @@ private:
 	inline void randomize() {
 		//2^outputs rozhazej 2^inputs krat
 		const T mask = (1<<outputs)-1;
-		assert(GA1DArrayGenome<T>::sz == (uint)1<<inputs);
+		check(GA1DArrayGenome<T>::sz == (uint)1<<inputs, "Array size must equal 2^inputs");
 		for (T i = 0; i < 1<<inputs; i++) {
 			(*this)[i] = i&mask;
 		}

@@ -62,16 +62,16 @@ private:
 	inline static TInstructionType randomType(bool isFirst, bool isLast);
 
 	explicit Cycle(bool first, bool last, const InstructionVector &vec) : isFirst(first), isLast(last), instructions(vec) {
-		assert(!(first&&last));
-		assert(vec.size() == instructionsInCycle);
+		check(!(first&&last), "Cycle cannot be both first and last");
+		check(vec.size() == instructionsInCycle, "Wrong number of instructions in Cycle");
 	}
 public:
 	Cycle(const Cycle &orig) : isFirst(orig.isFirst), isLast(orig.isLast), instructions(orig.instructions) {}
 
 	Cycle& operator=(const Cycle& orig) {
 		if(&orig != this) {
-			assert(isFirst == orig.isFirst);
-			assert(isLast == orig.isLast);
+			check(isFirst == orig.isFirst, "Cannot assign cycles with different first flags");
+			check(isLast == orig.isLast, "Cannot assign cycles with different last flags");
 			instructions = orig.instructions;
 		}
 		return *this;
@@ -117,7 +117,7 @@ public:
 	}
 
 	SoftwareSboxGenome& operator=(const GAGenome& orig){
-		assert(false);
+		throw std::runtime_error("SoftwareSboxGenome::operator= not implemented");
 		if(&orig != this) copy(orig);
 		return *this;
 	}
@@ -126,8 +126,8 @@ public:
 		GAGenome::copy(o);
 		SoftwareSboxGenome &orig = (SoftwareSboxGenome&) o;
 		Sbox::copy(orig);
-		assert(bitsPerRegister == orig.bitsPerRegister);
-		assert(evaluator() == orig.evaluator());
+		check(bitsPerRegister == orig.bitsPerRegister, "Cannot copy genomes with different bitsPerRegister");
+		check(evaluator() == orig.evaluator(), "Cannot copy genomes with different evaluators");
 		cycles = orig.cycles;
 	}
 
@@ -135,7 +135,7 @@ public:
 
 	inline void setCycles(const CycleVector &vector) {
 		cycles = vector;
-		assert(cycles.size() == CYCLES_COUNT);
+		check(cycles.size() == CYCLES_COUNT, "Wrong number of cycles");
 		_evaluated = gaFalse;
 	}
 
@@ -151,7 +151,7 @@ public:
 
 	inline int mutate(float pMut);
 
-	virtual const SboxPtrVector neigboursInStateSpace() const {assert(false); }//zatim netreba...
+	virtual const SboxPtrVector neigboursInStateSpace() const { throw std::runtime_error("neigboursInStateSpace not implemented for SoftwareSboxGenome"); }//zatim netreba...
 };
 
 

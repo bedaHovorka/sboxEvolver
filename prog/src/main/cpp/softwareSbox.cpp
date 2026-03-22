@@ -49,7 +49,7 @@ float SoftwareSboxGenome::Compare(const GAGenome&g1, const GAGenome&g2) {
 }
 
 float SoftwareSboxGenome::Evaluate(GAGenome&) {
-	assert(false);
+	throw std::runtime_error("SoftwareSboxGenome::Evaluate should not be called directly");
 	return 0.0;
 }
 
@@ -81,7 +81,7 @@ int SoftwareSboxGenome::Cross(const GAGenome&p1, const GAGenome&p2, GAGenome*c1,
 }
 
 int SoftwareSboxGenome::output(int x) const {
-	assert(!(inputsCount() & 3));
+	check(!(inputsCount() & 3), "inputsCount must be divisible by 4");
 
 	int *r = new int[REGISTERS_COUNT];
 	memset(r, 0, REGISTERS_COUNT*sizeof(int));
@@ -96,7 +96,7 @@ int SoftwareSboxGenome::output(int x) const {
 
 	//vystup
 	int result = 0;
-	assert(outputsCount() == inputsCount());
+	check(outputsCount() == inputsCount(), "outputsCount must equal inputsCount for SoftwareSboxGenome");
 	for (uint i=0, shift=0; i < REGISTERS_COUNT; i++) {
 		if (i == 3) continue;
 		result += (r[i]&mask) << shift;
@@ -247,7 +247,7 @@ void Cycle::compute(int **registers) const {
 				break;
 
 			default:
-				assert(false);
+				throw std::runtime_error("Unknown instruction type in Cycle::compute");
 				break;
 		}
 	}
@@ -262,7 +262,7 @@ inline int compareInstruction(const TInstruction &instr1,const TInstruction &ins
 }
 
 int Cycle::compareTo(const Cycle& other) const {
-	assert (instructions.size() == other.instructions.size());
+	check(instructions.size() == other.instructions.size(), "Instruction sizes must match for comparison");
 	int cmp = isFirst - other.isFirst; if (cmp) return cmp;
 	cmp = isLast - other.isLast; if (cmp) return cmp;
 	for (InstructionVector::const_iterator i1 = instructions.begin(), i2 = other.instructions.begin(); i1 != instructions.end(); i1++, i2++) {
@@ -301,7 +301,7 @@ std::ostream& operator<<(std::ostream& output, const Cycle &cycle) {
 				break;
 
 			default:
-				assert(false);
+				throw std::runtime_error("Unknown instruction type in Cycle output");
 				break;
 		}
 

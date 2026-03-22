@@ -35,7 +35,7 @@ protected:
 	}
 
 	virtual const GAPopulation& population(const GAPopulation&) {
-		assert(false);
+		throw std::runtime_error("MulticriterialGeneticAlgorithm::population not implemented");
 	}
 
 	inline uint getBestGenomes() {

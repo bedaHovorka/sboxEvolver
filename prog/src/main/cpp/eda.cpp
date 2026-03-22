@@ -149,7 +149,7 @@ int BmdaModel::sampleModel(GAPopulation* tmpPop) {
 				float currentValue = (parentValue) ? ((float) current->getCountWithOne()) / onesCounts[parentPosition] :
 						(onesCounts[parentPosition] == popSize) ? 0 :
 							((float) current->getCountWithZero()) / (popSize - onesCounts[parentPosition]);
-				assert(currentValue >= 0 && currentValue <= 1);
+				check(currentValue >= 0 && currentValue <= 1, "Invalid probability in BMDA model");
 				genome->gene(position, GARandomFloat(0, 1) < currentValue);
 			} else {
 				genome->gene(position, GARandomInt(0, popSize) <= onesCounts[position]);
@@ -172,7 +172,7 @@ void EdaModel::learnStructure(GAPopulation* pop, int size) {//UMDA
 	}
 
 	for (unsigned int i = 0; i < length; i++) {
-		assert(onesCounts[i] <=pop->size() && onesCounts[i] >= 0);
+		check(onesCounts[i] <=pop->size() && onesCounts[i] >= 0, "Invalid ones count in EDA");
 	}
 }
 
