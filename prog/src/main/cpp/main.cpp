@@ -16,6 +16,17 @@
  */
 #include "main.h"
 
+__thread SboxError g_sboxLastError = {false, {0}};
+
+bool hasError() {
+	return g_sboxLastError.hasError;
+}
+
+const char* getLastError() {
+	return g_sboxLastError.message;
+}
+
+
 void setParameters(SboxSearchAlgorithmBase & ga, const int popsize, const int ngen, const float pmut, const float pcross,
 		const int bestGenomes)
 {
@@ -33,25 +44,31 @@ inline void setParameters(SboxSearchAlgorithmBase & ga, const int popsize, const
 }
 
 TSearching newParallelRandomSearching(TGenome genome, int popsize, int ngen, float pMut) {
+	SBOX_TRY
 	std::unique_ptr<ParallelRandomSearchAlgorithm> ga(new ParallelRandomSearchAlgorithm(*genome.ptr));
 	setParameters(*ga, popsize, ngen, pMut, 0.0);
 	TSearching searching = {ga.release()};
 	return searching;
+	SBOX_CATCH_RETURN(TSearching{NULL})
 }
 
 TSearching newEdaSearching(TGenome g, int popsize, int ngen, bool bdma) {
+	SBOX_TRY
 	std::unique_ptr<EstimationOfDistributionAlgorithm> ga(new EstimationOfDistributionAlgorithm(*g.ptr, bdma, popsize));
 	setParameters(*ga, popsize, ngen, 0.0, 0.0);
 	TSearching searching = {ga.release()};
 	return searching;
+	SBOX_CATCH_RETURN(TSearching{NULL})
 }
 
 TSearching newGaSearching(TGenome g, int popsize, int ngen, float pMut, float pCross, bool elitism) {
+	SBOX_TRY
 	std::unique_ptr<SboxSearchAlgorithmBase> ga(new SboxSearchAlgorithmBase(*g.ptr));
 	setParameters(*ga, popsize, ngen, pMut, pCross);
 	ga->elitist(toGABool(elitism));
 	TSearching searching = {ga.release()};
 	return searching;
+	SBOX_CATCH_RETURN(TSearching{NULL})
 }
 
 void ParallelRandomSearchAlgorithm::step() {
@@ -84,10 +101,12 @@ void RandomSearchAlgorithm::step()
 // u nahodneho prohledavani se neda hovorit o velikosti populace, ale
 // toto cislo se da pouzit k nastaveni kolik nejlepsich jedincu se ma ulozit
 TSearching newRandomSearching(TGenome g, int bestGenomes, int ngen) {
+	SBOX_TRY
 	std::unique_ptr<RandomSearchAlgorithm> ga(new RandomSearchAlgorithm(*g.ptr));
 	setParameters(*ga, 1, ngen, 0.1, 0, bestGenomes);
 	TSearching searching = {ga.release()};
 	return searching;
+	SBOX_CATCH_RETURN(TSearching{NULL})
 }
 
 void HeuristicSearchAlgorithm::evolve(unsigned int seed){
@@ -114,10 +133,12 @@ void HeuristicSearchAlgorithm::evolve(unsigned int seed){
 }
 
 TSearching newHeuristicSearching(TGenome g, uint maxStates, uint ngen) {
+	SBOX_TRY
 	std::unique_ptr<HeuristicSearchAlgorithm> ga(new HeuristicSearchAlgorithm(*g.ptr, maxStates));
 	setParameters(*ga, 1, maxStates, ngen, 0);
 	TSearching searching = {ga.release()};
 	return searching;
+	SBOX_CATCH_RETURN(TSearching{NULL})
 }
 
 inline const CriterionsSet createCriterionsSet(const int criterionsCount, const CriterionsFitness *criterions) {
@@ -128,17 +149,21 @@ inline const CriterionsSet createCriterionsSet(const int criterionsCount, const 
 }
 
 TSearching newVegaSearching(TGenome g, int popsize, int ngen, float pMut, float pCross, const int criterionsCount, const CriterionsFitness *criterions) {
+	SBOX_TRY
 	std::unique_ptr<VegaAlgorithm> ga(new VegaAlgorithm(*g.ptr, createCriterionsSet(criterionsCount, criterions)));
 	setParameters(*ga, popsize, ngen, pMut, pCross);
 	TSearching searching = {ga.release()};
 	return searching;
+	SBOX_CATCH_RETURN(TSearching{NULL})
 }
 
 TSearching newSpeaSearching(TGenome g, int popsize, int ngen, float pMut, float pCross, const int criterionsCount, const CriterionsFitness *criterions) {
+	SBOX_TRY
 	std::unique_ptr<SpeaAlgorithm> ga(new SpeaAlgorithm(*g.ptr, createCriterionsSet(criterionsCount, criterions)));
 	setParameters(*ga, popsize, ngen, pMut, pCross);
 	TSearching searching = {ga.release()};
 	return searching;
+	SBOX_CATCH_RETURN(TSearching{NULL})
 }
 
 TGenome privateCreateGenome(GenomeType type, GAGenome::Evaluator evaluator, const intVector & arguments) {
@@ -188,15 +213,18 @@ for (int i=0; i < argc; i++) arguments.push_back(va_arg(args, int));\
 va_end(args);\
 
 TGenome createGenome(GenomeType type, CriterionsFitness criterion, int argc, ...) {
+	SBOX_TRY
 	VARARGS_TO_VECTOR
 
 	GAGenome::Evaluator evaluator = criterionsEnumToFunction(criterion);
 	TGenome privateCreateGenome0 = privateCreateGenome(type, evaluator, arguments);
 	/*report << privateCreateGenome0.ptr << endl;*/
 	return privateCreateGenome0;
+	SBOX_CATCH_RETURN(TGenome{NULL})
 }
 
 TGenome createSymbolicalRegresionGenome(GenomeType type, int *expectedOutputs, int argc, ...) {
+	SBOX_TRY
 	VARARGS_TO_VECTOR
 
 	GAGenome::Evaluator evaluator = symbolicalRegresionObjective;
@@ -205,9 +233,11 @@ TGenome createSymbolicalRegresionGenome(GenomeType type, int *expectedOutputs, i
 	intVector *outputs = new intVector(expectedOutputs, expectedOutputs+(1<<sbox->inputsCount()));
 	sbox->setExpectedValues(outputs);
 	return genome;
+	SBOX_CATCH_RETURN(TGenome{NULL})
 }
 
 void processSearching(TSearching searching, TerminatorCondition condition, uint seed) {
+	SBOX_TRY
 	GAGeneticAlgorithm *ga = searching.algorithm;
 	switch (condition) {
 		case GENERATION:
@@ -225,13 +255,46 @@ void processSearching(TSearching searching, TerminatorCondition condition, uint 
 			break;
 	}
 	ga->evolve(seed);
+	SBOX_CATCH
 }
 
 void parallelProcessSearching(const int taskCount, const TSearching tasks[], TerminatorCondition condition, const uint seeds[]) {
+	SBOX_TRY
+	bool anyError = false;
+	char firstError[256] = {0};
 	#pragma omp parallel for schedule(guided) default(shared)
 	for (int i = 0; i < taskCount; i++) {
-		processSearching(tasks[i], condition, seeds[i]);
+		try {
+			GAGeneticAlgorithm *ga = tasks[i].algorithm;
+			switch (condition) {
+				case GENERATION:
+					ga->terminator(GAGeneticAlgorithm::TerminateUponGeneration);
+					break;
+				case CONVERGENCE:
+					ga->terminator(GAGeneticAlgorithm::TerminateUponConvergence);
+					break;
+				case POPCONVERGENCE:
+					ga->terminator(GAGeneticAlgorithm::TerminateUponPopConvergence);
+					break;
+				default:
+					throw std::runtime_error("Wrong type of terminator specified");
+			}
+			ga->evolve(seeds[i]);
+		} catch (const std::exception& e) {
+			#pragma omp critical
+			{
+				if (!anyError) {
+					strncpy(firstError, e.what(), 255);
+					firstError[255] = '\0';
+					anyError = true;
+				}
+			}
+		}
 	}
+	if (anyError) {
+		throw std::runtime_error(std::string("Error in parallel search: ") + firstError);
+	}
+	SBOX_CATCH
 }
 
 
@@ -275,6 +338,7 @@ inline void simpleReportAboutGenome(std::ostream & out, GAGenome & individual) t
 }
 
 PyObject* simpleReportSearching(TSearching searching) {
+	SBOX_TRY
 	SboxSearchAlgorithmBase *ga = searching.algorithm;
 	GAPopulation population = ga->bestResults();
 	std::ostringstream out;
@@ -288,24 +352,33 @@ PyObject* simpleReportSearching(TSearching searching) {
 	}
 
 	return createPythonString(out.str());
+	SBOX_CATCH_RETURN(NULL)
 }
 
 void testSoftwareBox() {
+	SBOX_TRY
 	SoftwareSboxGenome genome = SoftwareSboxGenome::testBox();
 	genome.evaluator(bentAndMosacObjective);
 	simpleReportAboutGenome(std::cout, genome);
+	SBOX_CATCH
 }
 
 void closeSearching(TSearching searching) {
+	SBOX_TRY
 	freeAndNULL(searching.algorithm);
+	SBOX_CATCH
 }
 
 void closeGenome(TGenome genome) {
+	SBOX_TRY
 	freeAndNULL(genome.ptr);
+	SBOX_CATCH
 }
 
 void setMiniMaxiSearching(TSearching searching, bool minimize) {
+	SBOX_TRY
 	searching.algorithm->minimaxi(minimize ? GAGeneticAlgorithm::MINIMIZE : GAGeneticAlgorithm::MAXIMIZE);
+	SBOX_CATCH
 }
 
 inline void arrayConv(const GAPopulation &population, float *&result) {
@@ -315,6 +388,7 @@ inline void arrayConv(const GAPopulation &population, float *&result) {
 }
 
 TStatistics getStatisticsSearching(TSearching searching, float *bestPopulationScores, float *bestPopulationCriterionsValues, int *bestPopulationOutputs) {
+	SBOX_TRY
 	const GAStatistics &stats = searching.algorithm->statistics();
 	// nepouzije se posledni generace, ale populace nejlepsich jedincu ze statistik
 	// (nejen proto, aby se dalo srovnavat s nahodnym prohledavanim)
@@ -348,9 +422,11 @@ TStatistics getStatisticsSearching(TSearching searching, float *bestPopulationSc
 	result.replacements = stats.replacements();
 	result.nBestGenomes = population.size();
 	return result;
+	SBOX_CATCH_RETURN(TStatistics{})
 }
 
 PyObject* bestPopulationStringsSearching(TSearching searching) {
+	SBOX_TRY
 	const GAPopulation &population = searching.algorithm->bestResults();
 	PyObject* list = PyList_New(population.size());
 	for (int i = 0; i < population.size(); i++) {
@@ -359,6 +435,7 @@ PyObject* bestPopulationStringsSearching(TSearching searching) {
 		PyList_SET_ITEM(list, i, createPythonString(out.str()));
 	}
 	return list;
+	SBOX_CATCH_RETURN(NULL)
 }
 
 //kdyby se standardni coredump nehodil...
@@ -380,6 +457,7 @@ PyObject* bestPopulationStringsSearching(TSearching searching) {
 //}
 //
 void initialization() {
+	SBOX_TRY
 //	errno = 0;
 //	signal(SIGABRT, handler);
 //	if (errno) {
@@ -392,4 +470,5 @@ void initialization() {
 //		exit(1);
 //	}
 ////	std::set_terminate(terminateWithStackTrace);
+	SBOX_CATCH
 }

@@ -29,7 +29,33 @@ extern "C" {
 #include <typeinfo>
 #include <vector>
 #include <algorithm>
+#include <cstring>
 #include <memory>
+
+// Thread-local error state for C API boundary
+struct SboxError {
+    bool hasError;
+    char message[256];
+};
+
+// Use __thread for C++11 compatibility (thread_local also works but __thread is simpler for POD)
+extern __thread SboxError g_sboxLastError;
+
+inline void clearSboxError() {
+    g_sboxLastError.hasError = false;
+    g_sboxLastError.message[0] = '\0';
+}
+
+inline void setSboxError(const char* msg) {
+    g_sboxLastError.hasError = true;
+    strncpy(g_sboxLastError.message, msg, sizeof(g_sboxLastError.message) - 1);
+    g_sboxLastError.message[sizeof(g_sboxLastError.message) - 1] = '\0';
+}
+
+// Macros for wrapping extern "C" functions
+#define SBOX_TRY try { clearSboxError();
+#define SBOX_CATCH } catch (const std::exception& e) { setSboxError(e.what()); } catch (...) { setSboxError("Unknown C++ exception"); }
+#define SBOX_CATCH_RETURN(default_val) } catch (const std::exception& e) { setSboxError(e.what()); return default_val; } catch (...) { setSboxError("Unknown C++ exception"); return default_val; }
 
 #include <ga/std_stream.h>
 #include <ga/GASimpleGA.h>
