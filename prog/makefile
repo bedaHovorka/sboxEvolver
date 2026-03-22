@@ -37,5 +37,14 @@ all: $(EXS)
 $(EXS): $(OBJS)
 	$(CXX) -shared -Wl,-soname,$@ -o $@ $(LIB_DIRS) $(OBJS) $(FLAGS) $(CXX_LIBS)
 
+VALGRIND_TEST=valgrind_test
+VALGRIND_TEST_SRC=src/test/cpp/valgrind_test.cpp
+
+$(VALGRIND_TEST): $(EXS) $(VALGRIND_TEST_SRC)
+	$(CXX) $(FLAGS) $(INC_DIRS) -o $@ $(VALGRIND_TEST_SRC) -L. -lsboxevolution $(CXX_LIBS)
+
+valgrind: $(VALGRIND_TEST)
+	LD_LIBRARY_PATH=. valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./$(VALGRIND_TEST)
+
 clean:
-	$(RM) $(OBJS) $(EXS) *.o *~ *.pyc core
+	$(RM) $(OBJS) $(EXS) $(VALGRIND_TEST) *.o *~ *.pyc core

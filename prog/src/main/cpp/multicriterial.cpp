@@ -121,7 +121,7 @@ inline void MulticriterialGeneticAlgorithm::computeNondominancePopulation(const 
 				if (is1dominatingOver2(g2, g1) || g1 == g2) {
 					break;// !continue vnejsiho cyklu !
 				} else if (is1dominatingOver2(g1, g2)) {
-					nondominance.remove(j); j--;
+					delete nondominance.remove(j); j--;
 				}
 			}
 		}
