@@ -330,6 +330,9 @@ make test
 # Run C++ benchmarks (on-demand, not in CI)
 make bench
 
+# Run C++ benchmarks in Docker (on-demand)
+docker build --target cpp-bench -f prog/Dockerfile .
+
 # Run Valgrind memory check
 make valgrind
 ```

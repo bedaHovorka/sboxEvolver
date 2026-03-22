@@ -2,13 +2,13 @@ name: Build and Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
     paths:
       - 'prog/**'
       - '.github/workflows/build-and-test.yml'
       - 'docker-compose.yml'
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
     paths:
       - 'prog/**'
       - '.github/workflows/build-and-test.yml'

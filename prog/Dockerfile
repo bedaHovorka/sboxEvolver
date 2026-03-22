@@ -228,6 +228,31 @@ RUN g++ -std=gnu++11 -ggdb3 -fopenmp -march=native -O2 \
 RUN LD_LIBRARY_PATH=. ./cpp_tests
 
 # ============================================
+# Stage 5b2: C++ benchmarks (on-demand, not a build gate)
+# Run with: docker build --target cpp-bench -f prog/Dockerfile .
+# ============================================
+FROM sbox-builder AS cpp-bench
+
+WORKDIR /build/sboxEvolver/prog
+
+# Copy test/benchmark source files
+COPY prog/src/test/cpp/ src/test/cpp/
+
+# Compile C++ benchmarks (bench_main.cpp + bench_criterions.cpp)
+RUN g++ -std=gnu++11 -ggdb3 -fopenmp -march=native -O2 \
+    -DCATCH_CONFIG_ENABLE_BENCHMARKING \
+    -Isrc/main/cpp \
+    -I../../galib247/ -L../../galib247/ga \
+    -Isrc/test/cpp \
+    -I/usr/local/include/python3.14 \
+    -o cpp_benchmarks \
+    src/test/cpp/bench_*.cpp \
+    -L. -lsboxevolution -lga -lm -lpython3.14
+
+# Run benchmarks
+RUN LD_LIBRARY_PATH=. ./cpp_benchmarks
+
+# ============================================
 # Stage 5c: Run Python tests
 # ============================================
 FROM python-base AS tester
