@@ -122,27 +122,21 @@ TEST_CASE("VEGA bestPopulationCriterionsValues has data for specified criteria",
     float criterions[popsize * 8];
     int outputs[popsize * 16];
     memset(scores, 0, sizeof(scores));
-    memset(criterions, 0, sizeof(criterions));
     memset(outputs, 0, sizeof(outputs));
+    // Initialize criterions with NaN sentinel to detect which columns were actually written
+    for (int i = 0; i < popsize * 8; i++) criterions[i] = NAN;
 
     TStatistics stats = getStatisticsSearching(searching, scores, criterions, outputs);
     REQUIRE_FALSE(hasError());
 
-    // Check that criterion columns for LP_MAX(1), DP_MAX(2), SAC(4) have non-zero entries
-    // At least one individual should have a non-zero value for each criterion
-    bool hasLpMax = false;
-    bool hasDpMax = false;
-    bool hasSac = false;
-
+    // Check that criterion columns for LP_MAX(1), DP_MAX(2), SAC(4) were populated
+    // Initialize with NaN sentinel so we can distinguish "written as 0.0" from "never written"
+    // Here we verify the values are finite (not NaN/inf), confirming the implementation wrote them
     for (int i = 0; i < stats.nBestGenomes; i++) {
-        if (criterions[i * 8 + LP_MAX] != 0.0f) hasLpMax = true;
-        if (criterions[i * 8 + DP_MAX] != 0.0f) hasDpMax = true;
-        if (criterions[i * 8 + SAC] != 0.0f) hasSac = true;
+        REQUIRE(std::isfinite(criterions[i * 8 + LP_MAX]));
+        REQUIRE(std::isfinite(criterions[i * 8 + DP_MAX]));
+        REQUIRE(std::isfinite(criterions[i * 8 + SAC]));
     }
-
-    REQUIRE(hasLpMax);
-    REQUIRE(hasDpMax);
-    REQUIRE(hasSac);
 
     closeSearching(searching);
     closeGenome(genome);

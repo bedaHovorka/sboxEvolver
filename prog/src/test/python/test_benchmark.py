@@ -1,4 +1,5 @@
 import pytest
+from assertpy import assert_that
 
 from evolution import (
     Genome,
@@ -24,7 +25,7 @@ def test_benchmark_ga_permutation_4x4(benchmark):
         return stats.maxEver
 
     result = benchmark(run_ga)
-    assert result >= 0
+    assert_that(result).is_greater_than_or_equal_to(0)
 
 
 @pytest.mark.benchmark
@@ -42,7 +43,7 @@ def test_benchmark_parallel_random_cgp(benchmark):
         return stats.maxEver
 
     result = benchmark(run_parallel_random)
-    assert result >= 0
+    assert_that(result).is_greater_than_or_equal_to(0)
 
 
 @pytest.mark.benchmark
@@ -58,7 +59,7 @@ def test_benchmark_eda_binary(benchmark):
         return stats.maxEver
 
     result = benchmark(run_eda)
-    assert result >= 0
+    assert_that(result).is_greater_than_or_equal_to(0)
 
 
 @pytest.mark.benchmark
@@ -75,6 +76,6 @@ def test_benchmark_statistics_retrieval(benchmark):
         return stats.maxEver
 
     result = benchmark(retrieve_stats)
-    assert result >= 0
+    assert_that(result).is_greater_than_or_equal_to(0)
 
     search.close()

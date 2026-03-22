@@ -1,3 +1,5 @@
+import math
+
 from assertpy import assert_that
 
 from evolution import (
@@ -24,20 +26,21 @@ def test_vega_produces_valid_criterion_values():
 
         assert_that(stats.nBestGenomes).is_greater_than(0)
 
-        # Check that the criterion columns used have at least some non-zero values
+        # Check that the criterion columns used have finite values (not NaN/inf)
+        # Note: 0.0 is a valid criterion value (e.g., SAC can be 0, -log2(1.0) is 0)
         for crit in criterions:
             col_idx = crit.ordinal
-            col_values = [
-                stats.bestPopulationCriterionsValues[i][col_idx]
-                for i in range(stats.nBestGenomes)
-            ]
-            assert_that(any(v != 0.0 for v in col_values)).is_true()
+            for i in range(stats.nBestGenomes):
+                val = stats.bestPopulationCriterionsValues[i][col_idx]
+                assert_that(math.isfinite(val)).described_as(
+                    f"criterion {crit.name} for individual {i}"
+                ).is_true()
     finally:
         search.close()
 
 
 def test_spea_produces_valid_criterion_values():
-    """SPEA with multiple criteria should produce non-zero criterion columns."""
+    """SPEA with multiple criteria should produce finite criterion columns."""
     criterions = [
         CriterionFunction.LP_MAX,
         CriterionFunction.DP_MAX,
@@ -52,11 +55,11 @@ def test_spea_produces_valid_criterion_values():
 
         for crit in criterions:
             col_idx = crit.ordinal
-            col_values = [
-                stats.bestPopulationCriterionsValues[i][col_idx]
-                for i in range(stats.nBestGenomes)
-            ]
-            assert_that(any(v != 0.0 for v in col_values)).is_true()
+            for i in range(stats.nBestGenomes):
+                val = stats.bestPopulationCriterionsValues[i][col_idx]
+                assert_that(math.isfinite(val)).described_as(
+                    f"criterion {crit.name} for individual {i}"
+                ).is_true()
     finally:
         search.close()
 

@@ -214,21 +214,14 @@ WORKDIR /build/sboxEvolver/prog
 # Copy test source files
 COPY prog/src/test/cpp/ src/test/cpp/
 
-# Compile C++ unit tests (test_*.cpp with test_main.cpp, exclude bench_* and valgrind_test)
+# Compile C++ unit tests (all test_*.cpp, exclude bench_* and valgrind_test)
 RUN g++ -std=gnu++11 -ggdb3 -fopenmp -march=native -O2 \
     -Isrc/main/cpp \
     -I../../galib247/ -L../../galib247/ga \
     -Isrc/test/cpp \
     -I/usr/local/include/python3.14 \
     -o cpp_tests \
-    src/test/cpp/test_main.cpp \
-    src/test/cpp/test_criterions.cpp \
-    src/test/cpp/test_boxes.cpp \
-    src/test/cpp/test_combination.cpp \
-    src/test/cpp/test_softwareSbox.cpp \
-    src/test/cpp/test_cgp.cpp \
-    src/test/cpp/test_eda.cpp \
-    src/test/cpp/test_multicriterial.cpp \
+    src/test/cpp/test_*.cpp \
     -L. -lsboxevolution -lga -lm -lpython3.14
 
 # Run C++ unit tests

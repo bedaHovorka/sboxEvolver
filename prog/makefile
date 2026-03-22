@@ -15,7 +15,7 @@
 #INC_DIRS= -I$(GA_INC_DIR)
 #LIB_DIRS= -L$(GA_LIB_DIR)
 
-CXX = g++-4.4
+CXX ?= g++
 VPATH = src/main/cpp
 
 EXS=libsboxevolution.so

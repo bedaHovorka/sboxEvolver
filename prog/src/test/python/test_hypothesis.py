@@ -1,6 +1,6 @@
 import math
 
-import pytest
+from assertpy import assert_that
 from hypothesis import given, strategies as st, settings
 
 from evolution import (
@@ -23,10 +23,9 @@ def test_bijective_permutation_always_bijective(seed):
         stats = search.statistics()
         for i in range(stats.nBestGenomes):
             row = stats.bestPopulationOutputs[i]
-            assert len(set(row)) == 16, (
-                f"S-box row {i} with seed {seed} has only {len(set(row))} "
-                f"distinct values, expected 16"
-            )
+            assert_that(set(row)).described_as(
+                f"S-box row {i} with seed {seed}"
+            ).is_length(16)
     finally:
         search.close()
 
@@ -41,7 +40,9 @@ def test_lp_max_scores_non_negative(seed):
         search.process(TerminationCondition.GENERATION.ordinal, seed)
         stats = search.statistics()
         for score in stats.bestPopulationScores:
-            assert score >= 0, f"LP_MAX score {score} is negative (seed={seed})"
+            assert_that(score).described_as(
+                f"LP_MAX score (seed={seed})"
+            ).is_greater_than_or_equal_to(0)
     finally:
         search.close()
 
@@ -56,7 +57,9 @@ def test_dp_max_scores_non_negative(seed):
         search.process(TerminationCondition.GENERATION.ordinal, seed)
         stats = search.statistics()
         for score in stats.bestPopulationScores:
-            assert score >= 0, f"DP_MAX score {score} is negative (seed={seed})"
+            assert_that(score).described_as(
+                f"DP_MAX score (seed={seed})"
+            ).is_greater_than_or_equal_to(0)
     finally:
         search.close()
 
@@ -71,10 +74,9 @@ def test_statistics_maxever_consistency(seed):
         search.process(TerminationCondition.GENERATION.ordinal, seed)
         stats = search.statistics()
         best_in_pop = max(stats.bestPopulationScores)
-        assert stats.maxEver >= best_in_pop, (
-            f"maxEver ({stats.maxEver}) < max(bestPopulationScores) "
-            f"({best_in_pop}) with seed={seed}"
-        )
+        assert_that(stats.maxEver).described_as(
+            f"maxEver vs max(bestPopulationScores) (seed={seed})"
+        ).is_greater_than_or_equal_to(best_in_pop)
     finally:
         search.close()
 
@@ -97,8 +99,8 @@ def test_all_criterion_functions_finite():
             search.process(TerminationCondition.GENERATION.ordinal, 42)
             stats = search.statistics()
             for score in stats.bestPopulationScores:
-                assert math.isfinite(score), (
-                    f"Non-finite score {score} for criterion {criterion}"
-                )
+                assert_that(math.isfinite(score)).described_as(
+                    f"score {score} for criterion {criterion}"
+                ).is_true()
         finally:
             search.close()

@@ -40,12 +40,35 @@ jobs:
             exit 1
           fi
 
-          # Verify tests actually ran and passed
-          if grep -qP "\d+ passed" build.log && ! grep -qP "\d+ failed" build.log; then
-            echo "✓ All tests passed"
+          # Verify each test gate actually ran and passed
+          GATES_OK=true
+
+          # Check pytest: at least 1 test passed, none failed
+          if grep -qP "[1-9][0-9]* passed" build.log && ! grep -qP "[1-9][0-9]* failed" build.log; then
+            echo "✓ Python tests passed"
           else
-            echo "✗ Tests did not pass or were not executed properly"
-            cat build.log | grep -A 10 "test session starts" || echo "No test execution found"
+            echo "✗ Python tests did not pass or were not executed"
+            grep -A 10 "test session starts" build.log || true
+            GATES_OK=false
+          fi
+
+          # Check Catch2 C++ tests
+          if grep -qE "All tests passed|test case.*assertion.*passed" build.log; then
+            echo "✓ C++ tests passed"
+          else
+            echo "✗ C++ tests did not pass or were not executed"
+            GATES_OK=false
+          fi
+
+          # Check Valgrind
+          if grep -q "ERROR SUMMARY: 0 errors" build.log; then
+            echo "✓ Valgrind passed"
+          else
+            echo "✗ Valgrind did not pass or was not executed"
+            GATES_OK=false
+          fi
+
+          if [ "$GATES_OK" = false ]; then
             exit 1
           fi
 
