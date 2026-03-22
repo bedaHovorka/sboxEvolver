@@ -75,6 +75,7 @@ WORKDIR /build/sboxEvolver/prog
 # 4. Fix GAlib path to match Docker directory structure
 # 5. Add Python 3.13 library linkage for Python C API functions
 RUN sed -i 's|CXX = g++-4.4|CXX = g++|g' makefile && \
+    sed -i 's|-std=gnu++98|-std=gnu++11|g' makefile && \
     sed -i 's|-march=k8-sse3|-march=native|g' makefile && \
     sed -i 's|-I/usr/local/include/python2.5|-I/usr/include/python3.13|g' makefile && \
     sed -i 's|-I../galib247/|-I../../galib247|g' makefile && \
