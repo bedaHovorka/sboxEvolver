@@ -44,6 +44,18 @@ protected:
 			scoreBackuped(orig.scoreBackuped), backupedScore(orig.backupedScore),
 			expectedValues(orig.expectedValues ? new intVector(*orig.expectedValues) : NULL) {}
 
+	Sbox& operator=(const Sbox& orig) {
+		if (&orig != this) {
+			multievaluationValues = orig.multievaluationValues;
+			multievaluated = orig.multievaluated;
+			scoreBackuped = orig.scoreBackuped;
+			backupedScore = orig.backupedScore;
+			delete expectedValues;
+			expectedValues = orig.expectedValues ? new intVector(*orig.expectedValues) : NULL;
+		}
+		return *this;
+	}
+
 public:
 	operator GAGenome&() {return dynamic_cast<GAGenome&>(*this);}
 
