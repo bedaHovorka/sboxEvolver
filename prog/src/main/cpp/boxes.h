@@ -38,10 +38,23 @@ public:
 	virtual const SboxPtrVector neigboursInStateSpace() const = 0;
 
 protected:
-	virtual ~Sbox() {}
+	virtual ~Sbox() { delete expectedValues; }
 	explicit Sbox() : multievaluationValues(), multievaluated(false), scoreBackuped(false), backupedScore(0.0), expectedValues(NULL) {}
 	explicit Sbox(const Sbox &orig) : multievaluationValues(orig.multievaluationValues), multievaluated(orig.multievaluated),
-			scoreBackuped(orig.scoreBackuped), backupedScore(orig.backupedScore), expectedValues(orig.expectedValues) {}
+			scoreBackuped(orig.scoreBackuped), backupedScore(orig.backupedScore),
+			expectedValues(orig.expectedValues ? new intVector(*orig.expectedValues) : NULL) {}
+
+	Sbox& operator=(const Sbox& orig) {
+		if (&orig != this) {
+			multievaluationValues = orig.multievaluationValues;
+			multievaluated = orig.multievaluated;
+			scoreBackuped = orig.scoreBackuped;
+			backupedScore = orig.backupedScore;
+			delete expectedValues;
+			expectedValues = orig.expectedValues ? new intVector(*orig.expectedValues) : NULL;
+		}
+		return *this;
+	}
 
 public:
 	operator GAGenome&() {return dynamic_cast<GAGenome&>(*this);}
@@ -58,6 +71,8 @@ public:
 		multievaluated = orig.multievaluated;
 		scoreBackuped = orig.scoreBackuped;
 		backupedScore = orig.backupedScore;
+		delete expectedValues;
+		expectedValues = orig.expectedValues ? new intVector(*orig.expectedValues) : NULL;
 	}
 
 	virtual int realizationEfficiency() const {
