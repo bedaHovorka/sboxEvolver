@@ -205,7 +205,55 @@ RUN LD_LIBRARY_PATH=. valgrind \
     ./valgrind_test
 
 # ============================================
-# Stage 5b: Run tests
+# Stage 5b: C++ unit tests (Catch2)
+# ============================================
+FROM sbox-builder AS cpp-tester
+
+WORKDIR /build/sboxEvolver/prog
+
+# Copy test source files
+COPY prog/src/test/cpp/ src/test/cpp/
+
+# Compile C++ unit tests (all test_*.cpp, exclude bench_* and valgrind_test)
+RUN g++ -std=gnu++11 -ggdb3 -fopenmp -march=native -O2 \
+    -Isrc/main/cpp \
+    -I../../galib247/ -L../../galib247/ga \
+    -Isrc/test/cpp \
+    -I/usr/local/include/python3.14 \
+    -o cpp_tests \
+    src/test/cpp/test_*.cpp \
+    -L. -lsboxevolution -lga -lm -lpython3.14
+
+# Run C++ unit tests
+RUN LD_LIBRARY_PATH=. ./cpp_tests
+
+# ============================================
+# Stage 5b2: C++ benchmarks (on-demand, not a build gate)
+# Run with: docker build --target cpp-bench -f prog/Dockerfile .
+# ============================================
+FROM sbox-builder AS cpp-bench
+
+WORKDIR /build/sboxEvolver/prog
+
+# Copy test/benchmark source files
+COPY prog/src/test/cpp/ src/test/cpp/
+
+# Compile C++ benchmarks (bench_main.cpp + bench_criterions.cpp)
+RUN g++ -std=gnu++11 -ggdb3 -fopenmp -march=native -O2 \
+    -DCATCH_CONFIG_ENABLE_BENCHMARKING \
+    -Isrc/main/cpp \
+    -I../../galib247/ -L../../galib247/ga \
+    -Isrc/test/cpp \
+    -I/usr/local/include/python3.14 \
+    -o cpp_benchmarks \
+    src/test/cpp/bench_*.cpp \
+    -L. -lsboxevolution -lga -lm -lpython3.14
+
+# Run benchmarks
+RUN LD_LIBRARY_PATH=. ./cpp_benchmarks
+
+# ============================================
+# Stage 5c: Run Python tests
 # ============================================
 FROM python-base AS tester
 
@@ -224,8 +272,8 @@ COPY prog/src/ ./src/
 # Set PYTHONPATH so tests can import from src/main/python
 ENV PYTHONPATH=/build/sboxEvolver/prog/src/main/python
 
-# Run tests with pytest via uv
-RUN uv run pytest src/test/python
+# Run tests with pytest via uv (exclude benchmarks, with coverage)
+RUN uv run pytest -m "not benchmark" --cov=src/main/python --cov-report=term-missing src/test/python
 
 # ============================================
 # Stage 6: Runtime with artifacts
@@ -244,6 +292,10 @@ COPY --from=tester /build/sboxEvolver/prog/libsboxevolution.so /artifacts/
 # Ensure valgrind passed (creates build dependency on valgrind-tester stage)
 COPY --from=valgrind-tester /build/sboxEvolver/prog/libsboxevolution.so /tmp/valgrind-ok
 RUN rm -f /tmp/valgrind-ok
+
+# Ensure C++ tests passed (creates build dependency on cpp-tester stage)
+COPY --from=cpp-tester /build/sboxEvolver/prog/libsboxevolution.so /tmp/cpp-tests-ok
+RUN rm -f /tmp/cpp-tests-ok
 
 # Note: Library is already installed in /usr/lib/ via the .deb package in python-base
 # Verify library is accessible via system path
