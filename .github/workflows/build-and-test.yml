@@ -30,7 +30,7 @@ jobs:
       - name: Build and test prog service
         run: |
           # Build with output capture to verify tests ran
-          docker-compose build prog 2>&1 | tee build.log
+          docker compose build prog 2>&1 | tee build.log
 
           # Verify build succeeded
           if [ ${PIPESTATUS[0]} -eq 0 ]; then
