@@ -191,24 +191,21 @@ public:
 class EstimationOfDistributionAlgorithm : public SboxSearchAlgorithmBase {
 private:
 	int genomeLength;
-	EdaModel *model;
-	GAPopulation *tmpPop;
+	std::unique_ptr<EdaModel> model;
+	std::unique_ptr<GAPopulation> tmpPop;
 public:
 	GADefineIdentity("EstimationOfDistributionAlgorithm", 288);
 	EstimationOfDistributionAlgorithm(const GAGenome& g, bool bmda, int popsize) :
 		SboxSearchAlgorithmBase(g),
 		genomeLength(((GA1DBinaryStringGenome &) g).length()),
-		model(bmda ? new BmdaModel(genomeLength, popsize) : new EdaModel(genomeLength, popsize))	{
+		model(bmda ? static_cast<EdaModel*>(new BmdaModel(genomeLength, popsize)) : new EdaModel(genomeLength, popsize)) {
 
 		populationSize(popsize);
 		float pRepl = gaDefPRepl;
 		float n = ((pRepl*(float)pop->size() < 1) ? 1 : pRepl*(float)pop->size());
-		tmpPop = new GAPopulation(pop->individual(0), (unsigned int)n);
+		tmpPop.reset(new GAPopulation(pop->individual(0), (unsigned int)n));
 	}
-	virtual ~EstimationOfDistributionAlgorithm() {
-		freeAndNULL(model);
-		freeAndNULL(tmpPop);
-	}
+	virtual ~EstimationOfDistributionAlgorithm() {}
 	void step();
 	EstimationOfDistributionAlgorithm & operator++() { step(); return *this; }
 protected:

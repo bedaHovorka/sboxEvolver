@@ -174,7 +174,38 @@ COPY --from=deps-builder /build/sboxEvolver/prog/pyproject.toml /build/sboxEvolv
 ENV MPLBACKEND=Agg
 
 # ============================================
-# Stage 5: Run tests
+# Stage 5a: Valgrind memory leak check
+# ============================================
+FROM sbox-builder AS valgrind-tester
+
+# Install valgrind
+RUN apt-get update && apt-get install -y \
+    valgrind \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build/sboxEvolver/prog
+
+# Copy valgrind test source
+COPY prog/src/test/cpp/ src/test/cpp/
+
+# Build valgrind test binary (link against the .so built in sbox-builder)
+RUN g++ -std=gnu++11 -ggdb3 -fopenmp -march=native -O0 \
+    -Isrc/main/cpp \
+    -I../../galib247/ -L../../galib247/ga \
+    -I/usr/local/include/python3.14 \
+    -o valgrind_test src/test/cpp/valgrind_test.cpp \
+    -L. -lsboxevolution -lga -lm -lpython3.14
+
+# Run valgrind (--error-exitcode=1 fails the build on leaks)
+RUN LD_LIBRARY_PATH=. valgrind \
+    --leak-check=full \
+    --show-leak-kinds=all \
+    --track-origins=yes \
+    --error-exitcode=1 \
+    ./valgrind_test
+
+# ============================================
+# Stage 5b: Run tests
 # ============================================
 FROM python-base AS tester
 
@@ -209,6 +240,10 @@ COPY --from=sbox-builder /build/libsboxevolution_2.0.0_amd64.deb /artifacts/
 # Copy compiled library from tester stage for host extraction
 # (Ensures tests passed before extraction - runtime depends on tester)
 COPY --from=tester /build/sboxEvolver/prog/libsboxevolution.so /artifacts/
+
+# Ensure valgrind passed (creates build dependency on valgrind-tester stage)
+COPY --from=valgrind-tester /build/sboxEvolver/prog/libsboxevolution.so /tmp/valgrind-ok
+RUN rm -f /tmp/valgrind-ok
 
 # Note: Library is already installed in /usr/lib/ via the .deb package in python-base
 # Verify library is accessible via system path

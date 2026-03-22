@@ -15,6 +15,7 @@
  * Sbox representation like SubCrumb from Luffa SHA3 candidate
  */
 #include "softwareSbox.h"
+#include "common.h"
 
 void SoftwareSboxGenome::Init(GAGenome& g) {
 	SoftwareSboxGenome &genome = (SoftwareSboxGenome&) g;
@@ -81,9 +82,9 @@ int SoftwareSboxGenome::Cross(const GAGenome&p1, const GAGenome&p2, GAGenome*c1,
 }
 
 int SoftwareSboxGenome::output(int x) const {
-	check(!(inputsCount() & 3), "inputsCount must be divisible by 4");
+	assert(!(inputsCount() & 3));
 
-	int *r = new int[REGISTERS_COUNT];
+	int r[REGISTERS_COUNT];
 	memset(r, 0, REGISTERS_COUNT*sizeof(int));
 
 	const int mask = ((1<<bitsPerRegister)-1);
@@ -92,17 +93,18 @@ int SoftwareSboxGenome::output(int x) const {
 		x >>= bitsPerRegister;
 	}
 
-	for (CycleVector::const_iterator c = cycles.begin(); c != cycles.end(); c++) c->compute(&r);
+	// Need pointer-to-pointer for compute()
+	int *rPtr = r;
+	for (CycleVector::const_iterator c = cycles.begin(); c != cycles.end(); c++) c->compute(&rPtr);
 
 	//vystup
 	int result = 0;
-	check(outputsCount() == inputsCount(), "outputsCount must equal inputsCount for SoftwareSboxGenome");
+	assert(outputsCount() == inputsCount());
 	for (uint i=0, shift=0; i < REGISTERS_COUNT; i++) {
 		if (i == 3) continue;
 		result += (r[i]&mask) << shift;
 		shift += bitsPerRegister;
 	}
-	delete[] r;
 	return result;
 }
 

@@ -29,6 +29,7 @@ extern "C" {
 #include <typeinfo>
 #include <vector>
 #include <algorithm>
+#include <memory>
 
 #include <ga/std_stream.h>
 #include <ga/GASimpleGA.h>

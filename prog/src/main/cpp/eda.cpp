@@ -33,7 +33,7 @@ void EstimationOfDistributionAlgorithm::step() {
 
 int EstimationOfDistributionAlgorithm::variation() {
 	model->learnStructure(pop, tmpPop->size());
-	return model->sampleModel(tmpPop);
+	return model->sampleModel(tmpPop.get());
 }
 
 void BmdaModel::learnStructure(GAPopulation* pop, int size) {

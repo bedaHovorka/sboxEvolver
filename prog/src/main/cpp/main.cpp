@@ -33,27 +33,24 @@ inline void setParameters(SboxSearchAlgorithmBase & ga, const int popsize, const
 }
 
 TSearching newParallelRandomSearching(TGenome genome, int popsize, int ngen, float pMut) {
-	ParallelRandomSearchAlgorithm *ga = new ParallelRandomSearchAlgorithm(*genome.ptr);
+	std::unique_ptr<ParallelRandomSearchAlgorithm> ga(new ParallelRandomSearchAlgorithm(*genome.ptr));
 	setParameters(*ga, popsize, ngen, pMut, 0.0);
-
-	TSearching searching = {ga};
+	TSearching searching = {ga.release()};
 	return searching;
 }
 
 TSearching newEdaSearching(TGenome g, int popsize, int ngen, bool bdma) {
-	EstimationOfDistributionAlgorithm *ga = new EstimationOfDistributionAlgorithm(*g.ptr, bdma, popsize);
+	std::unique_ptr<EstimationOfDistributionAlgorithm> ga(new EstimationOfDistributionAlgorithm(*g.ptr, bdma, popsize));
 	setParameters(*ga, popsize, ngen, 0.0, 0.0);
-
-	TSearching searching = {ga};
+	TSearching searching = {ga.release()};
 	return searching;
 }
 
 TSearching newGaSearching(TGenome g, int popsize, int ngen, float pMut, float pCross, bool elitism) {
-	SboxSearchAlgorithmBase *ga = new SboxSearchAlgorithmBase(*g.ptr);
+	std::unique_ptr<SboxSearchAlgorithmBase> ga(new SboxSearchAlgorithmBase(*g.ptr));
 	setParameters(*ga, popsize, ngen, pMut, pCross);
 	ga->elitist(toGABool(elitism));
-
-	TSearching searching = {ga};
+	TSearching searching = {ga.release()};
 	return searching;
 }
 
@@ -87,9 +84,9 @@ void RandomSearchAlgorithm::step()
 // u nahodneho prohledavani se neda hovorit o velikosti populace, ale
 // toto cislo se da pouzit k nastaveni kolik nejlepsich jedincu se ma ulozit
 TSearching newRandomSearching(TGenome g, int bestGenomes, int ngen) {
-	RandomSearchAlgorithm *ga = new RandomSearchAlgorithm(*g.ptr);
+	std::unique_ptr<RandomSearchAlgorithm> ga(new RandomSearchAlgorithm(*g.ptr));
 	setParameters(*ga, 1, ngen, 0.1, 0, bestGenomes);
-	TSearching searching = {ga};
+	TSearching searching = {ga.release()};
 	return searching;
 }
 
@@ -117,9 +114,9 @@ void HeuristicSearchAlgorithm::evolve(unsigned int seed){
 }
 
 TSearching newHeuristicSearching(TGenome g, uint maxStates, uint ngen) {
-	HeuristicSearchAlgorithm *ga = new HeuristicSearchAlgorithm(*g.ptr, maxStates);
+	std::unique_ptr<HeuristicSearchAlgorithm> ga(new HeuristicSearchAlgorithm(*g.ptr, maxStates));
 	setParameters(*ga, 1, maxStates, ngen, 0);
-	TSearching searching = {ga};
+	TSearching searching = {ga.release()};
 	return searching;
 }
 
@@ -131,55 +128,55 @@ inline const CriterionsSet createCriterionsSet(const int criterionsCount, const 
 }
 
 TSearching newVegaSearching(TGenome g, int popsize, int ngen, float pMut, float pCross, const int criterionsCount, const CriterionsFitness *criterions) {
-	VegaAlgorithm *ga = new VegaAlgorithm(*g.ptr, createCriterionsSet(criterionsCount, criterions));
+	std::unique_ptr<VegaAlgorithm> ga(new VegaAlgorithm(*g.ptr, createCriterionsSet(criterionsCount, criterions)));
 	setParameters(*ga, popsize, ngen, pMut, pCross);
-	TSearching searching = {ga};
+	TSearching searching = {ga.release()};
 	return searching;
 }
 
 TSearching newSpeaSearching(TGenome g, int popsize, int ngen, float pMut, float pCross, const int criterionsCount, const CriterionsFitness *criterions) {
-	SpeaAlgorithm *ga = new SpeaAlgorithm(*g.ptr, createCriterionsSet(criterionsCount, criterions));
+	std::unique_ptr<SpeaAlgorithm> ga(new SpeaAlgorithm(*g.ptr, createCriterionsSet(criterionsCount, criterions)));
 	setParameters(*ga, popsize, ngen, pMut, pCross);
-	TSearching searching = {ga};
+	TSearching searching = {ga.release()};
 	return searching;
 }
 
 TGenome privateCreateGenome(GenomeType type, GAGenome::Evaluator evaluator, const intVector & arguments) {
 	TGenome genome;
+	std::unique_ptr<GAGenome> ptr;
 	switch (type) {
 	case BINARY:
 		check(arguments.size() == 2, "Binary genome needs 2 specific arguments (number of inputs, number of outputs)");
-		genome.ptr = new BinarySboxGenome(arguments[0], arguments[1], evaluator);
+		ptr.reset(new BinarySboxGenome(arguments[0], arguments[1], evaluator));
 		break;
 	case CGP:
 	{
 		check(arguments.size() == 5, "Binary genome needs 5 specific arguments (number of inputs, number of outputs, number of colums, number of rows, max mutations)");
-		// inputsCount, outputsCount, columnsCount, rowsCount
-		CgpGenome *cgpGenome = new CgpGenome(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
+		std::unique_ptr<CgpGenome> cgpGenome(new CgpGenome(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]));
 		cgpGenome->evaluator(evaluator);
-		genome.ptr = cgpGenome;
+		ptr = std::move(cgpGenome);
 		break;
 	}
 
 	case SOFTWARE_IMPL:
 	{
 		check(arguments.size() == 1, "i686 genom needs one argument, number of quaternion of bits");
-		SoftwareSboxGenome *softwareSboxGenome = new SoftwareSboxGenome(arguments[0]);
+		std::unique_ptr<SoftwareSboxGenome> softwareSboxGenome(new SoftwareSboxGenome(arguments[0]));
 		softwareSboxGenome->evaluator(evaluator);
-		genome.ptr = softwareSboxGenome;
+		ptr = std::move(softwareSboxGenome);
 		break;
 	}
 
 	case PERMUTATION:
 		check(arguments.size() == 3, "Permutaion genom needs three arguments (bijective, number of inputs, number of outputs)");
-		genome.ptr = new PermutationSboxGenome(arguments[0], arguments[1], arguments[2], evaluator);
+		ptr.reset(new PermutationSboxGenome(arguments[0], arguments[1], arguments[2], evaluator));
 		break;
 
 	default:
 		stopOnError("Wrong type of genome specified");
 		break;
 	}
-
+	genome.ptr = ptr.release();
 	return genome;
 }
 
