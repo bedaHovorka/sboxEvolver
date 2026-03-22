@@ -95,17 +95,15 @@ private:
 
 class SpeaAlgorithm : public MulticriterialGeneticAlgorithm {
 private:
-	GAPopulation *elite, *populationAndElite;
+	std::unique_ptr<GAPopulation> elite;
+	std::unique_ptr<GAPopulation> populationAndElite;
 public:
 	GADefineIdentity("SpeaAlgorithm", 306);
-	SpeaAlgorithm(const GAGenome &progenitor, const CriterionsSet cv) : MulticriterialGeneticAlgorithm(progenitor, cv), elite(NULL), populationAndElite(NULL) {
+	SpeaAlgorithm(const GAGenome &progenitor, const CriterionsSet cv) : MulticriterialGeneticAlgorithm(progenitor, cv), elite(), populationAndElite() {
 		minimaxi(GAGeneticAlgorithm::MINIMIZE);
 	}
 	explicit SpeaAlgorithm(const SpeaAlgorithm & orig) : MulticriterialGeneticAlgorithm(orig) {}
-	virtual ~SpeaAlgorithm() {
-		freeAndNULL(elite);
-		freeAndNULL(populationAndElite);
-	}
+	virtual ~SpeaAlgorithm() {}
 	SpeaAlgorithm & operator++() { step(); return *this; }
 protected:
 	virtual void step();
@@ -136,7 +134,7 @@ private:
 	typedef std::map<Cluster*,  ClusterPairVector> PairsForCluster;
 
 	inline double clusterDistance(const Cluster &cluster1, const Cluster &cluster2);
-	inline void clustering(GAPopulation* &elite, const uint limit);
+	inline void clustering(std::unique_ptr<GAPopulation> &elite, const uint limit);
 	inline double distance(const MultievaluationValues &values1, const MultievaluationValues &values2);
 	inline void addCluster(Cluster *cluster, PairsForCluster &pairsForCluster, ClusterDistances &clusterDistances);
 	inline void removeCluster(Cluster *cluster, PairsForCluster &pairsForCluster);

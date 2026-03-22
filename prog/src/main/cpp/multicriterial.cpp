@@ -79,14 +79,13 @@ void VegaAlgorithm::step() {
 
 void SpeaAlgorithm::initialize(uint seed) {
 	commonPreInit(seed);
-	freeAndNULL(elite);
-	elite = new GAPopulation;
+	elite.reset(new GAPopulation);
 	evaluation();
-	commonPostInit(populationAndElite);
+	commonPostInit(populationAndElite.get());
 }
 
 void SpeaAlgorithm::step() {
-	variation(populationAndElite);
+	variation(populationAndElite.get());
 	evaluation();
 	stats.update(*populationAndElite);
 }
@@ -171,7 +170,7 @@ inline void SpeaAlgorithm::removeCluster(Cluster *cluster, PairsForCluster &pair
 	freeAndNULL(cluster);
 }
 
-inline void SpeaAlgorithm::clustering(GAPopulation* &elite, const uint limit) {
+inline void SpeaAlgorithm::clustering(std::unique_ptr<GAPopulation> &elite, const uint limit) {
 	if (uint(elite->size()) < limit) return;
 	PairsForCluster pairsForCluster;
 	ClusterDistances clusterDistances;
@@ -205,7 +204,7 @@ inline void SpeaAlgorithm::clustering(GAPopulation* &elite, const uint limit) {
 
 	for (ClusterDistances::iterator i = clusterDistances.begin(); i != clusterDistances.end(); i++) freeAndNULL(i->second);
 
-	GAPopulation *tmp = new GAPopulation;
+	std::unique_ptr<GAPopulation> tmp(new GAPopulation);
 	for (PairsForCluster::iterator i = pairsForCluster.begin(); i != pairsForCluster.end(); i++) {
 		Cluster *cluster = i->first;
 		check(cluster->size() > 0, "Cluster must not be empty");
@@ -231,8 +230,7 @@ inline void SpeaAlgorithm::clustering(GAPopulation* &elite, const uint limit) {
 		freeAndNULL(cluster);
 	}
 	pairsForCluster.clear();
-	freeAndNULL(elite);
-	elite = tmp;
+	elite = std::move(tmp);
 }
 
 inline void SpeaAlgorithm::computePowers() {
@@ -263,13 +261,13 @@ inline void SpeaAlgorithm::computePowers() {
 }
 
 inline void SpeaAlgorithm::evaluation() {
-	freeAndNULL(populationAndElite);
+	populationAndElite.reset();
 	computeNondominancePopulation(*pop, *elite);
 	clustering(elite, pop->size()>>2);
 	computePowers();
 
 	//sloucit elitu a pop
-	populationAndElite = new GAPopulation(*pop);
+	populationAndElite.reset(new GAPopulation(*pop));
 	for (int i = 0; i < elite->size(); i++) populationAndElite->add(elite->individual(i));
 }
 
