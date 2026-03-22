@@ -9,15 +9,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a Master's thesis project from Brno University of Technology, Faculty of Information Technology (2009/2010), authored by Bedrich Hovorka. The project explores using genetic algorithms and other evolutionary computation methods to search for optimal S-boxes based on multiple cryptographic criteria.
 
 **Recent Updates (2025)**:
-- **January 2025**: Migrated from Python 2.7 to Python 3.13
+- **January 2025**: Migrated from Python 2.7 to Python 3.14
   - Modernized Python syntax (print functions, range, dict methods)
   - Added uv package manager for dependency management
   - Updated dependencies (numpy 1.26.4, matplotlib 3.9+, pytest 8.3+)
   - Environment-based library loading via SBOX_LIBRARY_PATH
   - Optimized Docker multi-stage build (removed build tools from runtime)
   - **Debian Package Distribution**: Docker build now creates `libsboxevolution_2.0.0_amd64.deb` package that installs library to `/usr/lib/` following FHS standards
-  - All unit tests pass successfully with pytest 8.3+
   - **Known Limitation**: Two Python C API functions (`simpleReportSearching()` and `bestPopulationStringsSearching()`) are disabled due to architectural constraints with ctypes-loaded libraries. Use `statistics().bestPopulationOutputs` for S-box data instead.
+- **March 2026**: Comprehensive test suite
+  - C++ upgraded from C++98 to **C++11** (`-std=gnu++11`)
+  - **Catch2 v2** (single-header) for C++ unit tests: 55 test cases, 1035 assertions
+  - **pytest** with hypothesis, pytest-benchmark, pytest-cov, pytest-xdist for Python: 26 tests
+  - **Valgrind** memory leak checking gate in Docker build
+  - Docker build gates: all C++ tests, Python tests, and Valgrind must pass
+  - On-demand C++ and Python benchmarks (not in CI)
 - Restructured with improved organization, Docker support, unit tests, and enhanced documentation while preserving the original research implementation
 
 ## Project Structure
@@ -44,9 +50,25 @@ sboxEvolver/
 │       │       ├── evolution.py    # Python wrapper for evolutionary algorithms
 │       │       └── experiments.py  # Experimental framework with 6 experiments
 │       └── test/                   # Unit tests (added 2025)
+│           ├── cpp/                # C++ tests (Catch2 v2)
+│           │   ├── catch.hpp           # Catch2 v2.13.10 single header
+│           │   ├── test_main.cpp       # Catch2 entry point
+│           │   ├── test_criterions.cpp # Cryptographic criterion tests
+│           │   ├── test_boxes.cpp      # KAT + genome class tests
+│           │   ├── test_combination.cpp # Combinatorial utility tests
+│           │   ├── test_softwareSbox.cpp # Software S-box tests
+│           │   ├── test_cgp.cpp        # CGP genome tests
+│           │   ├── test_eda.cpp        # EDA model tests
+│           │   ├── test_multicriterial.cpp # Multi-objective tests
+│           │   ├── bench_main.cpp      # Benchmark entry point
+│           │   └── bench_criterions.cpp # Performance benchmarks
 │           └── python/
+│               ├── conftest.py          # Shared pytest fixtures
 │               ├── test_routines.py     # Core algorithm and routine tests
-│               └── test_experiments.py  # Experiment framework tests
+│               ├── test_experiments.py  # Experiment framework tests
+│               ├── test_hypothesis.py   # Property-based tests (hypothesis)
+│               ├── test_integration.py  # Multi-objective + parallel integration
+│               └── test_benchmark.py    # Performance benchmarks (on-demand)
 ├── text/                           # LaTeX thesis document
 │   ├── Dockerfile                  # LaTeX build container
 │   ├── *.utf8.tex                  # Thesis chapters
@@ -146,21 +168,28 @@ docker-compose build text   # Builds diplomka.pdf
 
 **Docker Architecture:**
 - **prog service**: Multi-stage optimized build
-  - Stage 1: Build GAlib 2.4.7
-  - Stage 2: Build libsboxevolution.so (C++ library) and create Debian package
-  - Stage 3: Build Python 3.13 dependencies (numpy compilation with gcc/g++)
-  - Stage 4: Clean Python 3.13 runtime base (installs Debian package to /usr/lib/, no build tools)
-  - Stage 5: Run pytest 8.3+ tests
-  - Stage 6: Production runtime (copies tested artifacts)
+  - Stage 1 (`galib-builder`): Build GAlib 2.4.7
+  - Stage 2 (`sbox-builder`): Build libsboxevolution.so (C++11) and create Debian package
+  - Stage 3 (`deps-builder`): Build Python 3.14 dependencies (numpy compilation with gcc/g++)
+  - Stage 4 (`python-base`): Clean Python 3.14 runtime base (installs Debian package to /usr/lib/, no build tools)
+  - Stage 5a (`valgrind-tester`): Valgrind memory leak check (must pass)
+  - Stage 5b (`cpp-tester`): C++ unit tests with Catch2 v2 (55 test cases, must pass)
+  - Stage 5c (`tester`): Python tests with pytest (26 tests, must pass)
+  - Stage 6 (`runtime`): Production runtime (depends on all test stages passing)
 - **text service**: Single-stage LaTeX compilation with Czech language tools
 - **No inter-service dependencies**: Services build in parallel
+
+**Build gates — all must pass for successful build:**
+- Valgrind: 0 memory errors
+- C++ tests: 55 test cases, 1035 assertions (Catch2 v2)
+- Python tests: 26 tests (pytest + hypothesis + assertpy)
 
 **Advantages:**
 - No manual dependency installation (GAlib extraction, LaTeX tools, Czech typography packages)
 - Reproducible builds across platforms
 - Isolated build environments with minimal runtime image size
 - Automatic makefile patching for modern compilers (g++-4.4 → g++, k8-sse3 → native)
-- Python 3.13 support with modern pytest 8.3+
+- Python 3.14 support with modern pytest 8.3+
 - Build tools (gcc/g++) only in build stages, not in runtime (reduces image size ~200MB)
 - Resolves all platform-specific limitations mentioned in this document
 
@@ -217,15 +246,15 @@ make
 ```
 
 **Dependencies:**
-- `g++` (C++98 standard support)
+- `g++` with C++11 support (`-std=gnu++11`)
 - OpenMP support (`-fopenmp`)
-- Python 3.13+ development headers
+- Python 3.14+ development headers
 - GAlib 2.4.7 (extracted from included tarball)
 
 **⚠️ Manual makefile adjustments required** (automatically done by Docker):
 - Line 18: `CXX = g++-4.4` → `CXX = g++` (if g++-4.4 unavailable)
-- Line 26: `-march=k8-sse3` → `-march=native` (for modern CPUs)
-- Python include paths: Update to your Python 3.13 installation path
+- Line 27: `-march=k8-sse3` → `-march=native` (for modern CPUs)
+- Python include paths: Update to your Python 3.14 installation path
 
 **Note:** The shared library `libsboxevolution.so` is a **build artifact** generated by the build process. It is not checked into version control.
 
@@ -242,7 +271,7 @@ docker-compose up --build prog
 EXPERIMENT_NUM=3 docker-compose up prog
 ```
 
-**Local Development (Python 3.13 + uv):**
+**Local Development (Python 3.14 + uv):**
 ```bash
 cd prog/
 
@@ -272,32 +301,40 @@ uv run python src/main/python/experiments.py 6  # Symbolic regression
 - Generates EPS plots and LaTeX tables
 - Saves serialized results (`.picle` files)
 
-### Running Unit Tests
+### Running Tests
 
-Python unit tests validate core functionality (added in 2025 restructuring).
+**All tests must pass before merging.** The Docker build enforces this — it fails if any test gate fails.
 
 **Docker (Recommended):**
 
-Tests are automatically run during the Docker build process using pytest:
+All three test suites run automatically during `docker-compose build prog`:
 
 ```bash
-# Tests run automatically as part of the build
+# Build and run all tests (C++, Python, Valgrind)
 docker-compose build prog
 
-# The build will fail if tests don't pass
-# Tests are executed in Stage 5 of the multi-stage Dockerfile using:
-# pytest src/test/python
+# The build fails if any test gate fails:
+# - Stage 5a: Valgrind memory leak check
+# - Stage 5b: C++ unit tests (Catch2 v2, 55 test cases)
+# - Stage 5c: Python tests (pytest, 26 tests)
 ```
 
-The Docker build uses:
-- pytest 8.3+ (Python 3.13 compatible)
-- assertpy 1.1+ (assertion library)
-- Isolated environment with all dependencies
-- Non-interactive matplotlib backend (Agg)
+**Native C++ tests (requires GAlib built locally):**
 
-**Native (Manual):**
+```bash
+cd prog/
 
-If running tests without Docker (requires compiled library):
+# Run C++ unit tests
+make test
+
+# Run C++ benchmarks (on-demand, not in CI)
+make bench
+
+# Run Valgrind memory check
+make valgrind
+```
+
+**Native Python tests (requires compiled library):**
 
 ```bash
 cd prog/
@@ -305,29 +342,47 @@ cd prog/
 # Ensure library path is set
 export SBOX_LIBRARY_PATH=/path/to/sboxEvolver/artifacts/prog
 
-# Run all tests with pytest
+# Run all tests (excludes benchmarks by default via addopts)
 uv run pytest src/test/python/
 
-# Or with pytest directly (if installed)
-pytest src/test/python/
+# Run with coverage report
+uv run pytest --cov=src/main/python --cov-report=term-missing src/test/python/
 
-# Run specific test module
-uv run pytest src/test/python/test_routines.py
-uv run pytest src/test/python/test_experiments.py
-
-# Run with verbose output
-uv run pytest -v src/test/python/
+# Run benchmarks only (on-demand)
+uv run pytest -m benchmark --benchmark-only src/test/python/test_benchmark.py
 ```
 
-**Test Coverage:**
-- `test_routines.py` - Core algorithm and routine tests (S-box operations, fitness functions, genome handling)
-- `test_experiments.py` - Experiment framework tests (parameter tuning, multi-objective optimization)
+**Test Suite Overview:**
+
+| Suite | Framework | Count | What it covers |
+|---|---|---|---|
+| C++ unit tests | Catch2 v2.13.10 | 55 cases, 1035 assertions | criterions, boxes, combination, softwareSbox, cgp, eda, multicriterial |
+| Python tests | pytest + hypothesis + assertpy | 26 tests | routines, experiments, property-based, integration |
+| Python benchmarks | pytest-benchmark | 4 tests | GA, CGP, EDA, statistics (on-demand, `@pytest.mark.benchmark`) |
+| C++ benchmarks | Catch2 benchmarks | 6 benchmarks | criterion functions, GA step (on-demand via `make bench`) |
+| Valgrind | valgrind --leak-check=full | 1 harness | Memory leak detection |
+
+**C++ Test Files:**
+- `test_criterions.cpp` — hammingWeight, binaryDot, highestOneBit, computeLPMax, computeDPMax, isBijective, isBidirectional, bijectiveScore, computeBranchingFactor, SAC, bent, polynomial
+- `test_boxes.cpp` — BinarySboxGenome, PermutationSboxGenome, KAT tests, criterion dispatch
+- `test_combination.cpp` — next_combination, prev_combination enumeration
+- `test_softwareSbox.cpp` — Luffa SubCrumb testBox() KAT, C API integration, random init
+- `test_cgp.cpp` — CGP creation, output range, multiple criteria, symbolic regression
+- `test_eda.cpp` — ContingentTable chi-squared, BMDA/UMDA via C API
+- `test_multicriterial.cpp` — VEGA, SPEA via C API, criterion validation
+
+**Python Test Files:**
+- `test_routines.py` — Core algorithm and routine tests
+- `test_experiments.py` — Experiment framework tests
+- `test_hypothesis.py` — Property-based tests (bijective outputs, score invariants)
+- `test_integration.py` — VEGA, SPEA, parallel search, deterministic seed
+- `test_benchmark.py` — Performance benchmarks (on-demand only)
 
 **Prerequisites:**
 - Compiled `libsboxevolution.so` must be present
 - Must run from `prog/` directory for correct library path resolution
-- Python 3.13 with numpy and matplotlib
-- pytest 8.3+ and assertpy 1.1+ (installed via `uv sync`)
+- Python 3.14+ with numpy and matplotlib
+- pytest 8.3+, assertpy, hypothesis, pytest-benchmark, pytest-cov (installed via `uv sync`)
 
 ### Thesis Compilation
 
@@ -560,14 +615,14 @@ stats.bestPopulationOutputs          # S-box lookup tables [popSize, 2^inputs]
 
 ## Important Notes
 
-### Python 3.13 Migration (January 2025)
-- ✅ **Successfully migrated from Python 2.7 to Python 3.13**
+### Python 3.14 Migration (January 2025)
+- ✅ **Successfully migrated from Python 2.7 to Python 3.14**
 - All syntax modernized: `print()` functions, `range()`, dict `.items()`
 - Uses **uv** for package management (see `prog/pyproject.toml`)
 - **Breaking change**: Python 2 pickle files are not compatible
 - Set `SBOX_LIBRARY_PATH` environment variable for local development
 - All unit tests pass successfully with pytest 8.3+
-- Docker multi-stage build optimized (6 stages, runtime image without build tools)
+- Docker multi-stage build with test gates (Valgrind + Catch2 + pytest must all pass)
 
 **Known Architectural Limitation**:
 - Two C++ functions permanently disabled due to ctypes/Python C API incompatibility:
@@ -600,8 +655,9 @@ stats.bestPopulationOutputs          # S-box lookup tables [popSize, 2^inputs]
 
 ### Compilation Errors (Native Build Only)
 - **Missing GAlib**: Extract and compile `galib247bh100329.tar.bz2` first
-- **Python headers**: Install `python2-dev` or adjust include path in makefile
+- **Python headers**: Install `python3-dev` (3.14+) or adjust include path in makefile
 - **OpenMP**: Ensure compiler supports `-fopenmp` flag
+- **C++11 required**: Compiler must support `-std=gnu++11`
 - **⚠️ Docker builds avoid all these issues automatically**
 
 ### Runtime Errors
@@ -609,14 +665,16 @@ stats.bestPopulationOutputs          # S-box lookup tables [popSize, 2^inputs]
 - **Segmentation fault**: Check genome parameter validity (e.g., input/output sizes)
 - **Memory errors**: Large populations may exhaust RAM (reduce `popSize`)
 
-### Unit Test Errors
-- **Docker builds failing at test stage**: Check test output in build logs (Stage 4: tester)
+### Test Errors
+- **Docker builds failing at test stage**: Check build logs for Stage 5a (Valgrind), 5b (C++ tests), or 5c (Python tests)
+- **C++ test compilation errors**: Ensure Catch2 header (`src/test/cpp/catch.hpp`) is present
 - **ImportError: No module named evolution** (native): Must run tests from `prog/` directory
 - **OSError: libsboxevolution.so: cannot open shared object file** (native): Compile C++ library first
 - **Test failures after code changes**:
   - Docker: Rebuild with `docker-compose build --no-cache prog`
-  - Native: Rebuild C++ library: `cd prog && make clean && make`
-- **pytest not found** (native): Install with `uv sync` to install all dev dependencies including pytest 8.3+
+  - Native C++: `cd prog && make clean && make && make test`
+  - Native Python: `cd prog && uv run pytest src/test/python/`
+- **pytest not found** (native): Install with `uv sync` to install all dev dependencies
 
 ### Experiment Issues
 - **No output directory**: Script creates `./results<timestamp>/` automatically
@@ -659,22 +717,32 @@ This work explores the automated design of **cryptographic S-boxes** using evolu
 - **Repository Restructuring**: 2025
   - Source code reorganization (src/main/ and src/test/)
   - Docker containerization
-  - Unit test implementation
+  - Python unit test implementation
+  - Python 2.7 to 3.14 migration, C++98 to C++11 upgrade
   - Documentation updates
+- **Test Suite Extension**: March 2026
+  - Catch2 v2 C++ unit tests (55 test cases, 1035 assertions)
+  - pytest with hypothesis, pytest-benchmark, pytest-cov, pytest-xdist
+  - Docker build gates: Valgrind + C++ tests + Python tests must all pass
+  - On-demand C++ and Python performance benchmarks
 
 ## Code Quality Notes
 
 **For Claude Code:**
-- This is a legacy research codebase (2010) with modern enhancements (2025)
-- Fully migrated to Python 3.13 with modern syntax
-- C++98 standard with GAlib 2.4.7 integration
-- Unit tests validate core functionality but coverage is not exhaustive
-- **Testing uses pytest 8.3+ via Docker** (Stage 5 of multi-stage build)
+- This is a legacy research codebase (2010) with modern enhancements (2025-2026)
+- Fully migrated to Python 3.14 with modern syntax
+- C++11 standard (`-std=gnu++11`) with GAlib 2.4.7 integration
+- **All tests must pass before merging** — enforced by Docker build gates
+- Comprehensive test suite: 55 C++ tests (Catch2 v2) + 26 Python tests + Valgrind
+- 91% coverage on `evolution.py` (Python ctypes wrapper)
 - Prefer Docker builds for consistency and reproducibility
 - When modifying code:
-  - Use Python 3.13 syntax and conventions
+  - Use Python 3.14 syntax and conventions
+  - Use C++11 features (auto, range-for, unique_ptr, etc.)
   - Rebuild C++ library after any `.cpp` changes
-  - Run unit tests to verify changes:
-    - Docker: `docker-compose build prog` (pytest runs automatically)
-    - Native: `uv run pytest src/test/python/`
+  - **Run tests to verify changes**:
+    - Docker: `docker-compose build prog` (all test gates run automatically)
+    - Native C++: `make test` (Catch2 unit tests)
+    - Native Python: `uv run pytest src/test/python/`
+  - Add tests for new functionality (C++ in `src/test/cpp/test_*.cpp`, Python in `src/test/python/test_*.py`)
   - Update documentation if adding new features

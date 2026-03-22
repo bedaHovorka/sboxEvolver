@@ -41,8 +41,8 @@ jobs:
           fi
 
           # Verify tests actually ran and passed
-          if grep -q "14 passed" build.log; then
-            echo "✓ All 14 tests passed"
+          if grep -qP "\d+ passed" build.log && ! grep -qP "\d+ failed" build.log; then
+            echo "✓ All tests passed"
           else
             echo "✗ Tests did not pass or were not executed properly"
             cat build.log | grep -A 10 "test session starts" || echo "No test execution found"

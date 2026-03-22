@@ -15,6 +15,10 @@ dependencies = [
 dev = [
     "pytest>=8.3.0",
     "assertpy>=1.1",
+    "pytest-benchmark>=4.0.0",
+    "pytest-cov>=5.0.0",
+    "hypothesis>=6.100.0",
+    "pytest-xdist>=3.5.0",
 ]
 
 [build-system]
@@ -29,9 +33,26 @@ testpaths = ["src/test/python"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
+markers = [
+    "benchmark: performance benchmark tests (deselect with '-m not benchmark')",
+    "slow: tests that take more than a few seconds",
+]
+addopts = "-m 'not benchmark'"
+
+[tool.coverage.run]
+source = ["src/main/python"]
+omit = ["src/test/*"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 0
 
 [tool.uv]
 dev-dependencies = [
     "pytest>=8.3.0",
     "assertpy>=1.1",
+    "pytest-benchmark>=4.0.0",
+    "pytest-cov>=5.0.0",
+    "hypothesis>=6.100.0",
+    "pytest-xdist>=3.5.0",
 ]

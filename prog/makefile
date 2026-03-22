@@ -46,5 +46,33 @@ $(VALGRIND_TEST): $(EXS) $(VALGRIND_TEST_SRC)
 valgrind: $(VALGRIND_TEST)
 	LD_LIBRARY_PATH=. valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./$(VALGRIND_TEST)
 
+# Catch2 unit tests
+TEST_DIR=src/test/cpp
+TEST_MAIN_OBJ=$(TEST_DIR)/test_main.o
+TEST_SRCS=$(filter-out $(TEST_DIR)/test_main.cpp $(VALGRIND_TEST_SRC) $(wildcard $(TEST_DIR)/bench_*.cpp), $(wildcard $(TEST_DIR)/test_*.cpp))
+TEST_OBJS=$(TEST_SRCS:.cpp=.o)
+TEST_BIN=run_tests
+
+# Catch2 benchmarks
+BENCH_MAIN_OBJ=$(TEST_DIR)/bench_main.o
+BENCH_SRCS=$(filter-out $(TEST_DIR)/bench_main.cpp, $(wildcard $(TEST_DIR)/bench_*.cpp))
+BENCH_OBJS=$(BENCH_SRCS:.cpp=.o)
+BENCH_BIN=run_benchmarks
+
+$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
+	$(CXX) -fPIC $(FLAGS) -I$(TEST_DIR) -Isrc/main/cpp $(INC_DIRS) -c $< -o $@
+
+$(TEST_BIN): $(EXS) $(TEST_MAIN_OBJ) $(TEST_OBJS)
+	$(CXX) $(FLAGS) -I$(TEST_DIR) -Isrc/main/cpp $(INC_DIRS) -o $@ $(TEST_MAIN_OBJ) $(TEST_OBJS) -L. -lsboxevolution $(CXX_LIBS)
+
+test: $(TEST_BIN)
+	LD_LIBRARY_PATH=. ./$(TEST_BIN)
+
+$(BENCH_BIN): $(EXS) $(BENCH_MAIN_OBJ) $(BENCH_OBJS)
+	$(CXX) $(FLAGS) -I$(TEST_DIR) -Isrc/main/cpp $(INC_DIRS) -o $@ $(BENCH_MAIN_OBJ) $(BENCH_OBJS) -L. -lsboxevolution $(CXX_LIBS)
+
+bench: $(BENCH_BIN)
+	LD_LIBRARY_PATH=. ./$(BENCH_BIN)
+
 clean:
-	$(RM) $(OBJS) $(EXS) $(VALGRIND_TEST) *.o *~ *.pyc core
+	$(RM) $(OBJS) $(EXS) $(VALGRIND_TEST) $(TEST_BIN) $(BENCH_BIN) $(TEST_DIR)/*.o *.o *~ *.pyc core
