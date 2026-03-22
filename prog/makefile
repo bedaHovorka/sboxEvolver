@@ -24,7 +24,7 @@ HEADS=common.h eda.h cgp.h criterions.h main.h softwareSbox.h multicriterial.h
 DEBUG_FLAGS = -ggdb3
 PROD_FLAGS = -DNDEBUG
 CURRENT_FLAGS = $(DEBUG_FLAGS)
-FLAGS= -W -Wall -std=gnu++11 $(CURRENT_FLAGS) -fopenmp -march=k8-sse3 -O3 -I../galib247/ -L../galib247/ga
+FLAGS= -W -Wall -std=gnu++11 $(CURRENT_FLAGS) -fopenmp -march=k8-sse3 -O3 -I../galib247/ -L../galib247/ga -I/usr/local/include/python3.14
 CXX_LIBS=-lga -lm
 
 .SUFFIXES: .cpp
