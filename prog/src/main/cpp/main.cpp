@@ -152,18 +152,18 @@ TGenome privateCreateGenome(GenomeType type, GAGenome::Evaluator evaluator, cons
 	case CGP:
 	{
 		check(arguments.size() == 5, "Binary genome needs 5 specific arguments (number of inputs, number of outputs, number of colums, number of rows, max mutations)");
-		CgpGenome *cgpGenome = new CgpGenome(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
+		std::unique_ptr<CgpGenome> cgpGenome(new CgpGenome(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]));
 		cgpGenome->evaluator(evaluator);
-		ptr.reset(cgpGenome);
+		ptr = std::move(cgpGenome);
 		break;
 	}
 
 	case SOFTWARE_IMPL:
 	{
 		check(arguments.size() == 1, "i686 genom needs one argument, number of quaternion of bits");
-		SoftwareSboxGenome *softwareSboxGenome = new SoftwareSboxGenome(arguments[0]);
+		std::unique_ptr<SoftwareSboxGenome> softwareSboxGenome(new SoftwareSboxGenome(arguments[0]));
 		softwareSboxGenome->evaluator(evaluator);
-		ptr.reset(softwareSboxGenome);
+		ptr = std::move(softwareSboxGenome);
 		break;
 	}
 

@@ -68,6 +68,7 @@ public:
 //	}
 
 	virtual void copy(const Sbox& orig) {
+		if (this == &orig) return;
 		multievaluationValues = orig.multievaluationValues;
 		multievaluated = orig.multievaluated;
 		scoreBackuped = orig.scoreBackuped;
