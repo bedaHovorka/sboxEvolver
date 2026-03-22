@@ -15,7 +15,7 @@
  * Sbox representation like SubCrumb from Luffa SHA3 candidate
  */
 #include "softwareSbox.h"
-#include "main.h"
+#include "common.h"
 
 void SoftwareSboxGenome::Init(GAGenome& g) {
 	SoftwareSboxGenome &genome = (SoftwareSboxGenome&) g;
