@@ -47,7 +47,7 @@ RUN make
 # ============================================
 # Stage 2: Build libsboxevolution.so
 # ============================================
-FROM python:3.14-slim AS sbox-builder
+FROM debian:bookworm-slim AS sbox-builder
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
@@ -71,13 +71,11 @@ WORKDIR /build/sboxEvolver/prog
 # 1. Change g++-4.4 to g++ (use default compiler)
 # 2. Change -march=k8-sse3 to -march=native (optimize for build machine)
 # 3. Fix GAlib path to match Docker directory structure
-# 4. Add Python 3.14 library linkage for Python C API functions
 RUN sed -i 's|CXX = g++-4.4|CXX = g++|g' makefile && \
     sed -i 's|-std=gnu++98|-std=gnu++11|g' makefile && \
     sed -i 's|-march=k8-sse3|-march=native|g' makefile && \
     sed -i 's|-I../galib247/|-I../../galib247|g' makefile && \
-    sed -i 's|-L../galib247/ga|-L../../galib247/ga|g' makefile && \
-    sed -i 's|CXX_LIBS=-lga -lm|CXX_LIBS=-lga -lm -lpython3.14|g' makefile
+    sed -i 's|-L../galib247/ga|-L../../galib247/ga|g' makefile
 
 # Patch project's template code for modern C++ (same issue as GAlib)
 RUN sed -i 's/\tinitializer(/\tthis->initializer(/g' src/main/cpp/boxes.h && \
@@ -192,9 +190,8 @@ COPY prog/src/test/cpp/ src/test/cpp/
 RUN g++ -std=gnu++11 -ggdb3 -fopenmp -march=native -O0 \
     -Isrc/main/cpp \
     -I../../galib247/ -L../../galib247/ga \
-    -I/usr/local/include/python3.14 \
     -o valgrind_test src/test/cpp/valgrind_test.cpp \
-    -L. -lsboxevolution -lga -lm -lpython3.14
+    -L. -lsboxevolution -lga -lm
 
 # Run valgrind (--error-exitcode=1 fails the build on leaks)
 RUN LD_LIBRARY_PATH=. valgrind \
@@ -219,10 +216,9 @@ RUN g++ -std=gnu++11 -ggdb3 -fopenmp -march=native -O2 \
     -Isrc/main/cpp \
     -I../../galib247/ -L../../galib247/ga \
     -Isrc/test/cpp \
-    -I/usr/local/include/python3.14 \
     -o cpp_tests \
     src/test/cpp/test_*.cpp \
-    -L. -lsboxevolution -lga -lm -lpython3.14
+    -L. -lsboxevolution -lga -lm
 
 # Run C++ unit tests
 RUN LD_LIBRARY_PATH=. ./cpp_tests
@@ -244,10 +240,9 @@ RUN g++ -std=gnu++11 -ggdb3 -fopenmp -march=native -O2 \
     -Isrc/main/cpp \
     -I../../galib247/ -L../../galib247/ga \
     -Isrc/test/cpp \
-    -I/usr/local/include/python3.14 \
     -o cpp_benchmarks \
     src/test/cpp/bench_*.cpp \
-    -L. -lsboxevolution -lga -lm -lpython3.14
+    -L. -lsboxevolution -lga -lm
 
 # Run benchmarks
 RUN LD_LIBRARY_PATH=. ./cpp_benchmarks
