@@ -21,10 +21,6 @@
 #include <stdexcept>
 #include <string>
 
-extern "C" {
-	#include <Python.h>
-}
-
 #include <cmath>
 #include <typeinfo>
 #include <vector>
@@ -81,11 +77,6 @@ inline int binaryDot(int x, int y) {
 	// * == & paralelne ;)
 	// suma - suda/licha hammingova vaha
 	return is_odd(hammingWeight(x & y));
-}
-
-inline PyObject* createPythonString(const std::string & str) {
-	// Python 3 uses PyUnicode for string objects (PyString removed)
-	return PyUnicode_FromStringAndSize(str.c_str(), str.size());
 }
 
 inline void stopOnError(const std::string &message) {
