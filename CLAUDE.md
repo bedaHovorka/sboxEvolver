@@ -16,7 +16,6 @@ This is a Master's thesis project from Brno University of Technology, Faculty of
   - Environment-based library loading via SBOX_LIBRARY_PATH
   - Optimized Docker multi-stage build (removed build tools from runtime)
   - **Debian Package Distribution**: Docker build now creates `libsboxevolution_2.0.0_amd64.deb` package that installs library to `/usr/lib/` following FHS standards
-  - **Known Limitation**: Two Python C API functions (`simpleReportSearching()` and `bestPopulationStringsSearching()`) are disabled due to architectural constraints with ctypes-loaded libraries. Use `statistics().bestPopulationOutputs` for S-box data instead.
 - **March 2026**: Comprehensive test suite
   - C++ upgraded from C++98 to **C++11** (`-std=gnu++11`)
   - **Catch2 v2** (single-header) for C++ unit tests: 55 test cases, 1035 assertions
@@ -626,13 +625,6 @@ stats.bestPopulationOutputs          # S-box lookup tables [popSize, 2^inputs]
 - Set `SBOX_LIBRARY_PATH` environment variable for local development
 - All unit tests pass successfully with pytest 8.3+
 - Docker multi-stage build with test gates (Valgrind + Catch2 + pytest must all pass)
-
-**Known Architectural Limitation**:
-- Two C++ functions permanently disabled due to ctypes/Python C API incompatibility:
-  - `simpleReportSearching()` - detailed evolution report (commented out)
-  - `bestPopulationStringsSearching()` - string representation of S-boxes (returns empty list)
-- **Root Cause**: Libraries loaded via `ctypes.CDLL` cannot safely call Python C API functions like `PyUnicode_FromStringAndSize()` to create Python objects. This would require converting the entire codebase to use Python extension modules instead of ctypes.
-- **Workaround**: All core functionality works perfectly. Use `statistics().bestPopulationOutputs` (integer arrays) and `statistics().bestPopulationScores` instead of string representations.
 
 ### GAlib Integration
 - The project relies on **GAlib 2.4.7** (included as tarball)

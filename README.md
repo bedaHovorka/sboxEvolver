@@ -634,7 +634,6 @@ search = Searching("Ga", genome, popSize=50, nGen=5, pMut=0.1, pCross=0.9)
 ## Known Limitations
 
 - **✓ Migrated to Python 3.13** (January 2025): Successfully ported from Python 2.x
-  - **Architectural Constraint**: Two C++ functions (`simpleReportSearching()`, `bestPopulationStringsSearching()`) disabled due to ctypes/Python C API incompatibility. Use `statistics().bestPopulationOutputs` instead.
 - **Legacy Dependencies**: GAlib 2.4.7 (2001), C++98 standard
 - **Platform-Specific** (Native builds only): Makefile hardcodes AMD K8 architecture flags
   - **✓ Resolved by Docker**: Automatic patching for modern compilers and architectures
