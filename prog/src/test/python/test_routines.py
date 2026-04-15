@@ -183,8 +183,10 @@ def test_best_population_strings_nonempty_list():
         search.simpleEvolve(TerminationCondition.GENERATION)
         strings = search.bestPopulationStrings()
         stats = search.statistics()
-        assert isinstance(strings, list)
-        assert len(strings) == stats.nBestGenomes
-        assert all(isinstance(s, str) and len(s) > 0 for s in strings)
+        assert_that(stats.nBestGenomes).is_greater_than(0)
+        assert_that(strings).is_instance_of(list).is_not_empty()
+        assert_that(len(strings)).is_equal_to(stats.nBestGenomes)
+        for s in strings:
+            assert_that(s).is_instance_of(str).is_not_empty()
     finally:
         search.close()

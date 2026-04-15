@@ -104,10 +104,12 @@ class TGenome(ctypes.Structure):
 libsboxevolution.closeGenome.argtypes = [TGenome]
 libsboxevolution.closeGenome.restype = None
 
-# Configure buffer-based report and string functions
-libsboxevolution.simpleReportSearching.argtypes = [TSearching, ctypes.c_char_p, ctypes.c_int]
+# Configure buffer-based report and string functions.
+# POINTER(c_char) is used (not c_char_p) because the buffer is written to
+# by the C side; c_char_p is for immutable NUL-terminated input strings.
+libsboxevolution.simpleReportSearching.argtypes = [TSearching, ctypes.POINTER(ctypes.c_char), ctypes.c_int]
 libsboxevolution.simpleReportSearching.restype = ctypes.c_int
-libsboxevolution.bestPopulationStringsSearching.argtypes = [TSearching, ctypes.c_char_p, ctypes.c_int]
+libsboxevolution.bestPopulationStringsSearching.argtypes = [TSearching, ctypes.POINTER(ctypes.c_char), ctypes.c_int]
 libsboxevolution.bestPopulationStringsSearching.restype = ctypes.c_int
 
 # zastupuje Ceckovu strukturu, pomoci ktere se predavaji statistiky behu
