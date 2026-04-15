@@ -346,7 +346,7 @@ inline void simpleReportAboutGenome(std::ostream & out, GAGenome & individual) t
 	out << endl << "Chromozome:\t" << individual << endl << endl;
 }
 
-PyObject* simpleReportSearching(TSearching searching) {
+int simpleReportSearching(TSearching searching, char* buf, int bufSize) {
 	SBOX_TRY
 	SboxSearchAlgorithmBase *ga = searching.algorithm;
 	GAPopulation population = ga->bestResults();
@@ -360,8 +360,15 @@ PyObject* simpleReportSearching(TSearching searching) {
 		simpleReportAboutGenome(out, individual);
 	}
 
-	return createPythonString(out.str());
-	SBOX_CATCH_RETURN(NULL)
+	const std::string s = out.str();
+	const int needed = (int)s.size();
+	if (buf != NULL && bufSize > 0) {
+		const int toCopy = (needed < bufSize) ? needed : (bufSize - 1);
+		memcpy(buf, s.data(), toCopy);
+		buf[toCopy] = '\0';
+	}
+	return needed;
+	SBOX_CATCH_RETURN(-1)
 }
 
 void testSoftwareBox() {
@@ -434,17 +441,24 @@ TStatistics getStatisticsSearching(TSearching searching, float *bestPopulationSc
 	SBOX_CATCH_RETURN(TStatistics{})
 }
 
-PyObject* bestPopulationStringsSearching(TSearching searching) {
+int bestPopulationStringsSearching(TSearching searching, char* buf, int bufSize) {
 	SBOX_TRY
 	const GAPopulation &population = searching.algorithm->bestResults();
-	PyObject* list = PyList_New(population.size());
+	std::ostringstream out;
 	for (int i = 0; i < population.size(); i++) {
-		std::ostringstream out;
+		if (i > 0) out << '\x1f'; // ASCII Unit Separator delimits entries
 		out << population.individual(i);
-		PyList_SET_ITEM(list, i, createPythonString(out.str()));
 	}
-	return list;
-	SBOX_CATCH_RETURN(NULL)
+
+	const std::string s = out.str();
+	const int needed = (int)s.size();
+	if (buf != NULL && bufSize > 0) {
+		const int toCopy = (needed < bufSize) ? needed : (bufSize - 1);
+		memcpy(buf, s.data(), toCopy);
+		buf[toCopy] = '\0';
+	}
+	return needed;
+	SBOX_CATCH_RETURN(-1)
 }
 
 //kdyby se standardni coredump nehodil...

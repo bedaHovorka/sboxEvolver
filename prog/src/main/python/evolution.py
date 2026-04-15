@@ -53,8 +53,6 @@ def _load_sbox_library():
         )
 
 libsboxevolution = _load_sbox_library()
-libsboxevolution.simpleReportSearching.restype = ctypes.py_object
-libsboxevolution.bestPopulationStringsSearching.restype = ctypes.py_object
 
 # Configure error checking functions
 libsboxevolution.hasError.restype = ctypes.c_bool
@@ -105,6 +103,14 @@ class TGenome(ctypes.Structure):
 # Configure closeGenome function signature for type safety
 libsboxevolution.closeGenome.argtypes = [TGenome]
 libsboxevolution.closeGenome.restype = None
+
+# Configure buffer-based report and string functions.
+# POINTER(c_char) is used (not c_char_p) because the buffer is written to
+# by the C side; c_char_p is for immutable NUL-terminated input strings.
+libsboxevolution.simpleReportSearching.argtypes = [TSearching, ctypes.POINTER(ctypes.c_char), ctypes.c_int]
+libsboxevolution.simpleReportSearching.restype = ctypes.c_int
+libsboxevolution.bestPopulationStringsSearching.argtypes = [TSearching, ctypes.POINTER(ctypes.c_char), ctypes.c_int]
+libsboxevolution.bestPopulationStringsSearching.restype = ctypes.c_int
 
 # zastupuje Ceckovu strukturu, pomoci ktere se predavaji statistiky behu
 class TStatistics(ctypes.Structure):
@@ -185,20 +191,31 @@ class Searching:
 
     def simpleReport(self):
         print(self)
-        # NOTE: simpleReportSearching() disabled due to architectural limitation
-        # The C++ function returns PyObject* (Python string), but when loaded via
-        # ctypes.CDLL, the library cannot safely call Python C API functions like
-        # PyUnicode_FromStringAndSize(). This would require converting to a proper
-        # Python extension module (not ctypes). Detailed stats are available via statistics().
-        # ptr = libsboxevolution.simpleReportSearching(self.delegat)
-        # print(ptr)
+        buf_size = 8192
+        buf = ctypes.create_string_buffer(buf_size)
+        needed = libsboxevolution.simpleReportSearching(self.delegat, buf, buf_size)
+        _check_sbox_error()
+        if needed >= buf_size:
+            buf_size = needed + 1
+            buf = ctypes.create_string_buffer(buf_size)
+            libsboxevolution.simpleReportSearching(self.delegat, buf, buf_size)
+            _check_sbox_error()
+        print(buf.value.decode('utf-8', errors='replace'))
 
     def bestPopulationStrings(self):
-        # NOTE: bestPopulationStringsSearching() disabled due to architectural limitation
-        # Same issue as simpleReportSearching() - cannot return PyObject* from ctypes library.
-        # Use statistics().bestPopulationOutputs to get S-box lookup tables as integers instead.
-        # return libsboxevolution.bestPopulationStringsSearching(self.delegat)
-        return []  # Return empty list to maintain compatibility
+        buf_size = 8192
+        buf = ctypes.create_string_buffer(buf_size)
+        needed = libsboxevolution.bestPopulationStringsSearching(self.delegat, buf, buf_size)
+        _check_sbox_error()
+        if needed >= buf_size:
+            buf_size = needed + 1
+            buf = ctypes.create_string_buffer(buf_size)
+            libsboxevolution.bestPopulationStringsSearching(self.delegat, buf, buf_size)
+            _check_sbox_error()
+        if needed == 0:
+            return []
+        text = buf.value.decode('utf-8', errors='replace')
+        return text.split('\x1f')
 
     def simpleEvolveAndClose(self, terminator=TerminationCondition.GENERATION):
         self.simpleEvolve(terminator)

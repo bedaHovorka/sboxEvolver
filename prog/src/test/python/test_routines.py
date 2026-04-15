@@ -163,3 +163,30 @@ def test_error_propagation_invalid_genome_type():
         libsboxevolution.createGenome.restype = prev_restype
 
 
+def test_simple_report_prints_convergence_and_header(capsys):
+    genome = Genome(ChromozomeType.PERMUTATION, CriterionFunction.LP_MAX, True, 4, 4)
+    search = Searching("Ga", genome, 50, 5, 0.1, 0.9, False)
+    try:
+        search.simpleEvolve(TerminationCondition.GENERATION)
+        search.simpleReport()
+        out = capsys.readouterr().out
+        assert "convergence:" in out
+        assert "Fit\tBent\tSAC\tLpMax\tDpMax\tBij\tBidir\tBF\tMinDeg\tPolynoms" in out
+    finally:
+        search.close()
+
+
+def test_best_population_strings_nonempty_list():
+    genome = Genome(ChromozomeType.PERMUTATION, CriterionFunction.LP_MAX, True, 4, 4)
+    search = Searching("Ga", genome, 50, 5, 0.1, 0.9, False)
+    try:
+        search.simpleEvolve(TerminationCondition.GENERATION)
+        strings = search.bestPopulationStrings()
+        stats = search.statistics()
+        assert_that(stats.nBestGenomes).is_greater_than(0)
+        assert_that(strings).is_instance_of(list).is_not_empty()
+        assert_that(len(strings)).is_equal_to(stats.nBestGenomes)
+        for s in strings:
+            assert_that(s).is_instance_of(str).is_not_empty()
+    finally:
+        search.close()
